@@ -93,8 +93,9 @@
   justify-content: center;
   gap: 8px;
   background: transparent;
-  color: var(--foreground);
+  color: rgba(0, 0, 0, 1);
   border: 1px solid var(--border);
+  border-color: rgba(0, 0, 0, 1);
   border-radius: var(--btn-radius);
   padding: 10px 20px;
   font-family: var(--font-ui);

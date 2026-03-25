@@ -143,47 +143,62 @@ var BATTLE_ICONS = {
 };
 
 var BATTLE_CARD_PROMPT = [
-  "You are an expert Indian D2C brand creative strategist with deep knowledge of social media benchmarks, competitor activity, and industry trends in India.",
+  "You are an expert brand strategist. You will receive a brand name, category, and website data.",
   "",
-  "CRITICAL DATA RULES:",
-  "- You MUST provide estimated values for ALL metrics. NEVER return 'Data unavailable' or 'N/A'.",
-  "- Use your knowledge of brands, their social media presence, category benchmarks, and Indian D2C norms to provide realistic estimates.",
-  "- For well-known brands (e.g. Samsonite, American Tourister, Boat, Mamaearth), use your training data to give accurate estimates.",
-  "- For less-known brands, use category benchmarks and reasonable inference.",
-  "- Mark confidence as 'verified' for brands you know well, 'estimated' for category-based inference.",
-  "- Every metric MUST have a numeric or descriptive value — posts: '25-30 posts', er: '2.1%', mix: '60% Reels / 40% Static', festivals: '8-10 regional', ai: '~15% est.'",
-  "- For trends, ALWAYS provide a stat value like '+180%', '+85%', '3.2x growth' — NEVER 'Data unavailable'.",
+  "YOUR JOB: Deeply analyze THIS SPECIFIC BRAND and produce a battle card that is IMPOSSIBLE to confuse with any other brand's battle card.",
   "",
-  "Each competitor gets ONE confidence level and ONE dataSource for ALL its metrics.",
+  "BEFORE writing ANY JSON, think through these questions about the brand:",
+  "- What EXACTLY does this brand sell? (not the category — the actual products, SKUs, price points)",
+  "- Who are their DIRECT competitors? (brands selling similar products at similar price points in India)",
+  "- Which Indian REGIONS matter most for THIS product category? (luggage = airport cities, fashion = metro youth, food = regional tastes)",
+  "- Which PLATFORMS work best for THIS product type? (visual products = Instagram/Pinterest, B2B = LinkedIn, tech = YouTube reviews)",
+  "- Which FESTIVALS/SEASONS drive purchases in THIS category? (luggage = vacation seasons, fashion = Diwali/wedding, food = harvest festivals)",
+  "- What TRENDS are specifically reshaping THIS category right now? (not generic D2C trends — category-specific shifts)",
+  "",
+  "CRITICAL RULES:",
+  "- Every field must be SPECIFIC to this brand and its category. If analyzing a luggage brand, markets should mention travel hubs, not generic 'Tier-2 cities'.",
+  "- Platforms should explain WHY that platform matters for THIS category specifically.",
+  "- Seasonal campaigns should be relevant to THIS product (not generic Diwali for every brand).",
+  "- Trends must be about THIS industry, not generic AI/D2C trends.",
+  "- For each trend, ground `title`, `desc`, and `action` in the BRAND WEBSITE DATA (product categories, positioning, and pricing tier). Avoid generic wording when the website data contradicts it.",
+  "- Competitors must be REAL brands selling similar products in India.",
+  "- Every metric must have a numeric value. Never 'Data unavailable'.",
   "",
   "Respond ONLY with valid JSON. No markdown. No backticks.",
   "",
   "JSON structure:",
   "{",
   "  \"competitors\": [",
-  "    {\"name\":\"REAL brand\",\"desc\":\"short\",\"badge\":\"Category Leader|Fast Mover|Rising Fast|Market Leader|High Spend\",",
-  "     \"badgeClass\":\"leader|rising\",\"confidence\":\"verified|estimated\",\"dataSource\":\"how you know (e.g. Instagram analysis, industry reports)\",",
-  "     \"posts\":\"NN posts\",\"postsClass\":\"good|neutral|bad\",",
-  "     \"er\":\"N.N%\",\"erClass\":\"good|neutral|bad\",",
-  "     \"mix\":\"NN% Reels / NN% Static\",\"mixClass\":\"good|neutral|bad\",",
-  "     \"festivals\":\"NN regional\",\"festivalsClass\":\"good|neutral|bad\",",
-  "     \"ai\":\"~NN% est.\",\"aiClass\":\"good|neutral|bad\",",
-  "     \"gap\":\"gap vs brand\",\"gapClass\":\"bad|neutral\"}",
+  "    {\"name\":\"<REAL competitor brand name>\",\"desc\":\"<what they sell, their positioning vs this brand>\",\"badge\":\"Category Leader|Fast Mover|Rising Fast|Market Leader|High Spend\",",
+  "     \"badgeClass\":\"leader|rising\",\"confidence\":\"verified|estimated\",\"dataSource\":\"<how you know this>\",",
+  "     \"posts\":\"<estimated monthly posts>\",\"postsClass\":\"good|neutral|bad\",",
+  "     \"er\":\"<engagement rate %>\",\"erClass\":\"good|neutral|bad\",",
+  "     \"mix\":\"<content format split>\",\"mixClass\":\"good|neutral|bad\",",
+  "     \"festivals\":\"<how many regional/festival campaigns they run>\",\"festivalsClass\":\"good|neutral|bad\",",
+  "     \"ai\":\"<estimated AI adoption %>\",\"aiClass\":\"good|neutral|bad\",",
+  "     \"gap\":\"<specific gap vs the brand being analyzed>\",\"gapClass\":\"bad|neutral\"}",
   "  ],",
-  "  \"yourBrand\":{\"desc\":\"short\",\"confidence\":\"verified|estimated\",",
-  "    \"posts\":\"NN\",\"er\":\"N.N%\",\"mix\":\"format\",\"festivals\":\"NN\",\"ai\":\"~NN%\",\"potential\":\"target\"},",
-  "  \"markets\":[{\"title\":\"Region\",\"desc\":\"data\",\"opp\":\"revenue\",\"confidence\":\"verified|estimated\"}],",
-  "  \"platforms\":[{\"rank\":1,\"title\":\"Platform\",\"desc\":\"data\",\"opp\":\"metric\"}],",
-  "  \"seasonal\":[{\"title\":\"Campaign\",\"desc\":\"context\",\"opp\":\"window\"}],",
-  "  \"trends\":[{\"tag\":\"rising|emerging|urgent\",\"title\":\"Trend\",\"stat\":\"+NNN%\",\"statLabel\":\"measure\",",
-  "    \"desc\":\"2 sentences\",\"action\":\"action\",\"source\":\"source\"}],",
-  "  \"methodology\":{\"competitorSelection\":\"how chosen\",\"metricsApproach\":\"Estimated from brand knowledge, social media benchmarks, and Indian D2C category norms\",\"limitationsNote\":\"Metrics are AI-estimated based on brand knowledge and category benchmarks; actual values may vary\"},",
-  "  \"dataSources\":[\"Source 1\",\"Source 2\",\"Source 3\"]",
+  "  \"yourBrand\":{\"desc\":\"<what this brand is and does — from website data>\",\"confidence\":\"verified|estimated\",",
+  "    \"posts\":\"<est monthly posts>\",\"er\":\"<est engagement %>\",\"mix\":\"<format split>\",\"festivals\":\"<festival campaigns>\",\"ai\":\"<AI adoption %>\",\"potential\":\"<growth target>\"},",
+  "  \"markets\":[",
+  "    {\"title\":\"<region/city cluster relevant to THIS product>\",\"desc\":\"<WHY this region matters for THIS brand's category — mention specific cities, buyer behavior, cultural factors>\",\"opp\":\"<revenue opportunity in ₹ Cr>\",\"confidence\":\"verified|estimated\"}",
+  "  ],",
+  "  \"platforms\":[",
+  "    {\"rank\":1,\"title\":\"<platform name>\",\"desc\":\"<WHY this platform matters for THIS specific product category — not generic platform facts>\",\"opp\":\"<specific measurable goal for this brand>\"}",
+  "  ],",
+  "  \"seasonal\":[",
+  "    {\"title\":\"<campaign name relevant to THIS category>\",\"desc\":\"<WHY this season/festival drives sales for THIS product type — connect to buyer behavior>\",\"opp\":\"<timing window>\"}",
+  "  ],",
+  "  \"trends\":[",
+  "    {\"tag\":\"rising|emerging|urgent\",\"title\":\"<trend specific to THIS industry/category>\",\"stat\":\"<real stat like +180% or 3.2x>\",\"statLabel\":\"<what the stat measures>\",",
+  "     \"desc\":\"<2 sentences explaining how this trend specifically impacts THIS brand's category>\",\"action\":\"<specific action for THIS brand>\",\"source\":\"<credible source>\"}",
+  "  ],",
+  "  \"methodology\":{\"competitorSelection\":\"<how you chose these specific competitors>\",\"metricsApproach\":\"<data sources used>\",\"limitationsNote\":\"<honest limitations>\"},",
+  "  \"dataSources\":[\"<source 1>\",\"<source 2>\",\"<source 3>\",\"<source 4>\",\"<source 5>\"]",
   "}",
   "",
-  "Counts: 4 competitors, 4 markets, 4 platforms, 4 seasonal, 4 trends. Do NOT include concepts or strategy.",
-  "All India-specific. Keep descriptions SHORT to fit within token limits.",
-  "REMEMBER: Every single metric field MUST have a real estimated value. Zero 'Data unavailable' values allowed."
+  "Provide exactly 4 competitors, 4 markets, 4 platforms, 4 seasonal, 4 trends.",
+  "EVERY field must be brand-specific and category-specific. If I can copy-paste your output to a different brand and it still makes sense, you have FAILED."
 ].join("\n");
 
 function escBattle(s) {
@@ -254,8 +269,18 @@ async function generateBattleCardData(brandName, category, segment) {
   var ad = window.lastAnalysisData;
 
   // Fetch website content for thorough brand understanding
-  var urls = Array.from(document.querySelectorAll('.brand-url-input'))
-    .map(function(i) { return i.value.trim(); }).filter(Boolean);
+  var urls = [];
+  try {
+    var storedUrls = sessionStorage.getItem('fyndBrandUrls');
+    if (storedUrls) urls = JSON.parse(storedUrls);
+  } catch(e) {}
+  urls = Array.isArray(urls) ? urls.filter(function(u) { return !!u; }) : [];
+
+  // Fallback: if session data isn't present (e.g. direct link), try DOM inputs.
+  if (!urls.length) {
+    urls = Array.from(document.querySelectorAll('.brand-url-input'))
+      .map(function(i) { return i.value.trim(); }).filter(Boolean);
+  }
 
   // Step 1: Studying website (loader is already on step 1)
   var siteContent = await fetchSiteContent(urls);
@@ -335,6 +360,44 @@ function metricVal(value, cardConfidence) {
     return '<span style="color:var(--muted-foreground);font-style:italic">Data unavailable</span>';
   }
   return val;
+}
+
+function renderCompetitorTabLoading(data, brandName) {
+  var compGrid = document.querySelector('#tab-competitor .comp-grid');
+  if (!compGrid) return;
+
+  var competitorNames = (data.competitors || []).map(function(c) { return c.name; });
+  var namesList = competitorNames.length ? competitorNames.join(', ') : 'competitors';
+
+  compGrid.innerHTML =
+    '<div style="grid-column:1/-1;padding:60px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px">' +
+      '<div style="position:relative;width:48px;height:48px">' +
+        '<div style="position:absolute;inset:0;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite"></div>' +
+        '<div style="position:absolute;inset:6px;border:3px solid var(--border);border-bottom-color:var(--signal, #10b981);border-radius:50%;animation:spin 1.5s linear infinite reverse"></div>' +
+      '</div>' +
+      '<div style="font-size:16px;font-weight:600;color:var(--foreground)">Fetching Live Competitor Data</div>' +
+      '<div style="font-size:13px;color:var(--muted-foreground);max-width:400px;line-height:1.6">' +
+        'Scraping real Instagram profiles for <strong>' + escBattle(namesList) + '</strong> via Apify. This takes 1–2 minutes for verified data.' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:8px;width:260px;text-align:left;margin-top:8px">' +
+        '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted-foreground)">' +
+          '<div style="width:6px;height:6px;border-radius:50%;background:var(--primary);animation:lstep-pulse 1.2s ease-in-out infinite"></div>' +
+          'Looking up Instagram handles' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted-foreground);opacity:0.4">' +
+          '<div style="width:6px;height:6px;border-radius:50%;background:var(--border)"></div>' +
+          'Scraping follower counts & engagement' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted-foreground);opacity:0.4">' +
+          '<div style="width:6px;height:6px;border-radius:50%;background:var(--border)"></div>' +
+          'Calculating content mix & posting frequency' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted-foreground);opacity:0.4">' +
+          '<div style="width:6px;height:6px;border-radius:50%;background:var(--border)"></div>' +
+          'Building competitor cards with verified data' +
+        '</div>' +
+      '</div>' +
+    '</div>';
 }
 
 function renderCompetitorTab(data, brandName) {
@@ -477,7 +540,6 @@ var VISUAL_TYPES = [
     badgeClass: 'lifestyle',
     aspectClass: 'landscape',
     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
-    promptSuffix: 'Lifestyle editorial photography, environmental portrait, natural setting, aspirational scene with real people using the product in daily life. Wide-angle cinematic shot, 16:9 aspect ratio, warm natural lighting, shallow depth of field, editorial magazine quality.',
     fallbackGrad: 'linear-gradient(135deg,#09090b,#404040)'
   },
   {
@@ -486,66 +548,111 @@ var VISUAL_TYPES = [
     badgeClass: 'product',
     aspectClass: 'square',
     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>',
-    promptSuffix: 'Premium product photography, studio-lit hero shot of the product on a clean minimal surface, dramatic lighting, 1:1 square aspect ratio, high-end e-commerce quality, sharp focus on product details, subtle reflections, dark moody background.',
     fallbackGrad: 'linear-gradient(135deg,#09090b,#525252)'
   },
   {
-    key: 'banner',
-    label: 'Digital Banner',
-    badgeClass: 'banner',
-    aspectClass: 'banner-ratio',
-    icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M16 3v4M8 3v4M16 17v4M8 17v4"/></svg>',
-    promptSuffix: 'Wide panoramic digital banner composition, 2.5:1 ultra-wide aspect ratio, bold visual impact, vibrant colors, campaign hero image suitable for website header or social media cover, cinematic wide-angle, striking composition with clear visual hierarchy.',
+    key: 'social',
+    label: 'Social Post',
+    badgeClass: 'social',
+    aspectClass: 'portrait',
+    icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>',
     fallbackGrad: 'linear-gradient(135deg,#09090b,#404040)'
   }
 ];
 
+// ═══ UNIVERSAL PRODUCT-INTELLIGENT CAMPAIGN PROMPT ═══
+// Works for ANY product category: footwear, beverages, electronics, cosmetics, vehicles, etc.
+// Forces product classification BEFORE any creative generation.
 var CONCEPTS_PROMPT = [
-  "You are an expert Indian D2C brand creative strategist specializing in campaign ideation and visual direction.",
+  "You are a commercial creative director working across ALL product categories.",
+  "You will receive: brand name, product category, and website data.",
+  "Your job: UNDERSTAND the product first, then generate a campaign concept with 3 visual assets.",
   "",
-  "Generate a campaign concept for the given brand with THREE distinct visual assets:",
-  "1. Lifestyle Photo — shows real people wearing/using the brand's ACTUAL products in an aspirational, relatable Indian setting",
-  "2. Product Photoshoot — a premium studio hero shot focusing on one of the brand's REAL products",
-  "3. Digital Banner — a wide panoramic campaign visual featuring the brand's products for web/social media headers",
+  "STEP 1 — PRODUCT UNDERSTANDING (mandatory):",
+  "Analyze the product deeply. The productContext object is REQUIRED.",
+  "- type: specific product (e.g. 'lightweight mesh running sneaker', 'cold-pressed juice 250ml', 'wireless earbuds', 'anti-aging serum dropper bottle')",
+  "- category: footwear | beverage | electronics | cosmetics | apparel | luggage | home-goods | automobile | food | personal-care",
+  "- useCase: athletic | casual-daily | professional | cooking | skincare | commuting | entertainment | outdoor | travel",
+  "- appropriateScenes: 4 SPECIFIC environments where this product naturally appears",
+  "- inappropriateScenes: 4 environments that would look forced for this product",
+  "- sourceAngle: typical product photo angle (side-profile | front-facing | 3/4-view | top-down)",
+  "- positioning: premium | mass-market | luxury | functional | aspirational",
   "",
-  "CRITICAL RULE FOR imagePrompt FIELDS:",
-  "You MUST describe the brand's ACTUAL products with precise physical details extracted from the website data:",
-  "- Name the exact product type (e.g. 'oversized graphic t-shirt', 'slim-fit joggers', 'cotton kurta set')",
-  "- Describe the exact visual appearance: colors, prints/patterns, fabric texture, silhouette, neckline, fit",
-  "- Describe the brand's design language: Are they bold/minimal? Streetwear/ethnic? What makes their products visually recognizable?",
-  "- For lifestyle shots: describe the model wearing THE SPECIFIC PRODUCT, not a generic item",
-  "- For product shots: describe THE SPECIFIC PRODUCT laid flat or on a mannequin with its actual colors and design details",
-  "- For banners: feature THE SPECIFIC PRODUCTS as hero elements in the composition",
-  "- NEVER use vague terms like 'the product' or 'brand merchandise' — always describe the exact garment/item with physical details",
+  "STEP 2 — SCENE RULES FOR LIFESTYLE:",
+  "The scene MUST match the product's actual use context:",
+  "  Footwear: running→trail/park, casual→sidewalk/café, formal→office/dinner. NEVER indoors on carpet.",
+  "  Beverages: energy→gym/sports, juice→kitchen/picnic, premium→executive/spa. NEVER formal office.",
+  "  Electronics: headphones→commute/desk, phone→café/street. NEVER swimming pool.",
+  "  Cosmetics: skincare→bathroom/vanity, makeup→mirror/prep. NEVER gym.",
+  "  NEVER force festive/cultural themes unless the product genuinely fits.",
+  "  When uncertain, choose SAFE and NEUTRAL over bold and wrong.",
   "",
-  "Respond ONLY with valid JSON. No markdown. No backticks.",
+  "STEP 3 — PRODUCT PHOTOSHOOT RULES:",
+  "- Preserve the SAME viewing angle as the source image",
+  "- Do NOT rotate, flip, or reveal unseen surfaces",
+  "- Enhance ONLY with: lighting, backdrop, shadows, reflections",
+  "- Do NOT invent structural details not visible in the source",
   "",
-  "JSON structure:",
+  "STEP 4 — SOCIAL POST RULES:",
+  "The social post is a 3:4 portrait format designed for Instagram/social media:",
+  "- Product naturally integrated into an aspirational lifestyle scene",
+  "- The product must be the hero — prominent, well-lit, clearly visible",
+  "- Scene should feel like a premium brand's Instagram post",
+  "- Aspirational but realistic — commercially usable",
+  "- Clean composition suitable for social media feed",
+  "- NO text, NO typography, NO brand name, NO watermarks in the image",
+  "",
+  "STEP 5 — COLOR RULE:",
+  "For lifestyle and product shots: NEVER specify the product color.",
+  "Write: 'the exact product matching the reference image in color, shape, and design'.",
+  "For banner: describe the product generally since OpenAI generates the complete banner.",
+  "",
+  "OUTPUT FORMAT — valid JSON only, no markdown, no backticks:",
   "{",
-  "  \"campaign\":{",
-  "    \"title\":\"Campaign Name\",",
-  "    \"subtitle\":\"BRAND x THEME\",",
-  "    \"desc\":\"2-3 sentence description of the campaign idea, target audience, and expected impact\",",
-  "    \"tags\":[\"tag1\",\"tag2\",\"tag3\"]",
+  "  \"productContext\": {",
+  "    \"type\": \"<specific product>\",",
+  "    \"category\": \"<broad category>\",",
+  "    \"useCase\": \"<primary use context>\",",
+  "    \"appropriateScenes\": [\"scene1\", \"scene2\", \"scene3\", \"scene4\"],",
+  "    \"inappropriateScenes\": [\"scene1\", \"scene2\", \"scene3\", \"scene4\"],",
+  "    \"sourceAngle\": \"<viewing angle>\",",
+  "    \"positioning\": \"<market positioning>\"",
   "  },",
-  "  \"visuals\":[",
-  "    {\"type\":\"lifestyle\",\"title\":\"Short visual title\",\"desc\":\"1-sentence description of this specific visual\",",
-  "     \"imagePrompt\":\"Describe a SPECIFIC scene: A [age] Indian [man/woman] wearing [EXACT product from the brand — describe color, print, fit, fabric]. Setting: [specific Indian location]. The [specific garment details] are clearly visible. [Lighting, mood, camera angle]. No text/logos/watermarks.\"},",
-  "    {\"type\":\"product\",\"title\":\"Short visual title\",\"desc\":\"1-sentence description of this product shot\",",
-  "     \"imagePrompt\":\"Studio product photography of [EXACT product from the brand — describe the specific item, its color, print/graphic, fabric, cut, stitching details]. Laid on [surface]. [Lighting setup]. The [specific design element like graphic, embroidery, pattern] is the focal point. No text/logos/watermarks.\"},",
-  "    {\"type\":\"banner\",\"title\":\"Short visual title\",\"desc\":\"1-sentence description of this banner visual\",",
-  "     \"imagePrompt\":\"Wide panoramic shot featuring [2-3 SPECIFIC products from the brand — describe each with exact colors, prints, materials]. [Composition and setting]. [Color palette matching the brand]. No text/logos/watermarks.\"}",
+  "  \"campaign\": {",
+  "    \"title\": \"Campaign Name\",",
+  "    \"subtitle\": \"BRAND x THEME\",",
+  "    \"desc\": \"2-3 sentence campaign description\",",
+  "    \"tags\": [\"tag1\", \"tag2\", \"tag3\"]",
+  "  },",
+  "  \"visuals\": [",
+  "    {",
+  "      \"type\": \"lifestyle\",",
+  "      \"title\": \"Short title\",",
+  "      \"desc\": \"1-sentence description\",",
+  "      \"imagePrompt\": \"<Realistic scene from appropriateScenes. Person naturally using the exact product from the reference image. Describe environment, lighting, mood. Product clearly visible. Photorealistic, 16:9. No text, no logos.>\"",
+  "    },",
+  "    {",
+  "      \"type\": \"product\",",
+  "      \"title\": \"Short title\",",
+  "      \"desc\": \"1-sentence description\",",
+  "      \"imagePrompt\": \"<Studio shot. Exact product from reference at same angle. Describe surface, lighting, background. Do NOT show unseen surfaces. 1:1 square. No text.>\"",
+  "    },",
+  "    {",
+  "      \"type\": \"social\",",
+  "      \"title\": \"Short title\",",
+  "      \"desc\": \"1-sentence description\",",
+  "      \"imagePrompt\": \"<Premium social media post for [BRAND]. The [product type] from the reference image is the hero, naturally placed in an aspirational lifestyle scene. Product clearly visible and prominent. Beautiful composition suitable for Instagram feed. 3:4 portrait format. Photorealistic, premium lighting. No text, no logos, no watermarks.>\"",
+  "    }",
   "  ]",
   "}",
   "",
-  "Rules:",
-  "- ONE campaign concept with THREE distinct visual types (lifestyle, product, banner)",
-  "- All India-specific — reference Indian festivals, cities, culture, consumer behavior",
-  "- Each imagePrompt must be 3-4 sentences describing REAL products from the brand with exact physical details",
-  "- NEVER invent products that the brand doesn't sell — only reference items found in the website data",
-  "- If the brand sells graphic tees, describe the actual graphic style (pop art, typography, minimal, etc.)",
-  "- If the brand sells ethnic wear, describe the actual fabric, embroidery, silhouette",
-  "- Tags should be short (1-2 words each)"
+  "RULES:",
+  "- productContext is REQUIRED before any prompts.",
+  "- Lifestyle scene from appropriateScenes only.",
+  "- Product shot preserves source angle exactly.",
+  "- Social post must feel like a premium brand Instagram post — product-first, aspirational.",
+  "- For all three types: never specify product color — defer to reference image.",
+  "- When uncertain, choose safe and neutral."
 ].join("\n");
 
 window._conceptsGenerated = false;
@@ -561,8 +668,11 @@ var BRAND_CATEGORIES = [
   'Electronics & Gadgets',
   'Jewellery & Accessories',
   'Footwear',
+  'Luggage & Travel',
+  'Bags & Backpacks',
   'Kids & Baby',
   'Sports & Fitness',
+  'Automobile & Mobility',
   'Pet Care',
   'Stationery & Gifting'
 ];
@@ -571,11 +681,12 @@ function renderConceptsPlaceholder(brandName) {
   var conceptsTab = document.getElementById('tab-concepts');
   if (!conceptsTab) return;
 
-  var categoryOpts = '<option value="">Select category...</option>';
-  BRAND_CATEGORIES.forEach(function(c) {
-    var sel = (brandContext.category && brandContext.category === c) ? ' selected' : '';
-    categoryOpts += '<option value="' + c + '"' + sel + '>' + c + '</option>';
-  });
+  // Category for visual generation should come from Creative Intel (brandContext.category),
+  // not a user dropdown.
+  var defaultCategory = (brandContext.category && BRAND_CATEGORIES.indexOf(brandContext.category) !== -1)
+    ? brandContext.category
+    : BRAND_CATEGORIES[0];
+  brandContext.category = defaultCategory;
 
   var slots = '';
   for (var i = 0; i < 5; i++) {
@@ -649,10 +760,9 @@ function renderConceptsPlaceholder(brandName) {
         '</div>' +
 
         '<div class="cu-field">' +
-          '<div class="cu-label">Brand Category <span class="cu-req">*</span></div>' +
-          '<select class="cu-select" id="cuCategory" onchange="validateConceptForm()">' +
-            categoryOpts +
-          '</select>' +
+          '<div class="cu-label">Brand Category</div>' +
+          '<div class="cu-hint" style="margin-top:-2px" id="cuCategoryLabel">' + escBattle(defaultCategory) + '</div>' +
+          '<input type="hidden" id="cuCategory" value="' + escBattle(defaultCategory) + '" />' +
         '</div>' +
 
         '<button class="cu-generate" id="cuGenerateBtn" disabled onclick="uploadAndLaunchConcepts()">' +
@@ -672,6 +782,12 @@ function handleProductImageSelect(index, input) {
     return;
   }
   window._conceptUploadedFiles[index] = file;
+  // Store first product image as data URL for banner compositing
+  if (!window._productImageDataUrls) window._productImageDataUrls = [];
+  var reader2 = new FileReader();
+  reader2.onload = function(e) { window._productImageDataUrls[index] = e.target.result; };
+  reader2.readAsDataURL(file);
+
   var slot = document.getElementById('cuSlot' + index);
   var empty = document.getElementById('cuEmpty' + index);
   var preview = document.getElementById('cuPreview' + index);
@@ -708,6 +824,11 @@ function handleLogoSelect(input) {
     return;
   }
   window._conceptLogoFile = file;
+  // Store logo as data URL for banner compositing
+  var reader = new FileReader();
+  reader.onload = function(e) { window._conceptLogoDataUrl = e.target.result; };
+  reader.readAsDataURL(file);
+
   var slot = document.getElementById('cuLogoSlot');
   var empty = document.getElementById('cuLogoEmpty');
   var preview = document.getElementById('cuLogoPreview');
@@ -887,54 +1008,85 @@ async function launchConceptsGeneration() {
 
   var generateView = document.getElementById('conceptsGenerateView');
   var contentView = document.getElementById('conceptsContent');
+
+  // If contentView was destroyed (e.g. innerHTML replacement), recreate it
+  if (!contentView) {
+    var parent = generateView ? generateView.parentElement : document.getElementById('tab-concepts');
+    if (parent) {
+      contentView = document.createElement('div');
+      contentView.id = 'conceptsContent';
+      contentView.style.display = 'none';
+      parent.appendChild(contentView);
+    }
+  }
   if (!contentView) return;
 
-  // Show loading state — advance the generating steps if available
+  // Show a loading spinner while OpenAI generates the concept
   if (generateView) generateView.style.display = 'none';
   contentView.style.display = 'block';
-  if (typeof window._advanceGenStep === 'function') {
-    window._advanceGenStep(2);
-  } else {
-    contentView.innerHTML =
-      '<div style="padding:80px 40px;text-align:center">' +
-        '<div class="spinner" style="display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:24px"></div>' +
-        '<div style="font-size:16px;color:var(--muted-foreground)">Generating campaign visuals for ' + escBattle(brandName) + '...</div>' +
-        '<div style="font-size:12px;color:var(--muted-foreground);margin-top:8px">Creating lifestyle photo, product shot & banner \u2014 this takes 30-60 seconds</div>' +
-      '</div>';
-  }
+  contentView.innerHTML =
+    '<div style="padding:80px 40px;text-align:center">' +
+      '<div class="spinner" style="display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:24px"></div>' +
+      '<div style="font-size:16px;color:var(--muted-foreground)">Generating campaign visuals for ' + escBattle(brandName) + '...</div>' +
+      '<div style="font-size:12px;color:var(--muted-foreground);margin-top:8px">Creating lifestyle photo, product shot & banner \u2014 this takes 30-60 seconds</div>' +
+    '</div>';
 
   // Build prompt with brand context
-  var userPrompt = 'Brand: ' + brandName + '\nCategory: ' + category + '\nMarket Segment: ' + segment;
+  // The selected category from the upload form is the most reliable signal for product type
+  var selectedCategory = document.getElementById('cuCategory');
+  var uploadCategory = selectedCategory ? selectedCategory.value : category;
+
+  var userPrompt = 'Brand: ' + brandName + '\nCategory: ' + (uploadCategory || category) + '\nMarket Segment: ' + segment;
+
+  // CRITICAL: Tell OpenAI exactly what product was uploaded
+  var catLabel = uploadCategory || category;
+  userPrompt += '\n\n═══ UPLOADED PRODUCT (this overrides everything) ═══';
+  userPrompt += '\nThe user uploaded a product image in the category: "' + catLabel + '".';
+  userPrompt += '\nALL three visuals MUST feature ONLY this product type. No exceptions.';
+  userPrompt += '\n';
+  userPrompt += '\nCategory → product mapping (use this to determine what the uploaded product is):';
+  userPrompt += '\n  "Food & Beverages" → a food/drink item (bottle, can, packet, snack). NOT clothing.';
+  userPrompt += '\n  "Footwear" → a shoe, sneaker, sandal, slipper. NOT a bag or shirt.';
+  userPrompt += '\n  "Luggage & Travel" → a suitcase, trolley, travel bag. NOT a vase or home decor.';
+  userPrompt += '\n  "Bags & Backpacks" → a bag, backpack, handbag, purse. NOT luggage or clothing.';
+  userPrompt += '\n  "Fashion & Apparel" → clothing (shirt, dress, kurta, jacket). NOT accessories.';
+  userPrompt += '\n  "Beauty & Personal Care" → skincare, makeup, grooming product. NOT clothing.';
+  userPrompt += '\n  "Electronics & Gadgets" → phone, headphone, smartwatch, speaker. NOT furniture.';
+  userPrompt += '\n  "Home & Living" → furniture, decor, kitchenware, home textile. NOT luggage.';
+  userPrompt += '\n  "Sports & Fitness" → equipment, activewear, gym gear. NOT casual fashion.';
+  userPrompt += '\n  "Automobile & Mobility" → vehicle, scooter, bike, car accessory.';
+  userPrompt += '\n';
+  userPrompt += '\nThe uploaded product is a "' + catLabel + '" item. Use the mapping above to determine what it is.';
+  userPrompt += '\nDo NOT feature any other product type even if the brand website shows multiple categories.';
+  userPrompt += '\nThe reference image is the source of truth for product appearance.';
 
   var siteContent = window._battleSiteContent;
   if (siteContent) {
-    userPrompt += '\n\n--- BRAND WEBSITE DATA ---\n' + siteContent + '\n--- END ---';
-    userPrompt += '\n\nIMPORTANT: Study the website data above carefully. Identify:';
-    userPrompt += '\n1. The brand\'s TOP product categories (e.g. graphic tees, joggers, kurtas, dresses)';
-    userPrompt += '\n2. The brand\'s signature design language (e.g. bold pop-art graphics, minimalist, ethnic prints)';
-    userPrompt += '\n3. The brand\'s color palette (what colors dominate their products)';
-    userPrompt += '\n4. Specific product names or styles mentioned on the website';
-    userPrompt += '\nThen use these EXACT details in each imagePrompt. The AI image generator has NEVER seen this brand — your imagePrompt must describe every physical detail of the product so the generated image looks like it belongs to this brand.';
+    userPrompt += '\n\n--- BRAND WEBSITE DATA (for brand understanding only) ---\n' + siteContent + '\n--- END ---';
+    userPrompt += '\nUse the website data to understand the brand\'s positioning and tone. But the UPLOADED PRODUCT IMAGE determines what product to feature — NOT the website catalog.';
   }
 
-  // Include battle card insights
-  if (battleCardData) {
-    if (battleCardData.competitors) {
-      userPrompt += '\n\nKey competitors: ' + battleCardData.competitors.map(function(c) { return c.name; }).join(', ');
+  // Pass brand intel from Creative Intel audit (if available)
+  var auditData = window.lastAnalysisData;
+  if (auditData) {
+    userPrompt += '\n\n═══ BRAND INTELLIGENCE (from Creative Intel audit) ═══';
+    if (auditData.brandProfile && Array.isArray(auditData.brandProfile)) {
+      auditData.brandProfile.forEach(function(item) {
+        if (item.label && item.value) {
+          userPrompt += '\n' + item.label + ': ' + item.value;
+        }
+      });
     }
-    if (battleCardData.trends) {
-      userPrompt += '\nTrending: ' + battleCardData.trends.map(function(t) { return t.title; }).join(', ');
+    if (auditData.topInsight) {
+      userPrompt += '\nKey Insight: ' + auditData.topInsight;
     }
-    if (battleCardData.seasonal) {
-      userPrompt += '\nSeasonal opportunities: ' + battleCardData.seasonal.map(function(s) { return s.title; }).join(', ');
+    if (auditData.overallGrade) {
+      userPrompt += '\nBrand Grade: ' + auditData.overallGrade;
     }
+    userPrompt += '\nUse this brand intelligence to make the campaign contextually relevant — match the brand\'s positioning, audience, and tone.';
   }
 
-  if (window._battleProductImages && window._battleProductImages.length > 0) {
-    userPrompt += '\n\nThe brand has product images on their site. Their visual style and products must be reflected accurately in each imagePrompt.';
-  }
-
-  userPrompt += '\n\nGenerate a compelling campaign concept with three distinct visual assets (lifestyle, product, banner). Each imagePrompt MUST describe the brand\'s actual products with exact physical details (color, fabric, print style, fit, silhouette). Never use generic descriptions.';
+  userPrompt += '\n\nGenerate a campaign concept with three visual assets. Every visual MUST feature the uploaded ' + (uploadCategory || category) + ' product. Never substitute with a different product type.';
 
   try {
     var rawText = await callClaude(CONCEPTS_PROMPT, userPrompt, 3000);
@@ -948,9 +1100,16 @@ async function launchConceptsGeneration() {
     // Store in battleCardData
     if (!battleCardData) battleCardData = {};
     battleCardData.concepts = conceptsData;
+    // Store campaign title for banner compositing
+    if (conceptsData.campaign && conceptsData.campaign.title) {
+      window._battleCampaignTitle = conceptsData.campaign.title;
+    }
 
-    // Clear generating state
+    // Clear generating state and switch to content view
     if (typeof window._clearGenDots === 'function') window._clearGenDots();
+    var _genView = document.getElementById('conceptsGenerateView');
+    if (_genView) _genView.style.display = 'none';
+    contentView.style.display = 'block';
 
     // Render multi-format visual cards
     renderConceptCards(conceptsData, brandName);
@@ -959,6 +1118,9 @@ async function launchConceptsGeneration() {
 
   } catch(err) {
     if (typeof window._clearGenDots === 'function') window._clearGenDots();
+    var _genView2 = document.getElementById('conceptsGenerateView');
+    if (_genView2) _genView2.style.display = 'none';
+    contentView.style.display = 'block';
     contentView.innerHTML =
       '<div style="padding:40px;text-align:center;color:var(--primary)">' +
         '<div style="font-size:16px;margin-bottom:16px">Visual generation failed</div>' +
@@ -1013,7 +1175,7 @@ function renderConceptCards(conceptsData, brandName) {
 
   // Regenerate button
   cHtml += '<div style="text-align:center;margin-top:24px">' +
-    '<button onclick="launchConceptsGeneration()" class="btn-ghost" style="font-size:12px;padding:8px 20px;letter-spacing:0.04em">Regenerate Visuals</button>' +
+    '<button onclick="launchConceptsGeneration()" class="btn-ghost btn-concept-regenerate" style="font-size:12px;padding:8px 20px;letter-spacing:0.04em">Regenerate Visuals</button>' +
   '</div>';
 
   contentView.innerHTML = cHtml;
@@ -1027,36 +1189,66 @@ function renderConceptCards(conceptsData, brandName) {
   generateConceptImages(visuals, brandName);
 }
 
-// ── PixelBin AI Image Generation for Campaign Visuals ──
-function buildConceptPrompt(visual, brandName, index) {
-  var noText = 'CRITICAL: Do NOT render any text, words, letters, brand names, logos, watermarks, or typography in the image. Pure visual scene only.';
+// ═══ TYPE-SPECIFIC PROMPT BUILDERS ═══
+// Each media type has distinct priorities and guardrails.
+// Lifestyle + Product → FAL nano-banana-pro (image-to-image with reference)
+// Banner → OpenAI image generation (complete ad creative with text)
 
-  var vType = VISUAL_TYPES.find(function(vt) { return vt.key === visual.type; }) || VISUAL_TYPES[index % 3];
+// LIFESTYLE: Priority = contextual realism
+function buildLifestylePrompt(visual, brandName) {
+  var parts = [];
+  parts.push('CRITICAL: Do NOT render any text, words, letters, logos, watermarks. Pure visual scene only.');
 
-  // Build a prompt that matches the card's title + description + imagePrompt
-  var parts = [noText, vType.promptSuffix];
+  if (window._battleProductImages && window._battleProductImages.length > 0) {
+    parts.push('A reference product image is provided. The product in the scene MUST match the reference image exactly in color, shape, material, and design. Do NOT change the product color.');
+  }
 
   if (visual.imagePrompt) {
     parts.push(visual.imagePrompt);
+  } else {
+    parts.push('Lifestyle editorial photography for ' + brandName + '. A person naturally using the exact product from the reference image in a realistic, aspirational setting. Photorealistic, 16:9, warm natural lighting.');
   }
 
-  // Include the card title and description so the image matches the visible text
-  if (visual.title) {
-    parts.push('Visual concept: "' + visual.title + '".');
-  }
-  if (visual.desc) {
-    parts.push('Scene description: ' + visual.desc);
-  }
+  parts.push('Wide-angle cinematic composition, 16:9, shallow depth of field, editorial quality. Product clearly visible and central.');
+  return parts.join(' ');
+}
 
-  // If using a reference image, tell the model to feature that product prominently
+// PRODUCT: Priority = geometry fidelity
+function buildProductPrompt(visual, brandName) {
+  var parts = [];
+  parts.push('CRITICAL: Do NOT render any text, words, letters, logos, or watermarks.');
+
   if (window._battleProductImages && window._battleProductImages.length > 0) {
-    parts.push('The product shown in the reference image must be prominently featured and clearly recognizable in the final image. Keep the product\'s exact shape, color, and design.');
+    parts.push('ABSOLUTE RULE: A reference product image is provided. Preserve the EXACT same viewing angle, color, shape, material, and design. Do NOT rotate. Do NOT show unseen surfaces. ONLY enhance with lighting, backdrop, shadows, reflections. Output = same product in a premium studio, NOT a redesigned product.');
   }
 
-  if (!visual.imagePrompt) {
-    parts.push('Scene for ' + brandName + ' brand campaign. Photorealistic, shot on Sony A7IV.');
+  if (visual.imagePrompt) {
+    parts.push(visual.imagePrompt);
+  } else {
+    parts.push('Premium studio product photography. Same viewing angle as reference. Dark gradient background. Three-point lighting. Subtle shadow and reflection. 1:1 square. High-end e-commerce hero shot.');
   }
 
+  parts.push('Sharp focus, dramatic lighting, 1:1 square. Product identical to reference image.');
+  return parts.join(' ');
+}
+
+// SOCIAL POST: Priority = aspirational Instagram-style product hero shot (3:4 portrait)
+// Uses FAL nano-banana-pro with reference image, same as lifestyle/product
+function buildSocialPrompt(visual, brandName) {
+  var parts = [];
+  parts.push('CRITICAL: Do NOT render any text, words, letters, logos, watermarks. Pure visual scene only.');
+
+  if (window._battleProductImages && window._battleProductImages.length > 0) {
+    parts.push('A reference product image is provided. The product MUST match the reference image exactly in color, shape, material, and design. Do NOT change the product color.');
+  }
+
+  if (visual.imagePrompt) {
+    parts.push(visual.imagePrompt);
+  } else {
+    parts.push('Premium social media post for ' + brandName + '. The exact product from the reference image is the hero element, naturally placed in an aspirational lifestyle scene. Product clearly visible and prominent. Beautiful composition for Instagram feed. Photorealistic, premium lighting.');
+  }
+
+  parts.push('3:4 portrait format. Shallow depth of field. The product is the central focus. Aspirational but commercially usable. No text, no logos.');
   return parts.join(' ');
 }
 
@@ -1072,59 +1264,83 @@ async function generateSingleConceptImage(visual, brandName, index, vType) {
   var wrapperEl = document.getElementById('conceptPreview' + index);
   if (!wrapperEl) return;
 
-  var prompt = buildConceptPrompt(visual, brandName, index);
-
-  var imageSizeMap = {
-    lifestyle: 'landscape_16_9',
-    product: 'square',
-    banner: 'landscape_16_9'
-  };
-
-  var body = {
-    prompt: prompt,
-    image_size: imageSizeMap[visual.type] || 'landscape_16_9'
-  };
-
-  // Pass one product image as reference for FAL image-to-image generation
-  if (window._battleProductImages && window._battleProductImages.length > 0) {
-    // Pick a product image — rotate through available images for each concept
-    var imgIdx = index % window._battleProductImages.length;
-    body.reference_image = window._battleProductImages[imgIdx];
-    console.log('[concept ' + index + '] Using reference image:', body.reference_image.substring(0, 80));
-  }
-
   try {
-    var res = await fetch('/api/generate-image', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+    // ═══ ALL 3 TYPES: FAL nano-banana-pro ═══
+    // Lifestyle: i2i, landscape 16:9
+    // Product: i2i, square 1:1
+    // Social: i2i, portrait 3:4
+    var prompt;
+    if (visual.type === 'product') {
+      prompt = buildProductPrompt(visual, brandName);
+    } else if (visual.type === 'social') {
+      prompt = buildSocialPrompt(visual, brandName);
+    } else {
+      prompt = buildLifestylePrompt(visual, brandName);
+    }
 
-    if (!res.ok) {
-      var errData = await res.json().catch(function() { return {}; });
-      console.error('[concept ' + index + '] API error:', errData.error || res.status);
+    var imageSizeMap = { lifestyle: 'landscape_16_9', product: 'square', social: 'portrait_4_3' };
+    var body = {
+      prompt: prompt,
+      image_size: imageSizeMap[visual.type] || 'landscape_16_9',
+      asset_type: visual.type
+    };
+
+    // Pass reference image for FAL i2i generation
+    if (window._battleProductImages && window._battleProductImages.length > 0) {
+      var imgIdx = index % window._battleProductImages.length;
+      body.reference_image = window._battleProductImages[imgIdx];
+      console.log('[concept ' + index + '] FAL i2i (' + visual.type + '):', body.reference_image.substring(0, 80));
+    }
+
+    // Try up to 2 attempts — auto-retry once on failure
+    var imageUrl = null;
+    for (var attempt = 1; attempt <= 2; attempt++) {
+      try {
+        var res = await fetch('/api/generate-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+          var errData = await res.json().catch(function() { return {}; });
+          console.warn('[concept ' + index + '] FAL attempt ' + attempt + ' failed:', errData.error || res.status);
+          if (attempt < 2) continue; // retry
+          break;
+        }
+
+        var data = await res.json();
+        if (!data.image_url) {
+          console.warn('[concept ' + index + '] No image_url in attempt ' + attempt);
+          if (attempt < 2) continue;
+          break;
+        }
+
+        // Verify the image actually loads
+        var verified = data.image_url.startsWith('data:') ? true : await verifyImageLoads(data.image_url);
+        if (!verified) {
+          console.warn('[concept ' + index + '] Image failed to load in attempt ' + attempt);
+          if (attempt < 2) continue;
+          break;
+        }
+
+        imageUrl = data.image_url;
+        break; // success
+      } catch (retryErr) {
+        console.warn('[concept ' + index + '] Attempt ' + attempt + ' exception:', retryErr.message);
+        if (attempt < 2) continue;
+      }
+    }
+
+    if (!imageUrl) {
+      console.error('[concept ' + index + '] All attempts failed');
       showFallbackConcept(wrapperEl, visual, vType);
       return;
     }
 
-    var data = await res.json();
-    if (!data.image_url) {
-      console.error('[concept ' + index + '] No image_url in response');
-      showFallbackConcept(wrapperEl, visual, vType);
-      return;
-    }
-
-    // Self-verify: preload image and confirm it actually renders
-    var verified = await verifyImageLoads(data.image_url);
-    if (!verified) {
-      console.error('[concept ' + index + '] Image URL failed to load:', data.image_url);
-      showFallbackConcept(wrapperEl, visual, vType);
-      return;
-    }
-
-    // Image verified — render it
+    // Render the generated image
     wrapperEl.innerHTML =
-      '<img class="ai-concept-image" src="' + data.image_url + '" ' +
+      '<img class="ai-concept-image" src="' + imageUrl + '" ' +
         'alt="' + escBattle(brandName) + ' ' + escBattle(vType.label) + '">' +
       '<div class="ai-concept-badge">AI GENERATED</div>';
     console.log('[concept ' + index + '] Image loaded successfully');
@@ -1133,6 +1349,164 @@ async function generateSingleConceptImage(visual, brandName, index, vType) {
     console.error('[concept ' + index + '] Exception:', err.message);
     showFallbackConcept(wrapperEl, visual, vType);
   }
+}
+
+// ═══ BANNER COMPOSITING V2 — Professional marketing layout ═══
+// Composites: AI-generated gradient background + actual product image + actual logo + text
+// This ensures the banner uses the REAL uploaded product (exact color) and REAL logo.
+function compositeBannerV2(bgUrl, logoDataUrl, brandName, headline, subtext) {
+  return new Promise(function(resolve, reject) {
+    var W = 1200, H = 480;
+    var canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    var ctx = canvas.getContext('2d');
+
+    // Collect all assets to load in parallel
+    var assets = {};
+    var toLoad = 1; // background is required
+    var loaded = 0;
+
+    var bgImg = new Image();
+    bgImg.crossOrigin = 'anonymous';
+    assets.bg = bgImg;
+
+    var prodDataUrls = window._productImageDataUrls || [];
+    if (prodDataUrls[0]) {
+      toLoad++;
+      assets.prod = new Image();
+    }
+    if (logoDataUrl) {
+      toLoad++;
+      assets.logo = new Image();
+    }
+
+    function onLoad() {
+      loaded++;
+      if (loaded >= toLoad) compose();
+    }
+
+    function compose() {
+      // ── 1. BACKGROUND: AI-generated gradient/bokeh ──
+      ctx.drawImage(assets.bg, 0, 0, W, H);
+
+      // ── 2. DARK GRADIENT OVERLAY: left side for text readability ──
+      var grad = ctx.createLinearGradient(0, 0, W, 0);
+      grad.addColorStop(0, 'rgba(10,10,10,0.92)');
+      grad.addColorStop(0.4, 'rgba(10,10,10,0.75)');
+      grad.addColorStop(0.6, 'rgba(10,10,10,0.3)');
+      grad.addColorStop(1, 'rgba(10,10,10,0.05)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      // ── 3. PRODUCT IMAGE: right side, large, with drop shadow ──
+      var prod = assets.prod;
+      if (prod && prod.naturalWidth > 0) {
+        var maxPH = H * 0.75;
+        var maxPW = W * 0.38;
+        var pScale = Math.min(maxPW / prod.naturalWidth, maxPH / prod.naturalHeight);
+        var pw = prod.naturalWidth * pScale;
+        var ph = prod.naturalHeight * pScale;
+        var px = W - pw - 50;
+        var py = (H - ph) / 2;
+
+        // Professional drop shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 40;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 15;
+        ctx.drawImage(prod, px, py, pw, ph);
+
+        // Reset shadow
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+      }
+
+      // ── 4. TEXT LAYOUT: left side ──
+      var tx = 56; // left margin
+      var ty = H * 0.25; // start at 25% from top
+
+      // Logo (if available) — top-left, small
+      var logo = assets.logo;
+      if (logo && logo.naturalWidth > 0) {
+        var logoMaxW = 100;
+        var logoMaxH = 36;
+        var lScale = Math.min(logoMaxW / logo.naturalWidth, logoMaxH / logo.naturalHeight);
+        var lw = logo.naturalWidth * lScale;
+        var lh = logo.naturalHeight * lScale;
+        ctx.drawImage(logo, tx, ty - 8, lw, lh);
+        ty += lh + 20; // push text below logo
+      }
+
+      // Brand name — large bold uppercase
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 44px Inter, system-ui, sans-serif';
+      ctx.fillText(brandName.toUpperCase(), tx, ty);
+      ty += 14;
+
+      // Campaign headline — medium weight
+      ctx.font = '400 20px Inter, system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      // Word-wrap headline if too long
+      var words = (headline || '').split(' ');
+      var line = '';
+      var lineH = 28;
+      for (var wi = 0; wi < words.length; wi++) {
+        var test = line + (line ? ' ' : '') + words[wi];
+        if (ctx.measureText(test).width > W * 0.4) {
+          ty += lineH;
+          ctx.fillText(line, tx, ty);
+          line = words[wi];
+        } else {
+          line = test;
+        }
+      }
+      if (line) { ty += lineH; ctx.fillText(line, tx, ty); }
+
+      // Subtext — lighter
+      if (subtext) {
+        ty += 24;
+        ctx.font = '300 14px Inter, system-ui, sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fillText(subtext, tx, ty);
+      }
+
+      // Divider line
+      ty += 20;
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(tx, ty);
+      ctx.lineTo(tx + 160, ty);
+      ctx.stroke();
+
+      // CTA
+      ty += 24;
+      ctx.font = '600 12px Inter, system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.letterSpacing = '0.08em';
+      ctx.fillText('SHOP NOW  \u2192', tx, ty);
+
+      resolve(canvas.toDataURL('image/jpeg', 0.92));
+    }
+
+    // Start loading assets
+    bgImg.onload = onLoad;
+    bgImg.onerror = function() { reject(new Error('Failed to load banner background')); };
+    bgImg.src = bgUrl;
+
+    if (assets.prod) {
+      assets.prod.onload = onLoad;
+      assets.prod.onerror = onLoad; // proceed without product if it fails
+      assets.prod.src = prodDataUrls[0];
+    }
+    if (assets.logo) {
+      assets.logo.onload = onLoad;
+      assets.logo.onerror = onLoad; // proceed without logo if it fails
+      assets.logo.src = logoDataUrl;
+    }
+  });
 }
 
 // Preload an image and verify it actually renders (not broken/blocked)
@@ -1154,17 +1528,13 @@ function verifyImageLoads(url) {
 }
 
 function showFallbackConcept(wrapperEl, visual, vType) {
-  // Fallback to gradient + label when PixelBin is unavailable
-  var grad = vType ? vType.fallbackGrad : 'linear-gradient(135deg,#09090b,#404040)';
   var label = vType ? vType.label : 'Visual';
-  var title = visual ? escBattle(visual.title).toUpperCase() : label.toUpperCase();
-
   wrapperEl.innerHTML =
-    '<div class="ai-concept-fallback" style="background:' + grad + '">' +
-      '<div class="ai-concept-fallback-icon">' + BATTLE_ICONS.star + '</div>' +
-      '<div class="ai-concept-fallback-text">' + title + '</div>' +
-    '</div>' +
-    '<div class="ai-concept-badge">AI GENERATED</div>';
+    '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;background:var(--muted);border-radius:8px;min-height:180px;text-align:center">' +
+      '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--muted-foreground)" stroke-width="1.5" stroke-linecap="round" style="margin-bottom:12px;opacity:0.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
+      '<div style="font-size:13px;color:var(--muted-foreground);margin-bottom:8px">' + escBattle(label) + ' generation failed</div>' +
+      '<button onclick="launchConceptsGeneration()" style="font-size:11px;padding:6px 16px;background:var(--primary);color:var(--primary-foreground);border:none;border-radius:6px;cursor:pointer;font-family:Inter,system-ui,sans-serif">Retry</button>' +
+    '</div>';
 }
 
 // ── OGILVY STRATEGY — Separate generation, triggered after email unlock ──
@@ -1371,7 +1741,12 @@ function renderStrategyTab(data, brandName, category) {
 }
 
 function renderBattleCards(data, brandName, category) {
-  renderCompetitorTab(data, brandName);
+  // In live mode, show loading state for competitor tab — wait for Apify real data
+  if (typeof USE_DUMMY_DATA === 'undefined' || !USE_DUMMY_DATA) {
+    renderCompetitorTabLoading(data, brandName);
+  } else {
+    renderCompetitorTab(data, brandName);
+  }
   renderMarketTab(data, brandName);
   renderConceptsPlaceholder(brandName);
   // AI Concepts and Strategy tabs are generated on-demand when user clicks Generate
@@ -1382,36 +1757,50 @@ function renderBattleCards(data, brandName, category) {
     hcpLabel.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Live Battle Card Preview \u00b7 ' + escBattle(brandName);
   }
 
-  // Update hero scores from main analysis data
+  // Update hero snapshot with real brand profile data
   var ad = window.lastAnalysisData;
-  if (ad) {
-    var scores = ad.scores || ad;
-    var scoreNums = document.querySelectorAll('.hcp-score-num');
-    if (scoreNums.length >= 3) {
-      scoreNums[0].textContent = scores.ai || 78;
-      scoreNums[1].textContent = ad.savings || '\u20b962L';
-      scoreNums[2].textContent = '+' + Math.round((100 - (scores.platform || 67)) * 0.8) + '%';
+  var heroContent = document.getElementById('heroSnapshotContent');
+  if (heroContent && ad) {
+    var snapHtml = '';
+    // Show key brand profile items
+    if (ad.brandProfile && Array.isArray(ad.brandProfile)) {
+      snapHtml += '<div style="display:flex;flex-direction:column;gap:12px;padding:4px 0">';
+      ad.brandProfile.slice(0, 4).forEach(function(item) {
+        snapHtml += '<div style="display:flex;gap:8px;align-items:flex-start">' +
+          '<span style="font-size:14px;flex-shrink:0">' + (item.icon || '•') + '</span>' +
+          '<div><div style="font-size:11px;color:var(--muted-foreground);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px">' + escBattle(item.label) + '</div>' +
+          '<div style="font-size:13px;color:var(--foreground);line-height:1.5">' + escBattle(item.value) + '</div></div>' +
+        '</div>';
+      });
+      snapHtml += '</div>';
     }
-    var alertListEl = document.querySelector('.hero-card-preview .alert-list');
-    if (alertListEl && ad.alerts && ad.alerts.length >= 3) {
-      alertListEl.innerHTML = ad.alerts.slice(0, 3).map(function(a) {
-        return '<div class="alert-item ' + a.type + '"><div class="alert-icon">' + a.icon + '</div><div class="alert-text">' + a.text + '</div></div>';
-      }).join('');
+    // Show savings if available
+    if (ad.savings) {
+      snapHtml += '<div style="margin-top:12px;padding:12px 16px;background:var(--muted);border-radius:8px;display:flex;justify-content:space-between;align-items:center">' +
+        '<span style="font-size:12px;color:var(--muted-foreground)">Est. Annual Savings</span>' +
+        '<span style="font-size:16px;font-weight:700;color:var(--foreground)">' + escBattle(ad.savings) + '</span>' +
+      '</div>';
     }
+    heroContent.innerHTML = snapHtml || '<div style="padding:16px 0;font-size:13px;color:var(--muted-foreground)">No analysis data available.</div>';
   }
 
   // Update playbook header
   var ptEl = document.getElementById('playbookTitle');
   if (ptEl) ptEl.textContent = brandName + ' \u00b7 March 2026';
 
-  document.querySelectorAll('.playbook-header span').forEach(function(span) {
-    if (span.style && span.style.fontWeight === '700' && span.style.color) {
-      span.textContent = brandName;
-    }
-    if (span.textContent && span.textContent.indexOf('Fashion & Apparel') !== -1) {
-      span.textContent = '\u00b7 ' + category + ' \u00b7 March 2026';
-    }
-  });
+  var playbookRoot = document.getElementById('playbook');
+  if (playbookRoot) {
+    playbookRoot.querySelectorAll('span').forEach(function(span) {
+      // Update brand name span
+      if (span.style && span.style.fontWeight === '700' && span.style.color) {
+        span.textContent = brandName;
+      }
+      // Update category span
+      if (span.textContent && span.textContent.indexOf('Fashion & Apparel') !== -1) {
+        span.textContent = '\u00b7 ' + category + ' \u00b7 March 2026';
+      }
+    });
+  }
 
   // ── Data Sources & Methodology Footer ──
   var battleSourcesEl = document.getElementById('battleSourcesSection');
@@ -1460,22 +1849,12 @@ async function enrichCompetitorTabFromApify(data, brandName, category) {
   if (typeof USE_DUMMY_DATA !== 'undefined' && USE_DUMMY_DATA) return;
   if (!data || !data.competitors || !data.competitors.length) return;
 
-  var compGrid = document.querySelector('#tab-competitor .comp-grid');
-  if (!compGrid) return;
-
-  // Show loading overlay on the tab button
+  // Tab button loading state
   var tabBtn = document.querySelector('.btab[onclick*="competitor"]');
   if (tabBtn) {
     tabBtn.dataset.origText = tabBtn.textContent;
     tabBtn.innerHTML = 'Competitor Plan <span style="font-size:10px;opacity:0.6;margin-left:4px">· Live…</span>';
   }
-
-  // Show loading banner at top of grid
-  var loadBanner = document.createElement('div');
-  loadBanner.id = 'apify-loading-banner';
-  loadBanner.style.cssText = 'grid-column:1/-1;padding:14px 20px;background:var(--muted);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:12px;color:var(--muted-foreground);display:flex;align-items:center;gap:10px';
-  loadBanner.innerHTML = '<span style="animation:spin 1s linear infinite;display:inline-block;font-size:16px">⟳</span> Fetching live Instagram data via Apify… this may take 1–2 minutes.';
-  compGrid.insertBefore(loadBanner, compGrid.firstChild);
 
   try {
     var competitorNames = data.competitors.map(function(c) { return c.name; });
@@ -1528,11 +1907,13 @@ async function enrichCompetitorTabFromApify(data, brandName, category) {
 
   } catch (err) {
     console.warn('[Apify] Competitor enrichment failed:', err.message);
-    // Remove loading banner on failure, leave Claude data intact
-    var banner = document.getElementById('apify-loading-banner');
-    if (banner) banner.remove();
-    if (tabBtn && tabBtn.dataset.origText) {
-      tabBtn.textContent = tabBtn.dataset.origText;
+    // Fall back to OpenAI-estimated competitor data
+    renderCompetitorTab(data, brandName);
+    if (tabBtn) {
+      tabBtn.innerHTML = 'Competitor Plan <span style="font-size:10px;color:var(--muted-foreground);margin-left:4px">· Estimated</span>';
+    }
+    if (typeof showToast === 'function') {
+      showToast('warning', 'Live data unavailable', 'Showing AI-estimated competitor data. Instagram scraping failed: ' + err.message, 5000);
     }
   }
 }

@@ -12,9 +12,9 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   // Use server env key first, fall back to user-provided key from header
-  const apiKey = process.env.ANTHROPIC_API_KEY || req.headers['x-user-api-key'];
+  const apiKey = process.env.OPENAI_API_KEY || req.headers['x-user-api-key'];
   if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured. Click the gear icon in the nav bar to add your Anthropic API key.' });
+    return res.status(500).json({ error: 'API key not configured. Add OPENAI_API_KEY in Vercel environment variables.' });
   }
 
   try {
@@ -42,34 +42,35 @@ module.exports = async function handler(req, res) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 55000); // 55s safety margin
 
-    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+    const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'gpt-4o',
         max_tokens: 4000,
-        system: system,
-        messages: [{ role: 'user', content: user }]
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: user }
+        ]
       }),
       signal: controller.signal
     });
 
     clearTimeout(timeout);
 
-    if (!anthropicRes.ok) {
-      const errBody = await anthropicRes.json().catch(() => ({}));
-      console.error('Anthropic API error:', anthropicRes.status, JSON.stringify(errBody));
-      return res.status(anthropicRes.status).json({
-        error: errBody.error?.message || `Anthropic API error: ${anthropicRes.status}`
+    if (!openaiRes.ok) {
+      const errBody = await openaiRes.json().catch(() => ({}));
+      console.error('OpenAI API error:', openaiRes.status, JSON.stringify(errBody));
+      return res.status(openaiRes.status).json({
+        error: errBody.error?.message || `OpenAI API error: ${openaiRes.status}`
       });
     }
 
-    const data = await anthropicRes.json();
-    const rawText = data.content.map(c => c.text || '').join('');
+    const data = await openaiRes.json();
+    const rawText = data.choices[0]?.message?.content || '';
 
     // Try to parse as JSON (strip markdown fences if present)
     let parsed;
@@ -85,7 +86,7 @@ module.exports = async function handler(req, res) {
       success: true,
       data: parsed,
       model: data.model,
-      usage: data.usage
+      usage: { input_tokens: data.usage?.prompt_tokens || 0, output_tokens: data.usage?.completion_tokens || 0 }
     });
 
   } catch (err) {
@@ -98,54 +99,70 @@ module.exports = async function handler(req, res) {
 }
 
 function buildSystemPrompt() {
-  return `You are an Indian D2C brand strategist. Produce a creative health check as valid JSON only.
+  return `You are an expert Indian D2C brand creative strategist and media analyst. You analyse brands and produce a structured creative health check report. You have deep knowledge of India's D2C ecosystem, ad market benchmarks, platform dynamics (Instagram, YouTube, CTV, Q-Commerce), and the competitive landscape across fashion, beauty, FMCG, and consumer electronics.
 
-CRITICAL: You MUST return the COMPLETE JSON with ALL fields filled. Keep descriptions SHORT (under 15 words each) to fit within token limits. No markdown, no backticks. Every field is required.
+When given a brand name, category, market segment, and website URLs, you produce a realistic, data-grounded audit. Use your knowledge of the Indian D2C market to generate realistic scores, gaps, and opportunities. Be specific — name real platforms, real festivals, real content formats. Avoid generic advice.
+
+IMPORTANT — For every score and finding, you MUST provide:
+1. A confidence level ("high" if you have direct knowledge of this brand, "medium" if inferring from category/segment, "low" if based on general assumptions)
+2. A methodology note explaining HOW you arrived at that specific number/finding
+3. Source references — cite specific benchmarks, reports, or data points you used
+
+CRITICAL: Return COMPLETE valid JSON with ALL fields filled. No markdown, no backticks. Every field is required. Keep methodology notes concise (1-2 sentences each). Provide at least 3 items in breakdown, 3 alerts, 4+ regions, 3 priorities.
 
 JSON structure:
 {
-  "scores": {
-    "velocity": <0-100>,
-    "stagnation": <"LOW"|"MEDIUM"|"HIGH">,
-    "regional": <0-100>,
-    "ai": <0-100>,
-    "platform": <0-100>
-  },
-  "scoreMethodology": {
-    "velocity": {"confidence": "<high|medium|low>", "method": "<1-2 sentences: how you calculated this score>", "benchmark": "<what you compared against>"},
-    "stagnation": {"confidence": "<high|medium|low>", "method": "<1-2 sentences>", "benchmark": "<comparison>"},
-    "regional": {"confidence": "<high|medium|low>", "method": "<1-2 sentences>", "benchmark": "<comparison>"},
-    "ai": {"confidence": "<high|medium|low>", "method": "<1-2 sentences>", "benchmark": "<comparison>"},
-    "platform": {"confidence": "<high|medium|low>", "method": "<1-2 sentences>", "benchmark": "<comparison>"}
-  },
+  "brandProfile": [
+    {"label": "What They Sell", "value": "<specific products/services from the website — be exact, e.g. 'Premium hardside luggage, cabin trolleys, laptop backpacks, travel accessories'>", "icon": "🛍️"},
+    {"label": "Price Range", "value": "<actual price range found on site, e.g. '₹1,499 – ₹12,999'>", "icon": "💰"},
+    {"label": "Target Audience", "value": "<inferred from site positioning, e.g. '25-40 year old urban professionals, frequent travelers'>", "icon": "👥"},
+    {"label": "Brand Positioning", "value": "<how they position themselves, e.g. 'Premium quality at mid-market prices, durability-focused'>", "icon": "🎯"},
+    {"label": "Key Differentiator", "value": "<what makes them unique, e.g. 'Anti-theft features, 10-year warranty, lightweight polycarbonate'>", "icon": "⭐"},
+    {"label": "Content Maturity", "value": "<honest assessment: 'Early stage — minimal social presence' or 'Active — regular posts, multiple platforms' or 'Advanced — video content, influencer collabs'>", "icon": "📊"}
+  ],
   "savings": "<string like '₹45–72 Lakhs'>",
   "savingsMethodology": "<2-3 sentences explaining assumptions: team size, content volume, cost per asset, AI tool pricing used>",
   "overallGrade": "<A+|A|B+|B|C+|C|D>",
   "topInsight": "<one powerful sentence>",
   "breakdown": [
-    {"item": "<string>", "trad": "<string>", "ai": "<string>"}
+    {"item": "Product Photoshoots", "trad": "₹15,000/shoot", "ai": "₹2,000/shoot"},
+    {"item": "Social Media Creatives", "trad": "₹3,000/post", "ai": "₹500/post"},
+    {"item": "Campaign Banners", "trad": "₹8,000/banner", "ai": "₹1,500/banner"},
+    {"item": "Video Editing (Reels)", "trad": "₹5,000/reel", "ai": "₹1,200/reel"},
+    {"item": "Regional Adaptations", "trad": "₹4,000/variant", "ai": "₹800/variant"},
+    {"item": "Lifestyle Lookbooks", "trad": "₹25,000/set", "ai": "₹4,000/set"}
   ],
   "alerts": [
-    {"type": "<red|yellow|green>", "icon": "<html>", "text": "<html string>"}
+    {"type": "red", "icon": "🔴", "text": "<bold label>: <specific finding about this brand>"},
+    {"type": "yellow", "icon": "🟡", "text": "<bold label>: <specific finding about this brand>"},
+    {"type": "green", "icon": "🟢", "text": "<bold label>: <specific finding about this brand>"}
   ],
   "regions": [
-    {"name": "<string>", "score": <0-100>}
+    {"name": "North India", "score": <0-100>},
+    {"name": "South India", "score": <0-100>},
+    {"name": "West India", "score": <0-100>},
+    {"name": "East India", "score": <0-100>},
+    {"name": "Tier-2 Cities", "score": <0-100>},
+    {"name": "Tier-3 Cities", "score": <0-100>}
   ],
   "priorities": [
-    {"rank": <1-3>, "action": "<string>", "impact": "<string>", "timeline": "<string>"}
+    {"rank": 1, "action": "Launch AI-powered product photoshoot pipeline — replace manual studio shoots with AI-generated lifestyle and catalog imagery", "impact": "60% reduction in per-asset cost, 5× faster turnaround", "timeline": "IMMEDIATE · 7 DAYS"},
+    {"rank": 2, "action": "Build regional content engine — create Tamil, Telugu, Bengali, Hindi social content from one master creative using AI translation and adaptation", "impact": "4× regional reach, 40% higher engagement in Tier-2/3 markets", "timeline": "SHORT TERM · 30 DAYS"},
+    {"rank": 3, "action": "Implement AI-driven A/B testing system — auto-generate 10+ creative variants per campaign and test across platforms", "impact": "2× conversion rate improvement, data-driven creative decisions", "timeline": "MEDIUM TERM · 90 DAYS"}
   ],
   "competitorBenchmark": {
-    "summary": "<string>",
-    "postsPerMonth": <integer>,
-    "categoryLeaderPosts": <integer>,
-    "aiAdoptionPct": <integer>,
-    "categoryAvgAiPct": <integer>
+    "summary": "<2-3 sentences comparing this brand's content output, engagement, and AI adoption vs the top 3 competitors in its category. Name specific competitor brands.>",
+    "postsPerMonth": <integer — this brand's estimated monthly post count>,
+    "categoryLeaderPosts": <integer — the top competitor's monthly post count>,
+    "aiAdoptionPct": <integer — this brand's estimated AI tool usage percentage>,
+    "categoryAvgAiPct": <integer — average AI adoption in this category>
   },
   "dataSources": [
-    "<string — each source/report/benchmark cited, e.g. 'RedSeer India D2C Report 2024', 'Meta Business Suite category benchmarks', 'Bain India D2C Landscape 2024'>",
-    "<string>",
-    "<string>",
-    "<string>"
+    "Instagram Analytics — follower growth, engagement rate, posting frequency benchmarks",
+    "RedSeer India D2C Report 2024 — category growth rates, market sizing",
+    "Bain & Company India D2C Landscape — competitive benchmarks, unit economics",
+    "Meta Business Suite — platform-specific engagement norms by category",
+    "SimilarWeb / Google Trends — web traffic patterns, search interest data"
   ],
   "analysisDisclaimer": "<1-2 sentences: honest statement about data limitations — e.g. 'Scores are estimated from public signals and category benchmarks. For verified metrics, connect your analytics accounts.'>"
 }`;
@@ -158,12 +175,13 @@ Market Segment: ${segment || 'Premium Mid-Market'}
 Website/Social URLs: ${urls && urls.length ? urls.join(', ') : 'not provided'}`;
 
   if (siteContent) {
-    prompt += `\n\nSite data:\n${siteContent}\n`;
+    prompt += `\n\n--- BRAND WEBSITE DATA (scraped from actual site) ---\n${siteContent}\n--- END WEBSITE DATA ---\n`;
+    prompt += `\nUse the website data above to understand what this brand actually sells, their positioning, categories, and pricing. Ground your analysis in this real data.`;
   } else {
-    prompt += `\n\nNo site data available — mark confidence "low" where needed.`;
+    prompt += `\n\nNote: Website could not be fetched. For brand-specific metrics you cannot verify, mark confidence as "low" and note the limitation.`;
   }
 
-  prompt += `\n\nProduce a realistic creative health check. Be India-specific. Don't inflate scores.`;
+  prompt += `\n\nProduce a realistic, specific creative health check for this Indian D2C brand. Use your knowledge of this brand (if known) or infer from the category and segment. All scores, savings, and findings must be realistic for an Indian D2C brand at this stage. Reference specific Indian platforms, festivals, and content formats. Be critical where appropriate — don't inflate scores. If you don't know specific data, say so in your methodology notes.`;
 
   return prompt;
 }
@@ -204,7 +222,7 @@ async function fetchBrandSite(urls) {
         .replace(/<[^>]+>/g, ' ')
         .replace(/\s+/g, ' ')
         .trim()
-        .substring(0, 1000);
+        .substring(0, 2000);
 
       // Get prices
       const prices = (html.match(/₹[\s]*[\d,]+/g) || []).slice(0, 10);

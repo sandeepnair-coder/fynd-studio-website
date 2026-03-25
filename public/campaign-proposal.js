@@ -221,7 +221,7 @@ async function generateProposalData(brandName, category, segment) {
     .replace(/{BRAND_NAME}/g, brandName)
     .replace(/{CATEGORY}/g, category || 'Not specified')
     .replace(/{SEGMENT}/g, segment || 'Not specified')
-    .replace(/{SITE_CONTENT}/g, siteContent.substring(0, 1500));
+    .replace(/{SITE_CONTENT}/g, siteContent.substring(0, 3000));
 
   window._proposalLoaderStep(3, 50);
 

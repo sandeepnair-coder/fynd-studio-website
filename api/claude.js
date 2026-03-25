@@ -1,6 +1,6 @@
 // api/claude.js
-// Vercel Serverless Function — generic Claude API proxy
-// Forwards requests to Anthropic with server-side API key
+// Vercel Serverless Function — generic LLM proxy (OpenAI GPT-4o)
+// Accepts Anthropic-style request format, translates to OpenAI format
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,49 +10,67 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Use server env key first, fall back to user-provided key from header
-  const apiKey = process.env.ANTHROPIC_API_KEY || req.headers['x-user-api-key'];
+  const apiKey = process.env.OPENAI_API_KEY || req.headers['x-user-api-key'];
   if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured. Click the gear icon in the nav bar to add your Anthropic API key.' });
+    return res.status(500).json({ error: 'API key not configured. Add OPENAI_API_KEY in Vercel environment variables.' });
   }
 
   try {
     const { model, max_tokens, system, messages } = req.body;
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 58000); // 58s (within 60s Vercel limit)
+    // Build OpenAI messages array — prepend system message
+    const openaiMessages = [];
+    if (system) {
+      openaiMessages.push({ role: 'system', content: system });
+    }
+    if (messages && messages.length) {
+      openaiMessages.push(...messages);
+    }
 
-    const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 58000);
+
+    const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: model || 'claude-sonnet-4-20250514',
+        model: 'gpt-4o',
         max_tokens: max_tokens || 2000,
-        system: system || '',
-        messages: messages || []
+        messages: openaiMessages
       }),
       signal: controller.signal
     });
 
     clearTimeout(timeout);
 
-    if (!anthropicRes.ok) {
-      const errBody = await anthropicRes.json().catch(() => ({}));
-      console.error('Claude proxy error:', anthropicRes.status, JSON.stringify(errBody));
-      return res.status(anthropicRes.status).json(errBody);
+    if (!openaiRes.ok) {
+      const errBody = await openaiRes.json().catch(() => ({}));
+      console.error('OpenAI proxy error:', openaiRes.status, JSON.stringify(errBody));
+      return res.status(openaiRes.status).json(errBody);
     }
 
-    const data = await anthropicRes.json();
-    return res.status(200).json(data);
+    const data = await openaiRes.json();
+
+    // Translate OpenAI response to Anthropic-compatible format
+    // so the client-side code doesn't need changes
+    const anthropicFormat = {
+      content: [{ type: 'text', text: data.choices[0]?.message?.content || '' }],
+      model: data.model,
+      usage: {
+        input_tokens: data.usage?.prompt_tokens || 0,
+        output_tokens: data.usage?.completion_tokens || 0
+      }
+    };
+
+    return res.status(200).json(anthropicFormat);
 
   } catch (err) {
-    console.error('Claude proxy error:', err.name, err.message);
+    console.error('OpenAI proxy error:', err.name, err.message);
     if (err.name === 'AbortError') {
-      return res.status(504).json({ error: 'Request to Anthropic API timed out. Please try again.' });
+      return res.status(504).json({ error: 'Request to OpenAI timed out. Please try again.' });
     }
     return res.status(500).json({ error: err.message });
   }

@@ -896,103 +896,9 @@
       <div><span class="tb-label">AI-Generated Analysis</span> <span id="transparencyText">Scores estimated from public content analysis and category benchmarks. For precise metrics including conversion rates and regional performance, brand analytics integration required.</span> <span style="color:var(--primary);cursor:pointer;font-weight:500" onclick="document.getElementById('sourcesSection').scrollIntoView({behavior:'smooth'})">View sources ↓</span></div>
     </div>
 
-    <!-- ═══ SCORE CARDS GRID (shadcn dashboard pattern) ═══ -->
-    <div class="dash-scores-grid">
-      <!-- Score: Creative Velocity -->
-      <div class="dash-card">
-        <div class="dash-card-header row">
-          <div class="dash-card-header-col">
-            <div class="dash-card-desc">Creative Velocity Score</div>
-            <div class="dash-card-title tabnum" id="score-velocity">—</div>
-          </div>
-          <div class="dash-card-action" id="conf-velocity"></div>
-        </div>
-        <div class="dash-card-content">
-          <div class="score-bar"><div class="score-fill danger" id="bar-velocity" style="width:0%"></div></div>
-        </div>
-        <div class="dash-card-footer">
-          <div class="dash-footer-text" id="delta-velocity">—</div>
-          <div class="dash-footer-sub">How fast you publish new creative content compared to category leaders.</div>
-          <div class="methodology-toggle" onclick="toggleMethod('meth-velocity')">&#9662; How was this calculated?</div>
-          <div class="methodology-panel" id="meth-velocity"></div>
-        </div>
-      </div>
-      <!-- Score: Visual Stagnation -->
-      <div class="dash-card">
-        <div class="dash-card-header row">
-          <div class="dash-card-header-col">
-            <div class="dash-card-desc">Visual Stagnation Risk</div>
-            <div class="dash-card-title tabnum" id="score-stagnation">—</div>
-          </div>
-          <div class="dash-card-action" id="conf-stagnation"></div>
-        </div>
-        <div class="dash-card-content">
-          <div class="score-bar"><div class="score-fill warn" id="bar-stagnation" style="width:0%"></div></div>
-        </div>
-        <div class="dash-card-footer">
-          <div class="dash-footer-text" id="delta-stagnation">—</div>
-          <div class="dash-footer-sub">Risk of creative fatigue — are your visuals repetitive? Higher = higher risk.</div>
-          <div class="methodology-toggle" onclick="toggleMethod('meth-stagnation')">&#9662; How was this calculated?</div>
-          <div class="methodology-panel" id="meth-stagnation"></div>
-        </div>
-      </div>
-      <!-- Score: Regional Relevancy -->
-      <div class="dash-card">
-        <div class="dash-card-header row">
-          <div class="dash-card-header-col">
-            <div class="dash-card-desc">Regional Relevancy Index</div>
-            <div class="dash-card-title tabnum" id="score-regional">—</div>
-          </div>
-          <div class="dash-card-action" id="conf-regional"></div>
-        </div>
-        <div class="dash-card-content">
-          <div class="score-bar"><div class="score-fill warn" id="bar-regional" style="width:0%"></div></div>
-        </div>
-        <div class="dash-card-footer">
-          <div class="dash-footer-text" id="delta-regional">—</div>
-          <div class="dash-footer-sub">How well your brand covers India's regional markets — Tier 2/3 cities, vernacular content.</div>
-          <div class="methodology-toggle" onclick="toggleMethod('meth-regional')">&#9662; How was this calculated?</div>
-          <div class="methodology-panel" id="meth-regional"></div>
-        </div>
-      </div>
-      <!-- Score: AI Opportunity -->
-      <div class="dash-card">
-        <div class="dash-card-header row">
-          <div class="dash-card-header-col">
-            <div class="dash-card-desc">AI Opportunity Score</div>
-            <div class="dash-card-title tabnum" id="score-ai">—</div>
-          </div>
-          <div class="dash-card-action" id="conf-ai"></div>
-        </div>
-        <div class="dash-card-content">
-          <div class="score-bar"><div class="score-fill danger" id="bar-ai" style="width:0%"></div></div>
-        </div>
-        <div class="dash-card-footer">
-          <div class="dash-footer-text" id="delta-ai">—</div>
-          <div class="dash-footer-sub">How much your brand can benefit from AI-powered creative tools.</div>
-          <div class="methodology-toggle" onclick="toggleMethod('meth-ai')">&#9662; How was this calculated?</div>
-          <div class="methodology-panel" id="meth-ai"></div>
-        </div>
-      </div>
-      <!-- Score: Platform Compliance -->
-      <div class="dash-card">
-        <div class="dash-card-header row">
-          <div class="dash-card-header-col">
-            <div class="dash-card-desc">Platform Compliance Score</div>
-            <div class="dash-card-title tabnum" id="score-platform">—</div>
-          </div>
-          <div class="dash-card-action" id="conf-platform"></div>
-        </div>
-        <div class="dash-card-content">
-          <div class="score-bar"><div class="score-fill good" id="bar-platform" style="width:0%"></div></div>
-        </div>
-        <div class="dash-card-footer">
-          <div class="dash-footer-text" id="delta-platform">—</div>
-          <div class="dash-footer-sub">How well your content fits platform best practices — aspect ratios, formats, posting frequency.</div>
-          <div class="methodology-toggle" onclick="toggleMethod('meth-platform')">&#9662; How was this calculated?</div>
-          <div class="methodology-panel" id="meth-platform"></div>
-        </div>
-      </div>
+    <!-- ═══ BRAND PROFILE — real insights from website scrape ═══ -->
+    <div id="brandProfileGrid" class="dash-scores-grid" style="grid-template-columns: repeat(3, 1fr)">
+      <!-- Populated by JS from AI analysis -->
     </div>
 
     <!-- ═══ SAVINGS + ALERTS (2-column card layout) ═══ -->
@@ -1123,30 +1029,9 @@
   <div class="battle-hero">
     <div class="battle-hero-left">
       <div class="section-label">Brand Battle Cards · Page 02</div>
-      <h1 class="section-title">Your AI-powered<br>Strategic Playbook.</h1>
+      <h1 class="section-title">Your AI-powered Strategic Playbook.</h1>
       <p>A data-rich tactical report mapping untapped markets, AI campaign concepts, competitor breakdowns, granular ROI projections — and a full Ogilvy-style ad campaign strategy generated live by AI.</p>
-      <button class="btn-ghost" style="align-self:flex-start" onclick="document.getElementById('playbook').scrollIntoView({behavior:'smooth'})">View Playbook ↓</button>
-    </div>
-    <div class="dash-card" style="margin-bottom:0">
-      <div class="dash-card-header row-center">
-        <div class="dash-card-header-col">
-          <div class="dash-card-desc" style="display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Live Battle Card Preview</div>
-          <div class="dash-card-title" style="font-size:15px;text-transform:none;letter-spacing:-0.01em">Creative Health Snapshot</div>
-        </div>
-        <div class="dash-card-action"><span class="dash-badge good">Live</span></div>
-      </div>
-      <div class="dash-card-content">
-        <div class="hcp-score-row">
-          <div class="hcp-score"><div class="hcp-score-num">78</div><div class="hcp-score-lbl">AI Opportunity</div></div>
-          <div class="hcp-score"><div class="hcp-score-num">₹62L</div><div class="hcp-score-lbl">Est. Savings/Yr</div></div>
-          <div class="hcp-score"><div class="hcp-score-num">+33%</div><div class="hcp-score-lbl">CTR Lift Potential</div></div>
-        </div>
-      </div>
-      <div class="dash-card-footer" style="gap:10px">
-        <div class="alert-item red"><div class="alert-icon"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--destructive);flex-shrink:0"></span></div><div class="alert-text"><strong>Content Velocity:</strong> Posting 4× less than category leaders. Algorithm visibility dropping.</div></div>
-        <div class="alert-item yellow"><div class="alert-icon"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></span></div><div class="alert-text"><strong>Festival Gap:</strong> Missing Onam, Pongal & Eid campaigns for South & West India.</div></div>
-        <div class="alert-item green"><div class="alert-icon"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0"></span></div><div class="alert-text"><strong>Ogilvy Strategy Ready:</strong> AI can generate full 3-act campaign strategy in seconds.</div></div>
-      </div>
+      <button class="btn-primary" onclick="document.getElementById('playbook').scrollIntoView({behavior:'smooth'})">View Playbook ↓</button>
     </div>
   </div>
 
@@ -1163,7 +1048,7 @@
             <span style="font-size:13px;font-weight:600;color:var(--foreground);font-family:'Inter',sans-serif">Bewakoof</span>
             <span style="font-size:11px;color:var(--muted-foreground);font-family:'Inter',sans-serif">· Fashion &amp; Apparel · March 2026</span>
           </div>
-          <button class="btn-ghost btn-sm" onclick="openModal('pdfModal')">Download PDF</button>
+          <button class="btn-primary" onclick="openModal('pdfModal')">Download PDF</button>
         </div>
       </div>
     </div>
@@ -1354,7 +1239,7 @@
             <div style="font-size:14px;color:var(--muted-foreground);max-width:480px;line-height:1.7">Get the complete Ogilvy-style campaign strategy — slogan, three-act formula, campaign themes, story plots, and pitfall warnings — generated by AI for your brand.</div>
             <div style="display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap;justify-content:center">
               <input type="email" id="strategyEmail" placeholder="Enter your work email" style="min-width:280px;padding:12px 20px;font-size:14px;border-radius:6px;background:var(--background);border:1px solid var(--border);color:var(--foreground);font-family:'Inter',sans-serif;outline:none">
-              <button class="btn-ghost" onclick="unlockStrategy()">Unlock Strategy →</button>
+              <button class="btn-primary" onclick="unlockStrategy()">Unlock Strategy →</button>
             </div>
             <div style="font-size:11px;color:var(--muted-foreground)">Free. No credit card. Instant access.</div>
           </div>

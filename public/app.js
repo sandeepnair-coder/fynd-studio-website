@@ -58,9 +58,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 var DUMMY_ANALYSIS_DATA = {
-  scores: { velocity: 34, stagnation: 'HIGH', regional: 62, ai: 18, platform: 41 },
+  brandProfile: [
+    { label: 'What They Sell', value: 'Graphic t-shirts, oversized tees, joggers, hoodies, casual dresses — youth streetwear at value prices', icon: '🛍️' },
+    { label: 'Price Range', value: '₹299 – ₹1,499', icon: '💰' },
+    { label: 'Target Audience', value: '18-28 year olds, metro + Tier-2 cities, meme-literate Gen-Z', icon: '👥' },
+    { label: 'Brand Positioning', value: 'India\'s boldest youth fashion brand — irreverent, pop-culture driven, value-for-money', icon: '🎯' },
+    { label: 'Key Differentiator', value: 'Genuine cultural fluency — speaks internet-native language like no other Indian D2C brand', icon: '⭐' },
+    { label: 'Content Maturity', value: 'Active — high-volume social presence, meme-first strategy, but creatively repetitive', icon: '📊' }
+  ],
   overallGrade: 'C+',
-  topInsight: 'Creative output is 4× below category leaders — high stagnation risk with untapped regional and AI potential.',
+  topInsight: 'Strong brand recall with Gen-Z but creative output is repetitive — same meme templates, zero lifestyle content, missing regional audiences.',
   savings: '₹62L',
   breakdown: [
     { item: 'Campaign Shoots', trad: '₹18L', ai: '₹3.5L' },
@@ -69,13 +76,6 @@ var DUMMY_ANALYSIS_DATA = {
     { item: 'Video Content', trad: '₹15L', ai: '₹4L' }
   ],
   savingsMethodology: 'Based on Indian D2C category averages for brands with ₹50-200Cr annual revenue. Traditional costs from agency rate cards; AI costs from Fynd Studio production benchmarks.',
-  scoreMethodology: {
-    velocity:   { confidence: 'HIGH',   method: 'Instagram post frequency analysis vs category avg (45 posts/mo)', benchmark: 'Top 10 D2C fashion brands in India' },
-    stagnation: { confidence: 'MEDIUM', method: 'Creative format diversity + refresh rate over 90 days',           benchmark: 'Industry standard: 30% new formats/quarter' },
-    regional:   { confidence: 'MEDIUM', method: 'Regional language content ratio + geo-targeted campaigns',        benchmark: 'Category leaders: 40%+ regional content' },
-    ai:         { confidence: 'HIGH',   method: 'AI tool adoption assessment across creative workflow',            benchmark: 'Industry average: 35% AI adoption' },
-    platform:   { confidence: 'MEDIUM', method: 'Platform-specific content optimization score',                    benchmark: 'Best-in-class: 80%+ platform optimization' }
-  },
   alerts: [
     { type: 'red',    icon: '●', text: '<strong>Content Velocity:</strong> Posting 4× less than category leaders. Algorithm visibility dropping.' },
     { type: 'yellow', icon: '●', text: '<strong>Festival Gap:</strong> Missing Onam, Pongal & Eid campaigns for South & West India.' },
@@ -166,14 +166,19 @@ function personalizeBattleCards() {
   if(el=document.getElementById('playbookTitle')) el.textContent = bn + ' · March 2026';
   
   // Update "Viewing report for" label
-  document.querySelectorAll('.playbook-header span').forEach(function(s) {
-    if (s.textContent.includes('Bewakoof') && !s.textContent.includes('Fashion')) {
-      s.textContent = bn;
-    }
-    if (s.textContent.includes('Fashion & Apparel')) {
-      s.textContent = '· ' + cat + ' · March 2026';
-    }
-  });
+  var playbookRoot = document.getElementById('playbook');
+  if (playbookRoot) {
+    playbookRoot.querySelectorAll('span').forEach(function(s) {
+      // Update brand name span (e.g. "Bewakoof")
+      if (s.textContent && s.textContent.includes('Bewakoof') && !s.textContent.includes('Fashion')) {
+        s.textContent = bn;
+      }
+      // Update category span (e.g. "· Fashion & Apparel · March 2026")
+      if (s.textContent && s.textContent.indexOf('Fashion & Apparel') !== -1) {
+        s.textContent = '· ' + cat + ' · March 2026';
+      }
+    });
+  }
 
   // Update battle hero preview
   var hcpLabel = document.querySelector('.hcp-label');
@@ -377,8 +382,9 @@ function getApiHeaders() {
 }
 
 // ── CACHE HELPERS — avoid repeat API calls for same brand ──
+var CACHE_VERSION = 'v2'; // bump to invalidate old cached results
 function getCacheKey(prefix, brandName) {
-  return 'fynd_' + prefix + '_' + brandName.toLowerCase().replace(/\s+/g, '_');
+  return 'fynd_' + CACHE_VERSION + '_' + prefix + '_' + brandName.toLowerCase().replace(/\s+/g, '_');
 }
 function getCache(prefix, brandName, maxAgeMs) {
   try {
@@ -467,6 +473,13 @@ async function runAnalysis() {
   // Save brand context for Battle Cards personalization
   saveBrandContext(brandName, category, segment);
 
+  // Persist URLs for later Battle Cards generation.
+  // The Battle Cards page may not render the `.brand-url-input` elements anymore,
+  // so Battle Cards must be able to reuse the URLs from this analysis step.
+  try {
+    sessionStorage.setItem('fyndBrandUrls', JSON.stringify(urls));
+  } catch (e) {}
+
   // ── UI: Loading state ──
   const btn = document.getElementById('analyzeBtn');
   const btnText = document.getElementById('btnText');
@@ -514,8 +527,8 @@ async function runAnalysis() {
     if (btnSpinner) btnSpinner.style.display = 'none';
 
     let errorMsg = 'Could not fetch data: ' + err.message + '.';
-    if (err.message.includes('API key not configured') || err.message.includes('ANTHROPIC_API_KEY')) {
-      errorMsg = 'API key not configured. Check that ANTHROPIC_API_KEY is set in .env.local and restart vercel dev.';
+    if (err.message.includes('API key not configured') || err.message.includes('OPENAI_API_KEY')) {
+      errorMsg = 'API key not configured. Check that OPENAI_API_KEY is set in .env.local and restart the server.';
     } else if (err.message.includes('401') || err.message.includes('invalid') || err.message.includes('authentication')) {
       errorMsg = 'Invalid API key. Please check your Anthropic API key at console.anthropic.com and update it in Vercel env vars.';
     } else if (err.message.includes('429') || err.message.includes('rate') || err.message.includes('credit') || err.message.includes('billing')) {
@@ -563,10 +576,8 @@ function showAnalysisError(brandName, errorMsg) {
   document.getElementById('transparencyBar').style.display = 'none';
   document.getElementById('sourcesSection').style.display = 'none';
   document.getElementById('savingsMethodologyWrap').style.display = 'none';
-  ['velocity','stagnation','regional','ai','platform'].forEach(function(k) {
-    var c = document.getElementById('conf-'+k); if(c) c.innerHTML = '';
-    var m = document.getElementById('meth-'+k); if(m) { m.innerHTML = ''; m.classList.remove('open'); }
-  });
+  var profileGrid = document.getElementById('brandProfileGrid');
+  if (profileGrid) profileGrid.innerHTML = '';
   document.getElementById('alertList').innerHTML =
     '<div class="alert-item red" style="justify-content:center;text-align:center;padding:32px">' +
       '<div style="font-size:14px;color:var(--muted-foreground);line-height:1.7">' +
@@ -581,15 +592,9 @@ function showAnalysisError(brandName, errorMsg) {
   var benchEl = document.getElementById('competitorBenchmark');
   if (benchEl) benchEl.innerHTML = '';
 
-  // Reset scores to zero
-  ['velocity','stagnation','regional','ai','platform'].forEach(function(id) {
-    var ve = document.getElementById('score-' + id);
-    var be = document.getElementById('bar-' + id);
-    var de = document.getElementById('delta-' + id);
-    if (ve) { ve.textContent = '—'; ve.className = 'dash-card-title tabnum'; }
-    if (be) { be.style.width = '0%'; be.className = 'score-fill'; }
-    if (de) de.textContent = 'No data available';
-  });
+  // Reset brand profile on error
+  var profileGridErr = document.getElementById('brandProfileGrid');
+  if (profileGridErr) profileGridErr.innerHTML = '';
 
   // Reset battle card data so user can't navigate to stale cards
   battleCardData = null;
@@ -619,51 +624,26 @@ function renderResults(brandName, category, segment, data) {
   document.getElementById('resultBrandName').textContent = brandName;
   document.getElementById('resultBrandMeta').textContent = [category, segment, 'Analysed: ' + new Date().toLocaleDateString('en-IN',{month:'long',year:'numeric'})].filter(Boolean).join(' · ');
 
-  // Scores — handle both old flat format and new nested format
-  const sc = data.scores || data;
-  // Defensive: parse to number, default to 0 if NaN/undefined
+  // Defensive number parser (used by regions etc.)
   function safeNum(v, fallback) { var n = parseInt(v, 10); return isNaN(n) ? (fallback || 0) : n; }
-  var velVal = safeNum(sc.velocity, 35);
-  var regVal = safeNum(sc.regional, 50);
-  var aiVal  = safeNum(sc.ai, 20);
-  var platVal = safeNum(sc.platform, 40);
-  const stagNum = (sc.stagnation === 'HIGH' || sc.stagnation === 82) ? 82
-                : (sc.stagnation === 'MEDIUM' || sc.stagnation === 55) ? 55 : 28;
 
-  [
-    { id:'velocity',   val: velVal,         color: velVal   < 50 ? 'danger' : 'warn',  delta: `↓ ${100-velVal}% below category leader` },
-    { id:'stagnation', val: stagNum,        color: 'warn',                               delta: `${sc.stagnation || 'MEDIUM'} RISK — Creative fatigue detected` },
-    { id:'regional',   val: regVal,         color: regVal   < 50 ? 'warn'   : 'good',  delta: `↑ Opportunity in South & East India` },
-    { id:'ai',         val: aiVal,          color: 'danger',                             delta: `High AI adoption potential identified` },
-    { id:'platform',   val: platVal,        color: platVal  < 40 ? 'danger' : 'good',  delta: `+${100-platVal}% headroom vs category leaders` },
-  ].forEach(s => {
-    const ve = document.getElementById('score-'+s.id);
-    const be = document.getElementById('bar-'+s.id);
-    const de = document.getElementById('delta-'+s.id);
-    if (!ve || !be || !de) return;
-    ve.className = 'dash-card-title tabnum ' + s.color;
-    be.className = 'score-fill ' + s.color;
-    animVal(ve, s.val);
-    setTimeout(() => be.style.width = s.val + '%', 200);
-    de.textContent = s.delta;
-  });
-
-  // Confidence badges + methodology panels
-  if (data.scoreMethodology) {
-    ['velocity','stagnation','regional','ai','platform'].forEach(key => {
-      var m = data.scoreMethodology[key];
-      if (!m) return;
-      var confEl = document.getElementById('conf-' + key);
-      var methEl = document.getElementById('meth-' + key);
-      if (confEl) {
-        var confLevel = (m.confidence || '').toString().toUpperCase();
-        var levelClass = confLevel === 'HIGH' ? 'high' : confLevel === 'MEDIUM' ? 'medium' : confLevel === 'LOW' ? 'low' : '';
-        confEl.innerHTML = '<span class="dash-outline-badge' + (levelClass ? ' ' + levelClass : '') + '">' + confLevel + '</span>';
-      }
-      if (methEl) {
-        methEl.innerHTML = '<strong>Method:</strong> ' + m.method + '<br><strong>Benchmark:</strong> ' + m.benchmark;
-      }
-    });
+  // Brand Profile cards — real insights from website scrape
+  var profileGrid = document.getElementById('brandProfileGrid');
+  if (profileGrid && data.brandProfile && Array.isArray(data.brandProfile)) {
+    profileGrid.innerHTML = data.brandProfile.map(function(item) {
+      return '<div class="dash-card">' +
+        '<div class="dash-card-header row">' +
+          '<div class="dash-card-header-col">' +
+            '<div class="dash-card-desc">' + (item.icon || '') + ' ' + (item.label || '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="dash-card-content" style="padding:16px 24px 24px">' +
+          '<div style="font-size:15px;line-height:1.6;color:var(--foreground);font-weight:500">' + (item.value || '—') + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  } else if (profileGrid) {
+    profileGrid.innerHTML = '<div class="dash-card" style="grid-column:1/-1;padding:32px;text-align:center;color:var(--muted-foreground)">Brand profile not available for this analysis.</div>';
   }
 
   // Transparency bar

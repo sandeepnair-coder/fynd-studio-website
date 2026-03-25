@@ -34,6 +34,7 @@ const generateImageHandler = require('./api/generate-image.js');
 const imageProxyHandler = require('./api/image-proxy.js');
 const uploadTempHandler = require('./api/upload-temp.js');
 const competitorPlanHandler = require('./api/competitor-plan.js');
+const generateBannerHandler = require('./api/generate-banner.js');
 
 const PORT = process.env.PORT || 3000;
 
@@ -67,6 +68,7 @@ const API_ROUTES = {
   '/api/image-proxy': imageProxyHandler,
   '/api/upload-temp': uploadTempHandler,
   '/api/competitor-plan': competitorPlanHandler,
+  '/api/generate-banner': generateBannerHandler,
 };
 
 const server = http.createServer(async (req, res) => {
@@ -204,5 +206,5 @@ function wrapResponse(res) {
 
 server.listen(PORT, () => {
   console.log(`\n  Fynd Studio running at http://localhost:${PORT}\n`);
-  console.log(`  API keys loaded: ANTHROPIC_API_KEY=${process.env.ANTHROPIC_API_KEY ? 'YES' : 'NO'}, PIXELBIN_API_TOKEN=${process.env.PIXELBIN_API_TOKEN ? 'YES' : 'NO'}, FAL_API_KEY=${process.env.FAL_API_KEY ? 'YES' : 'NO'}, APIFY_API_KEY=${process.env.APIFY_API_KEY ? 'YES' : 'NO'}\n`);
+  console.log(`  API keys loaded: OPENAI_API_KEY=${process.env.OPENAI_API_KEY ? 'YES' : 'NO'}, PIXELBIN_API_TOKEN=${process.env.PIXELBIN_API_TOKEN ? 'YES' : 'NO'}, FAL_API_KEY=${process.env.FAL_API_KEY ? 'YES' : 'NO'}, APIFY_API_KEY=${process.env.APIFY_API_KEY ? 'YES' : 'NO'}\n`);
 });

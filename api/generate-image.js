@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { prompt, image_size, reference_image } = req.body;
+  const { prompt, image_size, reference_image, asset_type } = req.body;
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
 
   const falKey = process.env.FAL_API_KEY;
@@ -53,7 +53,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const imageUrl = await generateViaFal(falKey, prompt, image_size || 'landscape_16_9', falImageUrl);
+    const imageUrl = await generateViaFal(falKey, prompt, image_size || 'landscape_16_9', falImageUrl, asset_type);
 
     // Verify the image is reachable
     const verified = await verifyUrl(imageUrl);
@@ -151,7 +151,7 @@ function mapAspectRatio(imageSize) {
   return map[imageSize] || '16:9';
 }
 
-async function generateViaFal(apiKey, prompt, imageSize, referenceImageUrl) {
+async function generateViaFal(apiKey, prompt, imageSize, referenceImageUrl, assetType) {
   const isI2I = !!referenceImageUrl;
   const model = isI2I ? FAL_I2I_MODEL : FAL_T2I_MODEL;
   const queueUrl = `https://queue.fal.run/${model}`;
@@ -174,6 +174,13 @@ async function generateViaFal(apiKey, prompt, imageSize, referenceImageUrl) {
 
   if (isI2I) {
     body.image_urls = [referenceImageUrl];
+    // Type-specific strength: how much the reference image influences the output
+    // Product: high (0.85) — preserve exact geometry, angle, color
+    // Lifestyle: moderate (0.65) — keep product appearance but allow scene variation
+    // Default: 0.75
+    const strengthMap = { product: 0.85, lifestyle: 0.65, social: 0.65 };
+    body.strength = strengthMap[assetType] || 0.75;
+    console.log(`[FAL] asset_type: ${assetType || 'default'}, strength: ${body.strength}`);
   }
 
   // Step 1: Submit to queue
