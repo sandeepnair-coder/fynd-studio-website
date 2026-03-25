@@ -1,0 +1,18 @@
+/* ══════════════════════════════════════════
+   DISPLAY & LAYOUT UTILITIES
+   ══════════════════════════════════════════ */
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.justify-center { justify-content: center; }
+.items-center { align-items: center; }
+.grid { display: grid; }
+
+/* Background utilities */
+.bg-card { background: var(--card); }
+.bg-background { background: var(--background); }
+
+/* Border utilities */
+.border-bottom { border-bottom: 1px solid var(--border); }
+.border-top { border-top: 1px solid var(--border); }
+.rounded { border-radius: var(--card-radius); }

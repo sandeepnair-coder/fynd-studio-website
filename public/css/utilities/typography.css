@@ -1,0 +1,22 @@
+/* ══════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   ══════════════════════════════════════════ */
+
+/* Text color utilities */
+.text-center { text-align: center; }
+.text-primary { color: var(--primary); }
+.text-muted { color: var(--muted-foreground); }
+.text-foreground { color: var(--foreground); }
+.text-good { color: var(--good); }
+.text-warn { color: var(--warn); }
+.text-danger { color: var(--destructive); }
+
+/* Text style helpers */
+.text-bold-paper { font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--foreground); }
+.text-electric-bold { font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: var(--primary); }
+.text-signal-bold { font-family: var(--font-sans); font-size: 14px; font-weight: 700; color: var(--primary); }
+.text-half-white { font-size: 14px; color: var(--muted-foreground); }
+.text-desc-muted { font-size: 15px; color: var(--muted-foreground); line-height: 1.6; max-width: 580px; }
+.text-desc-muted-wide { font-size: 15px; color: var(--muted-foreground); line-height: 1.6; max-width: 700px; margin-bottom: 8px; }
+.text-source { font-size: 11px; color: var(--primary); text-decoration: none; font-weight: 500; }
+.text-source:hover { text-decoration: underline; }

@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "functions": {
+    "api/brand-audit.js": {
+      "maxDuration": 60
+    },
+    "api/claude.js": {
+      "maxDuration": 60
+    },
+    "api/health.js": {
+      "maxDuration": 15
+    },
+    "api/fetch-site.js": {
+      "maxDuration": 15
+    },
+    "api/generate-image.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/public/$1" }
+  ]
+}

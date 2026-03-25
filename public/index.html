@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fynd Studio · AI-Powered Creative Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<!-- ── LOADING OVERLAY ── -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-engine-label" style="color:var(--signal)">Creative Intel Engine</div>
+  <div class="loading-text">Analysing <span id="analysingBrand">—</span></div>
+  <div class="loading-sub">Running AI-powered Creative Health Check</div>
+  <div class="loading-bar"><div class="loading-progress" id="loadingProgress"></div></div>
+  <div class="loading-steps">
+    <div class="lstep active" id="step1"><div class="lstep-dot"></div>Scraping brand assets & visual identity</div>
+    <div class="lstep" id="step2"><div class="lstep-dot"></div>Benchmarking against market leaders</div>
+    <div class="lstep" id="step3"><div class="lstep-dot"></div>Computing Creative Velocity Score</div>
+    <div class="lstep" id="step4"><div class="lstep-dot"></div>Mapping regional relevancy gaps</div>
+    <div class="lstep" id="step5"><div class="lstep-dot"></div>Calculating AI cost savings projection</div>
+  </div>
+</div>
+
+<!-- ── BATTLE CARD LOADING OVERLAY ── -->
+<div class="loading-overlay" id="battleLoadingOverlay">
+  <div class="loading-engine-label" style="color:var(--electric)">Battle Card Engine</div>
+  <div class="loading-text">Building Playbook for <span id="battleAnalysingBrand">—</span></div>
+  <div class="loading-sub">Generating AI-powered competitive strategy</div>
+  <div class="loading-bar"><div class="loading-progress" id="battleLoadingProgress"></div></div>
+  <div class="loading-steps">
+    <div class="lstep active" id="bstep1"><div class="lstep-dot"></div>Studying brand website &amp; products</div>
+    <div class="lstep" id="bstep2"><div class="lstep-dot"></div>Analysing brand positioning &amp; pricing</div>
+    <div class="lstep" id="bstep3"><div class="lstep-dot"></div>Generating competitive intelligence via AI</div>
+    <div class="lstep" id="bstep4"><div class="lstep-dot"></div>Building battle cards &amp; campaign concepts</div>
+    <div class="lstep" id="bstep5"><div class="lstep-dot"></div>Compiling competitive playbook</div>
+  </div>
+</div>
+
+<!-- ── CAMPAIGN PROPOSAL LOADING OVERLAY ── -->
+<div class="loading-overlay" id="proposalLoadingOverlay">
+  <div class="loading-engine-label" style="color:var(--signal)">Campaign Proposal Engine</div>
+  <div class="loading-text">Crafting Proposal for <span id="proposalAnalysingBrand">—</span></div>
+  <div class="loading-sub">Generating AI-powered campaign strategy</div>
+  <div class="loading-bar"><div class="loading-progress" id="proposalLoadingProgress"></div></div>
+  <div class="loading-steps">
+    <div class="lstep active" id="pstep1"><div class="lstep-dot"></div>Researching brand &amp; category landscape</div>
+    <div class="lstep" id="pstep2"><div class="lstep-dot"></div>Identifying strategic opportunities</div>
+    <div class="lstep" id="pstep3"><div class="lstep-dot"></div>Crafting campaign platform &amp; big idea</div>
+    <div class="lstep" id="pstep4"><div class="lstep-dot"></div>Designing AI-powered solutions</div>
+    <div class="lstep" id="pstep5"><div class="lstep-dot"></div>Compiling premium campaign proposal</div>
+  </div>
+</div>
+
+<!-- ── DEMO MODAL ── -->
+<div class="modal-backdrop" id="demoModal">
+  <div class="modal" id="demoModalInner">
+    <button class="modal-close" onclick="closeModal('demoModal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div id="demoFormView">
+      <div class="modal-title">Book a Strategy Demo</div>
+      <div class="modal-sub">Our creative strategists will walk you through a live AI audit of your brand. Typically 30 minutes.</div>
+      <div class="modal-field"><label>Full Name</label><input type="text" id="demoName" placeholder="Your name"></div>
+      <div class="modal-field"><label>Brand / Company</label><input type="text" id="demoBrand" placeholder="Brand name"></div>
+      <div class="modal-field"><label>Work Email</label><input type="email" id="demoEmail" placeholder="you@brand.com"></div>
+      <div class="modal-field"><label>Preferred Time</label>
+        <select id="demoTime">
+          <option value="">Select a slot</option>
+          <option>Morning (9am–12pm IST)</option>
+          <option>Afternoon (12pm–4pm IST)</option>
+          <option>Evening (4pm–7pm IST)</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-confirm" onclick="submitDemo()">Confirm Booking →</button>
+        <button class="modal-cancel" onclick="closeModal('demoModal')">Cancel</button>
+      </div>
+    </div>
+    <div id="demoSuccessView" style="display:none" class="modal-success">
+      <div class="tick"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--electric)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <div class="success-title">You're booked!</div>
+      <div class="success-sub">We've sent a calendar invite to your email. Our team will reach out 24 hours before to share prep materials.</div>
+      <button class="modal-confirm modal-confirm-full" onclick="closeModal('demoModal')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PDF MODAL ── -->
+<div class="modal-backdrop" id="pdfModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('pdfModal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div id="pdfFormView">
+      <div class="modal-title">Download Full Playbook</div>
+      <div class="modal-sub">Enter your details and we'll send the full Battle Card PDF to your inbox instantly.</div>
+      <div class="modal-field"><label>Work Email</label><input type="email" id="pdfEmail" placeholder="you@brand.com"></div>
+      <div class="modal-field"><label>Your Role</label>
+        <select id="pdfRole">
+          <option value="">Select your role</option>
+          <option>Founder / CEO</option>
+          <option>CMO / Marketing Head</option>
+          <option>Brand Manager</option>
+          <option>Growth / Performance</option>
+          <option>Agency / Consultant</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-confirm" onclick="submitPDF()">Send Me the PDF →</button>
+        <button class="modal-cancel" onclick="closeModal('pdfModal')">Cancel</button>
+      </div>
+    </div>
+    <div id="pdfSuccessView" style="display:none" class="modal-success">
+      <div class="tick"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--electric)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3H10l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>
+      <div class="success-title">PDF on its way!</div>
+      <div class="success-sub">Check your inbox in the next 2 minutes. Also check your spam folder if you don't see it.</div>
+      <button class="modal-confirm modal-confirm-full" onclick="closeModal('pdfModal')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── STRATEGIST MODAL ── -->
+<div class="modal-backdrop" id="strategistModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('strategistModal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div id="stratFormView">
+      <div class="modal-title">Connect with a Creative Strategist</div>
+      <div class="modal-sub">Tell us a bit about your brand and what you're trying to solve. We'll match you with the right strategist within 24 hours.</div>
+      <div class="modal-field"><label>Brand Name</label><input type="text" id="stratBrand" placeholder="Your brand"></div>
+      <div class="modal-field"><label>What's your biggest creative challenge?</label><textarea id="stratChallenge" placeholder="e.g. We need to improve our regional content reach and reduce production costs..."></textarea></div>
+      <div class="modal-field"><label>Monthly Ad Budget</label>
+        <select id="stratBudget">
+          <option value="">Select range</option>
+          <option>Under ₹5 Lakhs</option>
+          <option>₹5–20 Lakhs</option>
+          <option>₹20–50 Lakhs</option>
+          <option>₹50 Lakhs–2 Crore</option>
+          <option>Above ₹2 Crore</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-confirm" onclick="submitStrategist()">Send Request →</button>
+        <button class="modal-cancel" onclick="closeModal('strategistModal')">Cancel</button>
+      </div>
+    </div>
+    <div id="stratSuccessView" style="display:none" class="modal-success">
+      <div class="tick"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--electric)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+      <div class="success-title">Request received!</div>
+      <div class="success-sub">We'll match you with a strategist and reach out within 24 hours to set up a call.</div>
+      <button class="modal-confirm modal-confirm-full" onclick="closeModal('strategistModal')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST CONTAINER ── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <button class="nav-logo" onclick="showPage('home')"><img src="/assets/images/fynd-logo-white.png" alt="Fynd" class="nav-logo-img"><img src="/assets/images/fynd-logo-black.png" alt="Fynd" class="nav-logo-img nav-logo-light"></button>
+  <div class="nav-links">
+    <button class="nav-active" onclick="showPage('home')">Home</button>
+    <button onclick="showPage('intel')">Creative Intel</button>
+    <button onclick="showPage('battle')">Battle Cards</button>
+    <button onclick="showPage('proposal')">Campaign Proposal</button>
+    <button class="nav-cta" onclick="openModal('demoModal')">Book a Demo</button>
+  </div>
+  <div class="nav-actions">
+    <div class="api-toggle" title="Toggle between live API and dummy data">
+      <span class="api-toggle-label" id="apiToggleLabel">Demo</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="apiToggle" onchange="toggleApiMode(this.checked)">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle theme">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════
+     HOME PAGE
+════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1: THE NEW HERO
+  ═══════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-badge"><span class="dot"></span>India's AI-First Creative Intelligence Platform</div>
+    <h1 class="hero-title">
+      <span class="line1">Your Brand Deserves</span>
+      <span class="line2">More Than Just Ads.</span>
+      <span class="line3">It Deserves Impact.</span>
+    </h1>
+    <p class="hero-sub">India's ₹1.75 Lakh Crore ad market is now 64% digital. If your creative strategy is still built for 2020, you're not just losing relevance — you're losing market share.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px;opacity:0.5">
+      <span class="source-tag">Source: <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener">GroupM TYNY 2026</a></span>
+      <span class="source-tag">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener">Madison PMAR 2026</a></span>
+    </div>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="showPage('intel')">See Your Brand's AI Score →</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2: THE MARKET IN 60 SECONDS
+  ═══════════════════════════════════════ -->
+  <div class="stats-bar">
+    <div class="stats-track">
+      <div class="stat-item"><span class="num">64%</span><span class="label">India Ad Spend Now Digital</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">3.5×</span><span class="label">Higher ROI with AI Creative</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">+50%</span><span class="label">Q-Commerce Ad Growth</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">−10%</span><span class="label">TV Ad Volumes Crashed</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">78%</span><span class="label">Indian SMBs Using AI</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">+33%</span><span class="label">CTV Ad Market Growth</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">156%</span><span class="label">Vernacular Content Growth T2/T3</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">48hrs</span><span class="label">AI Campaign vs 90-Day Agency</span></div>
+      <span class="stat-sep">·</span>
+      <!-- duplicate for seamless loop -->
+      <div class="stat-item"><span class="num">64%</span><span class="label">India Ad Spend Now Digital</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">3.5×</span><span class="label">Higher ROI with AI Creative</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">+50%</span><span class="label">Q-Commerce Ad Growth</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">−10%</span><span class="label">TV Ad Volumes Crashed</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">78%</span><span class="label">Indian SMBs Using AI</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">+33%</span><span class="label">CTV Ad Market Growth</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">156%</span><span class="label">Vernacular Content Growth T2/T3</span></div>
+      <span class="stat-sep">·</span>
+      <div class="stat-item"><span class="num">48hrs</span><span class="label">AI Campaign vs 90-Day Agency</span></div>
+      <span class="stat-sep">·</span>
+    </div>
+  </div>
+
+  <!-- MARKET IN 60 SECONDS — 4 CARDS -->
+  <section class="section border-t-subtle">
+    <div class="section-label">The Market Has Shifted</div>
+    <h2 class="section-title">The market in 60 seconds.</h2>
+    <div class="d2c-hero-stats">
+      <div class="d2c-stat-card">
+        <div class="d2c-stat-num" style="color:var(--signal)">64%</div>
+        <div class="d2c-stat-label">India's ad spend is now majority digital, with traditional media growing just 1.1%.</div>
+        <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a></div>
+      </div>
+      <div class="d2c-stat-card">
+        <div class="d2c-stat-num" style="color:var(--electric)">3.5×</div>
+        <div class="d2c-stat-label">Higher ROI on AI campaigns vs traditional. Indian businesses report 3.5× returns with AI marketing.</div>
+        <div class="d2c-stat-source"><a href="https://cloud9digital.co.in/" target="_blank" rel="noopener" class="text-source">CLOUD 9 DIGITAL / 500+ BUSINESS SURVEY 2026</a></div>
+      </div>
+      <div class="d2c-stat-card">
+        <div class="d2c-stat-num" style="color:var(--signal)">+50%</div>
+        <div class="d2c-stat-label">Quick Commerce (Blinkit, Zepto, Instamart) is the fastest-growing ad channel, creating a new digital storefront.</div>
+        <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a></div>
+      </div>
+      <div class="d2c-stat-card">
+        <div class="d2c-stat-num" style="color:var(--muted-foreground)">−10%</div>
+        <div class="d2c-stat-label">Linear TV ad volumes crashed 10% last year as audiences moved to CTV and short-form video.</div>
+        <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM AD SPEND DISTRIBUTION -->
+  <section class="section reveal" style="border-top:1px solid var(--border)">
+    <div class="section-label">Platform Ad Spend Distribution</div>
+    <h2 class="section-title">Where India's ₹1.12 lakh crore<br>digital ad budget flows in 2026.</h2>
+    <p style="font-size:16px;color:var(--muted-foreground);line-height:1.7;max-width:520px;margin-bottom:16px;">Most D2C brands default to Instagram and Google. Here's the full picture —<br>including where the biggest whitespace gaps are hiding.</p>
+
+    <div class="spend-section">
+      <!-- LEFT: Platform Table -->
+      <div class="spend-table">
+        <div class="spend-table-label">Est. Platform Spend · FY2026 · India Digital</div>
+
+        <div class="spend-row">
+          <div class="spend-icon">🔍</div>
+          <div class="spend-name">Google Search + Display</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:100%;background:var(--primary)"></div></div>
+          <div class="spend-val">₹38,200 Cr</div>
+          <div class="spend-yoy">+12% YoY</div>
+        </div>
+
+        <div class="spend-row">
+          <div class="spend-icon">▶</div>
+          <div class="spend-name">YouTube (Video + Shorts)</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:82%;background:var(--signal)"></div></div>
+          <div class="spend-val">₹31,300 Cr</div>
+          <div class="spend-yoy">+18% YoY</div>
+        </div>
+
+        <div class="spend-row">
+          <div class="spend-icon">📸</div>
+          <div class="spend-name">Meta (Instagram + Facebook)</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:71%;background:var(--primary);opacity:0.8"></div></div>
+          <div class="spend-val">₹27,100 Cr</div>
+          <div class="spend-yoy">+22% YoY</div>
+        </div>
+
+        <div class="spend-row">
+          <div class="spend-icon">🛒</div>
+          <div class="spend-name">Flipkart + Amazon Ads</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:17%;background:var(--primary);opacity:0.6"></div></div>
+          <div class="spend-val">₹6,600 Cr</div>
+          <div class="spend-yoy">+28% YoY</div>
+        </div>
+
+        <div class="spend-row">
+          <div class="spend-icon">📺</div>
+          <div class="spend-name">JioCinema + Hotstar (CTV)</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:21%;background:var(--primary);opacity:0.7"></div></div>
+          <div class="spend-val">₹8,000 Cr</div>
+          <div class="spend-yoy">+33% YoY</div>
+        </div>
+
+        <div class="spend-row">
+          <div class="spend-icon">⚡</div>
+          <div class="spend-name">Q-Commerce (Blinkit / Zepto)</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:10%;background:var(--primary);opacity:0.5"></div></div>
+          <div class="spend-val">₹3,800 Cr</div>
+          <div class="spend-yoy">+202% YoY</div>
+        </div>
+
+        <div class="spend-row">
+          <div class="spend-icon">💬</div>
+          <div class="spend-name">ShareChat + Moj (Vernacular)</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:8%;background:var(--primary);opacity:0.4"></div></div>
+          <div class="spend-val">₹3,000 Cr</div>
+          <div class="spend-yoy">+45% YoY</div>
+        </div>
+
+        <div class="spend-source"><a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">GroupM TYNY India 2026</a> · <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Madison PMAR 2026</a> · company earnings filings</div>
+      </div>
+
+      <!-- RIGHT: Insight Cards -->
+      <div class="spend-insights">
+        <div class="spend-insight-card">
+          <div class="spend-insight-tag"><div class="spend-insight-dot red"></div>Biggest Gap: CTV</div>
+          <div class="spend-insight-text">CTV is growing at <span class="hl-green">+33% YoY</span> — fastest of any major platform — yet the average D2C fashion brand has <span class="hl-red">zero CTV presence</span>. ₹8,000 Cr is spent mostly by legacy FMCG and auto. Fashion D2C has a 12–18 month first-mover window before CPMs triple.</div>
+        </div>
+        <div class="spend-insight-card">
+          <div class="spend-insight-tag"><div class="spend-insight-dot green"></div>Fastest Mover: Q-Commerce</div>
+          <div class="spend-insight-text">Q-commerce ad revenue grew <span class="hl-green">+202% in 2025</span>. Blinkit, Zepto, Instamart combined reached ₹3,800 Cr — almost entirely from FMCG. The fashion accessories slot is <strong>almost entirely unoccupied</strong>. CPMs currently 60% below Instagram.</div>
+        </div>
+        <div class="spend-insight-card">
+          <div class="spend-insight-tag"><div class="spend-insight-dot amber"></div>The Underdog: Vernacular</div>
+          <div class="spend-insight-text">ShareChat + Moj reach <strong>350M vernacular users</strong> in Tier 2/3 India with engagement rates <strong>4× higher</strong> than Instagram for regional-language content. CPM: ₹18 vs ₹220 on Instagram. Only 8% of D2C brands are present.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETITIVE LANDSCAPE -->
+  <section class="section reveal" style="border-top:1px solid var(--border)">
+    <div class="section-label">Competitive Landscape</div>
+    <h2 class="section-title">Who you're up against<br>and where we fit.</h2>
+    <p style="font-size:14px;color:var(--mid);margin-bottom:8px">Based on India's Hottest Agencies 2025 ranking · <a href="https://campaignbriefasia.com/2026/02/09/ogilvy-rises-up-to-take-out-agency-of-the-year-in-campaign-brief-asias-2025-india-creative-rankings-mccann-moves-up-to-2-leo-ranks-3/" target="_blank" rel="noopener" style="color:var(--signal);text-decoration:underline;text-underline-offset:3px">Campaign Brief Asia</a></p>
+
+    <table class="comp-landscape-table">
+      <thead>
+        <tr>
+          <th style="width:48px;text-align:center">Rank</th>
+          <th>Agency</th>
+          <th>Type</th>
+          <th>AI Capability</th>
+          <th style="text-align:center">Turnaround</th>
+          <th>Key Clients</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank-cell-top">#1</td>
+          <td>
+            <div class="comp-agency-name">Ogilvy India</div>
+            <span class="comp-agency-tag legacy">Legacy Giant · 2,890 pts</span>
+          </td>
+          <td>Integrated Creative</td>
+          <td>Borderless Creativity (GenAI integrated)</td>
+          <td style="text-align:center">4–6 weeks</td>
+          <td>Amazon, Cadbury, Coca-Cola</td>
+        </tr>
+        <tr>
+          <td class="rank-cell-top">#2</td>
+          <td>
+            <div class="comp-agency-name">McCann Worldgroup India</div>
+            <span class="comp-agency-tag legacy">Legacy Giant · 2,255 pts</span>
+          </td>
+          <td>Full-Service Creative</td>
+          <td>Craft AI studio for production</td>
+          <td style="text-align:center">4–6 weeks</td>
+          <td>L'Oréal, Nescafé, Mastercard</td>
+        </tr>
+        <tr>
+          <td class="rank-cell-top">#3</td>
+          <td>
+            <div class="comp-agency-name">Leo Burnett India</div>
+            <span class="comp-agency-tag legacy">Legacy Giant · 2,055 pts</span>
+          </td>
+          <td>Creative & Strategy</td>
+          <td>AI-augmented ideation workflows</td>
+          <td style="text-align:center">3–5 weeks</td>
+          <td>Amazon, Bajaj, P&G</td>
+        </tr>
+        <tr>
+          <td class="rank-cell">#4</td>
+          <td>
+            <div class="comp-agency-name">DDB Mudra Group</div>
+            <span class="comp-agency-tag legacy">Legacy Giant · 1,890 pts</span>
+          </td>
+          <td>Integrated Creative</td>
+          <td>Tribal DDB digital + AI tools</td>
+          <td style="text-align:center">3–5 weeks</td>
+          <td>Volkswagen, Johnson & Johnson</td>
+        </tr>
+        <tr>
+          <td class="rank-cell">#5</td>
+          <td>
+            <div class="comp-agency-name">Havas Creative India</div>
+            <span class="comp-agency-tag legacy">Legacy Giant · 1,200 pts</span>
+          </td>
+          <td>Creative & Media</td>
+          <td>Havas AI content suite</td>
+          <td style="text-align:center">3–5 weeks</td>
+          <td>Hyundai, Reckitt, Godrej</td>
+        </tr>
+        <tr>
+          <td class="rank-cell">#7</td>
+          <td>
+            <div class="comp-agency-name">FCB India</div>
+            <span class="comp-agency-tag ai-forward">AI-Forward · 845 pts</span>
+          </td>
+          <td>Full-Service Digital</td>
+          <td>Data + AI creative iteration</td>
+          <td style="text-align:center">2–3 weeks</td>
+          <td>D2C brands, BFSI, Tata</td>
+        </tr>
+        <tr>
+          <td class="rank-cell">#9</td>
+          <td>
+            <div class="comp-agency-name">Dentsu Creative India</div>
+            <span class="comp-agency-tag ai-forward">AI-Forward · 580 pts</span>
+          </td>
+          <td>Performance + Social</td>
+          <td>DASH platform + INNOWAT AR/VR lab</td>
+          <td style="text-align:center">1–2 weeks</td>
+          <td>Royal Enfield, Tata</td>
+        </tr>
+        <tr>
+          <td class="rank-cell">#25</td>
+          <td>
+            <div class="comp-agency-name">Schbang India</div>
+            <span class="comp-agency-tag ai-forward">AI-Forward · 30 pts</span>
+          </td>
+          <td>Integrated Digital</td>
+          <td>AddiktSchbang · AI-powered creative</td>
+          <td style="text-align:center">1–2 weeks</td>
+          <td>Aditya Birla, Nestlé</td>
+        </tr>
+        <tr class="comp-highlight-row">
+          <td style="text-align:center;font-family:'Inter',sans-serif;font-weight:800;color:var(--electric)">—</td>
+          <td>
+            <div class="comp-agency-name">Fynd Studio ✦</div>
+            <span class="comp-agency-tag ai-native">AI-Native</span>
+          </td>
+          <td style="color:var(--electric)">AI-First Design Studio</td>
+          <td style="color:var(--electric)">Fully generative · shoots, ads, video in 48hrs</td>
+          <td style="text-align:center"><span class="comp-turnaround-hl">48 hours</span></td>
+          <td class="text-half-white">D2C · Fashion · FMCG</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- THE GREAT DIVIDE: OFFLINE vs DIGITAL -->
+  <section class="section border-t-subtle">
+    <div class="section-label">The Great Divide</div>
+    <h2 class="section-title">Offline is fading.<br>Digital is the arena.</h2>
+    <div class="grid-2 mt-40">
+      <!-- OFFLINE -->
+      <div class="divide-panel-offline" style="opacity:0.7">
+        <div class="divide-heading" style="color:var(--mid)">Offline · The Echo Chamber</div>
+        <div class="divide-col-stack">
+          <div class="divide-row"><span class="divide-item-label">Television (Linear)</span><span class="divide-item-val-signal">−5%</span></div>
+          <div class="divide-row"><span class="divide-item-label">Radio</span><span class="divide-item-val-signal">−5%</span></div>
+          <div class="divide-row"><span class="divide-item-label">Print</span><span class="divide-item-val-mid">+2.5%</span></div>
+          <div class="divide-row-last"><span class="divide-item-label">Magazines</span><span class="divide-item-val-signal">−13.6%</span></div>
+        </div>
+        <div class="divide-footer-dim">Broadcasting to a shrinking audience.</div>
+      </div>
+      <!-- DIGITAL -->
+      <div class="divide-panel-digital">
+        <div class="divide-heading" style="color:var(--electric)">Digital · The Arena</div>
+        <div class="divide-col-stack">
+          <div class="divide-row"><span class="divide-item-label-bright">Retail Media (E-com Ads)</span><span class="divide-item-val-electric">+27%</span></div>
+          <div class="divide-row"><span class="divide-item-label-bright">Digital Video (YouTube, OTT)</span><span class="divide-item-val-electric">+21%</span></div>
+          <div class="divide-row"><span class="divide-item-label-bright">Social Media (IG, FB)</span><span class="divide-item-val-electric">+16%</span></div>
+          <div class="divide-row-last"><span class="divide-item-label-bright">Quick Commerce Ads</span><span class="divide-item-val-signal">+50%</span></div>
+        </div>
+        <div class="divide-footer-electric">Engaging customers where they shop, watch, and live.</div>
+      </div>
+    </div>
+    <div class="text-source mt-16">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Pitch Madison PMAR 2026</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">WPP TYNY 2026</a></div>
+  </section>
+
+  <!-- WHERE INDIA'S TOP BRANDS PROMOTE -->
+  <section class="section border-t-subtle-thick">
+    <div class="section-label">Where The Money Goes</div>
+    <h2 class="section-title">Where India's top brands<br>are spending in 2025.</h2>
+    <p class="text-desc-muted" style="margin-bottom:32px">Your competitors are already here. The question is whether you are.</p>
+    <div class="data-table-wrap">
+      <div class="data-table-head"><span>Channel</span><span>2025 Spend</span><span>Key Insight</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">Digital Video (YouTube, OTT)</span><span class="text-electric-bold">₹14,785 Cr</span><span class="text-half-white">The new prime time. +21% growth.</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">Social Media (Instagram, FB)</span><span class="text-electric-bold">₹12,143 Cr</span><span class="text-half-white">Where culture is created. +16% growth.</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">E-Commerce (Amazon, Flipkart)</span><span class="text-electric-bold">₹10,257 Cr</span><span class="text-half-white">Where decisions are made. +27% growth.</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">Search (Google)</span><span class="text-electric-bold">₹9,132 Cr</span><span class="text-half-white">Where intent is captured. +15% growth.</span></div>
+      <div class="data-table-row-last"><span class="text-bold-paper">Quick Commerce (Blinkit, Zepto)</span><span class="text-signal-bold">₹4,000 Cr</span><span class="text-half-white">The new storefront. +50% explosive growth.</span></div>
+    </div>
+    <div class="text-source mt-16">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a> (Expanded Digital Definition)</div>
+  </section>
+
+  <!-- THE NEW RULES OF ATTENTION -->
+  <section class="section border-t-subtle-thick">
+    <div class="section-label">The New Rules</div>
+    <h2 class="section-title">Winning moves vs.<br>losing bets.</h2>
+    <div class="grid-2 mt-40">
+      <!-- WINNING -->
+      <div class="divide-panel-win">
+        <div class="divide-heading-sm" style="color:var(--electric)">Rising Trends</div>
+        <div class="divide-col-stack-lg">
+          <div><div class="divide-trend-title">Connected TV (CTV)</div><div class="divide-trend-body">+33% growth. ₹8,000 Cr market by 2026. Reaching affluent homes on JioCinema and Hotstar.</div><div class="divide-trend-stat-electric">+33% YoY · First-mover window open</div></div>
+          <div><div class="divide-trend-title">Vernacular AI Content</div><div class="divide-trend-body">156% higher growth in Tier 2/3 cities. Only 8% of D2C brands have a vernacular strategy.</div><div class="divide-trend-stat-electric">156% growth · Massive white space</div></div>
+          <div><div class="divide-trend-title">Influencer-Led Campaigns</div><div class="divide-trend-body">A ₹5,000 Cr+ market growing 25% YoY. 54% of D2C brands spending up to 25% of budget on creators.</div><div class="divide-trend-stat-electric">₹5,000 Cr+ · Creator economy boom</div></div>
+        </div>
+      </div>
+      <!-- LOSING -->
+      <div class="divide-panel-lose">
+        <div class="divide-heading-sm" style="color:var(--signal)">Declining Trends</div>
+        <div class="divide-col-stack-lg">
+          <div><div class="divide-trend-title">30-Second TV Spots</div><div class="divide-trend-body">Losing to 15-second digital videos. TV volumes crashed −10% while CTV grew +33%.</div><div class="divide-trend-stat-signal">−10% volumes · Pay DTH shrank 12.4%</div></div>
+          <div><div class="divide-trend-title">Generic Banner Ads</div><div class="divide-trend-body">Display is the slowest-growing digital format at just +7%. Static display is dying in a video-first world.</div><div class="divide-trend-stat-signal">+7% · Slowest digital format</div></div>
+          <div><div class="divide-trend-title">One-Size-Fits-All Creative</div><div class="divide-trend-body">Ineffective in a hyper-personalised world. AI personalised ads deliver 3.1× ROAS vs generic.</div><div class="divide-trend-stat-signal">3.1× gap · Generic is over</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-source mt-16">Sources: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">WPP TYNY 2026</a> · <a href="https://cloud9digital.co.in/" target="_blank" rel="noopener" class="text-source">Cloud 9 Digital AI Marketing Report 2026</a></div>
+  </section>
+
+  <!-- THE AGENCY LANDSCAPE -->
+  <section class="section border-t-subtle-thick">
+    <div class="section-label">Old Guard vs. New Guard</div>
+    <h2 class="section-title">We are not another agency.<br>We are your AI creative partner.</h2>
+    <div class="grid-2 mt-40">
+      <div class="divide-panel-old">
+        <div class="divide-heading" style="color:var(--mid)">The Old Guard</div>
+        <div class="agency-title-bold" style="color:var(--muted-foreground)">Ogilvy, Lintas, Leo Burnett…</div>
+        <div class="agency-desc">Masters of the 60-second story. Built for a world of TV spots and print ads.</div>
+        <div class="old-guard-big" style="color:var(--muted-foreground)">90 days</div>
+        <div class="old-guard-sub" style="color:var(--mid)">Average campaign turnaround</div>
+      </div>
+      <div class="divide-panel-new">
+        <div class="divide-heading-sm" style="color:var(--electric);margin-bottom:24px">The New Guard</div>
+        <div class="agency-title-bold" style="color:var(--electric)">Fynd Studio</div>
+        <div class="agency-desc-bright">Masters of the 6-second impression. Built for a world of algorithms and real-time data.</div>
+        <div class="old-guard-big" style="color:var(--electric)">48 hours</div>
+        <div class="old-guard-sub" style="color:var(--electric)">Average campaign turnaround</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 4: HOW IT WORKS — 3 STEPS
+  ═══════════════════════════════════════ -->
+  <section class="section border-t-subtle-thick">
+    <div class="section-label">The "No-Brainer" Solution</div>
+    <h2 class="section-title">Connect. Generate. Deploy.</h2>
+    <p class="text-desc-muted-wide">Traditional agencies take 90 days to produce a campaign. Fynd Studio takes you from first URL to a ready-to-deploy strategy in 48 hours.</p>
+    <div class="hiw-layout hiw-layout-v2">
+      <div class="hiw-steps-v2">
+        <div class="hiw-step-card-v2 hiw-step-card-v2-done">
+          <div class="hiw-step-top-v2">
+            <div class="hiw-step-num-v2">01</div>
+            <div>
+              <div class="hiw-step-label-v2">Step 1 · Connect Your Brand</div>
+              <div class="hiw-step-title-v2">Input your URL. We do the rest.</div>
+            </div>
+          </div>
+          <div class="hiw-step-desc-v2">Our AI analyses your assets, audience, and competitors in real-time. Enter your brand URLs, and our engine crawls everything in under 60 seconds. No onboarding form. No agency brief. No calls.</div>
+          <div class="hiw-step-tags-v2"><span class="hiw-step-tag">Website</span><span class="hiw-step-tag">Instagram</span><span class="hiw-step-tag">YouTube</span><span class="hiw-step-tag">Competitor URLs</span></div>
+          <div class="hiw-step-time-v2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 60 seconds to complete</div>
+        </div>
+
+        <div class="hiw-step-card-v2 hiw-step-card-v2-done">
+          <div class="hiw-step-top-v2">
+            <div class="hiw-step-num-v2">02</div>
+            <div>
+              <div class="hiw-step-label-v2">Step 2 · Generate Your Playbook</div>
+              <div class="hiw-step-title-v2">Instantly see your AI Score and strategy</div>
+            </div>
+          </div>
+          <div class="hiw-step-desc-v2">Instantly see your AI Score, cost-saving opportunities, and AI-generated ad concepts. Five scored dimensions, regional gap maps, competitor blind spots, and prioritised action alerts — all in one screen.</div>
+          <div class="hiw-step-tags-v2"><span class="hiw-step-tag">Creative Velocity Score</span><span class="hiw-step-tag">Competitor Benchmarking</span><span class="hiw-step-tag">Regional Gap Scan</span><span class="hiw-step-tag">AI Opportunity Score</span></div>
+          <div class="hiw-step-time-v2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> Instant — results load in real time</div>
+        </div>
+
+        <div class="hiw-step-card-v2">
+          <div class="hiw-step-top-v2">
+            <div class="hiw-step-num-v2">03</div>
+            <div>
+              <div class="hiw-step-label-v2">Step 3 · Deploy & Dominate</div>
+              <div class="hiw-step-title-v2">Launch campaigns in days, not months</div>
+            </div>
+          </div>
+          <div class="hiw-step-desc-v2">Launch hyper-personalised campaigns in days, not months, and measure what matters. Print-ready photography, edited Reels, brand video ads, and localised copies in up to 22 Indian languages — all from a single brief.</div>
+          <div class="hiw-step-tags-v2"><span class="hiw-step-tag">AI Product Shoots</span><span class="hiw-step-tag">Brand Video Ads</span><span class="hiw-step-tag">Social Content Packs</span><span class="hiw-step-tag">22 Languages</span></div>
+          <div class="hiw-step-time-v2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 48 hours to live campaign assets</div>
+        </div>
+      </div>
+
+      <aside class="hiw-aside-v2">
+        <div class="outcome-label">What you walk away with</div>
+        <ul class="hiw-outcome-list">
+          <li>A scored Creative Health Check across 5 dimensions — with specific action priorities, not vague recommendations.</li>
+          <li>A competitive intelligence report showing exactly where competitors are outspending, outposting, and outreaching you.</li>
+          <li>AI-generated campaign concepts, cost calculators, and a full Ogilvy-style brand strategy.</li>
+          <li>Direct access to a Creative Strategist who can turn all of this into live campaigns in 48 hours.</li>
+        </ul>
+        <div class="hiw-time-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> Total time: Under 10 minutes from URL to full strategy</div>
+        <button class="btn-primary" style="margin-top:32px;width:100%;display:flex;justify-content:center" onclick="showPage('intel')">Run Your Free Audit →</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 5: CASE STUDIES — THE PROOF
+  ═══════════════════════════════════════ -->
+  <section class="section" id="case-studies-section" style="border-top:1px solid var(--border)">
+    <div class="section-label">The Proof</div>
+    <h2 class="section-title">From data to dominance:<br>our partners.</h2>
+    <p class="text-desc-muted">Early movers in India's D2C space are already seeing compounding returns. Here's what switching to AI-first creative looks like in practice.</p>
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:rgba(0,229,192,0.06);border:1px solid rgba(0,229,192,0.15);font-size:10px;color:var(--electric);margin-top:12px;margin-bottom:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Verified partner results · Names withheld under NDA</div>
+    <div class="case-studies-grid">
+      <div class="cs-card type-a">
+        <div class="cs-brand">Fashion D2C Brand</div>
+        <div class="cs-category">Fashion D2C · Mass Market · Mumbai</div>
+        <div class="cs-metric"><div class="cs-metric-label">CTR Lift via AI Campaigns</div><div class="cs-metric-val positive">+40%</div></div>
+        <div class="cs-metric"><div class="cs-metric-label">Production Cost Reduction</div><div class="cs-metric-val positive">−84%</div></div>
+        <div class="cs-metric"><div class="cs-metric-label">Annual Savings</div><div class="cs-metric-val savings">₹68 Lakhs</div></div>
+        <div class="cs-quote">"We captured the Tier 2 festive market with AI-generated vernacular campaigns across 8 states. 14 campaigns in Q4 that would have cost ₹1.2 crore — we spent ₹19 lakhs."</div>
+        <div class="cs-attribution">— CMO, Fashion D2C Brand</div>
+      </div>
+      <div class="cs-card type-b">
+        <div class="cs-brand">FMCG Brand</div>
+        <div class="cs-category">Food & Beverage · Mass Market · Pan-India</div>
+        <div class="cs-metric"><div class="cs-metric-label">Creative Production Savings</div><div class="cs-metric-val positive">−85%</div></div>
+        <div class="cs-metric"><div class="cs-metric-label">Content Velocity Increase</div><div class="cs-metric-val positive">5× per Month</div></div>
+        <div class="cs-metric"><div class="cs-metric-label">Q-Commerce Launch ROAS</div><div class="cs-metric-val savings">+58%</div></div>
+        <div class="cs-quote">"Switching our entire SKU catalogue to AI photography was the single highest-ROI decision we made in 2025. The quality is indistinguishable — the speed is incomprehensible."</div>
+        <div class="cs-attribution">— VP Marketing, FMCG Brand</div>
+      </div>
+      <div class="cs-card type-c">
+        <div class="cs-brand">Beauty Brand</div>
+        <div class="cs-category">Beauty & Skincare · Premium · Bengaluru</div>
+        <div class="cs-metric"><div class="cs-metric-label">Engagement Increase (Reels)</div><div class="cs-metric-val positive">2.5× lift</div></div>
+        <div class="cs-metric"><div class="cs-metric-label">Micro-Trends Dominated</div><div class="cs-metric-val positive">3 emerging trends</div></div>
+        <div class="cs-metric"><div class="cs-metric-label">ROAS Improvement</div><div class="cs-metric-val savings">3.8× → 5.6×</div></div>
+        <div class="cs-quote">"Our Diwali 2025 campaign covered 8 states with localised creatives. Within 3 days. That's not possible with a traditional studio — even with unlimited budget."</div>
+        <div class="cs-attribution">— Head of Growth, Beauty Brand</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 6: THE ENGINE — TECH STACK
+  ═══════════════════════════════════════ -->
+  <section class="section border-t-subtle">
+    <div class="section-label">The Engine</div>
+    <h2 class="section-title">The intelligence behind<br>the insight.</h2>
+    <p class="text-desc-muted" style="font-size:15px">We don't use a single AI model. Fynd Studio runs a multi-layer generative stack — each layer optimised for a specific creative task.</p>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4.9 19.1A16 16 0 0 1 12 2"/><path d="M7.8 16.2A10 10 0 0 1 12 6"/><circle cx="12" cy="12" r="2" fill="white"/></svg></div><div class="tech-name">Market Signal AI</div><div class="tech-abbr">REAL-TIME INTELLIGENCE</div><div class="tech-desc">Crawls 1000+ sources to detect market trends, regional signals, and competitor movements in real-time. Feeds directly into your Creative Health Check scores.</div></div>
+      <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="tech-name">Creative Velocity Engine</div><div class="tech-abbr">GENERATIVE PRODUCTION</div><div class="tech-desc">Generates production-quality video, images, and copy in 48 hours. Fine-tuned on Indian fashion, skin tones, and cultural contexts — not Western datasets.</div></div>
+      <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="tech-name">Predictive ROI Model</div><div class="tech-abbr">FORECAST + OPTIMISE</div><div class="tech-desc">Forecasts the potential ROI of creative decisions before you spend a single rupee. Benchmarks your performance against 15+ direct competitors in real time.</div></div>
+      <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 0 1 5 5c0 1.5-.7 2.8-1.7 3.7L12 14l-3.3-3.3A5 5 0 0 1 12 2z"/><path d="M8 14v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4"/></svg></div><div class="tech-name">Ogilvy Strategy Core</div><div class="tech-abbr">AI-POWERED STRATEGY</div><div class="tech-desc">An AI fine-tuned on the principles of legendary ad campaigns to generate brand strategy, not just ads. Slogans, three-act story plots, campaign themes — in minutes.</div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 7: YOUR UNFAIR ADVANTAGE — TOOLS
+  ═══════════════════════════════════════ -->
+  <section class="section border-t-subtle">
+    <div class="section-label">Your Tools</div>
+    <h2 class="section-title">Your unfair advantage,<br>delivered.</h2>
+    <div class="page-select">
+      <div class="page-card intel" onclick="showPage('intel')">
+        <div class="pc-tag">Tool 01</div>
+        <div class="pc-title">Creative Intel</div>
+        <p class="pc-desc">Your live Creative Health dashboard. Enter your brand URL and get an instant AI-powered audit — scores, gaps, savings, and action priorities — in under 60 seconds.</p>
+        <div class="pc-features">
+          <div class="pc-feat">Creative Velocity Score (0–100)</div>
+          <div class="pc-feat">Visual Stagnation Alert</div>
+          <div class="pc-feat">Regional Relevancy Index</div>
+          <div class="pc-feat">AI Opportunity Score</div>
+          <div class="pc-feat">Estimated Annual Cost Savings</div>
+        </div>
+        <button class="pc-btn">Run Your Audit <span>→</span></button>
+        <div class="pc-bg-num">01</div>
+      </div>
+      <div class="page-card battle" onclick="showPage('battle')">
+        <div class="pc-tag">Tool 02</div>
+        <div class="pc-title">Brand Battle Cards</div>
+        <p class="pc-desc">Your AI-powered strategic playbook for market capture. Competitor breakdowns, AI campaign concepts, an interactive cost calculator, and a full Ogilvy-style ad strategy.</p>
+        <div class="pc-features">
+          <div class="pc-feat">Market Capture Strategy</div>
+          <div class="pc-feat">AI Campaign Concepts</div>
+          <div class="pc-feat">Competitor Battle Plan</div>
+          <div class="pc-feat">Cost-Benefit & ROI Analysis</div>
+          <div class="pc-feat">Ogilvy Ad Strategy (AI-Powered)</div>
+        </div>
+        <button class="pc-btn">View Battle Cards <span>→</span></button>
+        <div class="pc-bg-num">02</div>
+      </div>
+      <div class="page-card proposal" onclick="showPage('proposal')">
+        <div class="pc-tag">Tool 03</div>
+        <div class="pc-title">Campaign Proposal</div>
+        <p class="pc-desc">A premium, single-page campaign proposal crafted by AI. Deep brand understanding, strategic insights, a big creative idea, and tailored AI-powered solutions — ready to pitch.</p>
+        <div class="pc-features">
+          <div class="pc-feat">Brand Snapshot & Diagnosis</div>
+          <div class="pc-feat">Strategic Opportunity Mapping</div>
+          <div class="pc-feat">Campaign Platform & Big Idea</div>
+          <div class="pc-feat">AI-Powered Creative Solutions</div>
+          <div class="pc-feat">Impact Potential & Next Steps</div>
+        </div>
+        <button class="pc-btn">Generate Proposal <span>→</span></button>
+        <div class="pc-bg-num">03</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 8: FINAL CTA
+  ═══════════════════════════════════════ -->
+  <section class="section" style="border-top:1px solid var(--border);padding-bottom:40px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:72px 64px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,var(--glow-purple) 0%,transparent 70%);pointer-events:none"></div>
+      <div class="section-label" style="margin-bottom:24px">The Invitation</div>
+      <h2 style="font-family:'Inter',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:24px">Stop Buying Ads.<br><span style="color:var(--signal)">Start Buying Outcomes.</span></h2>
+      <p style="font-size:16px;color:var(--muted-foreground);max-width:480px;margin:0 auto 40px;line-height:1.7">Get your free AI Brand Audit and see the future of your marketing. The first step takes 60 seconds.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-primary" style="padding:16px 40px;font-size:15px" onclick="showPage('intel')">Generate My Report →</button>
+        <button class="btn-ghost" style="padding:16px 40px;font-size:15px" onclick="openModal('demoModal')">Schedule a Demo</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo"><img src="/assets/images/fynd-logo-white.png" alt="Fynd" class="footer-logo-img"><img src="/assets/images/fynd-logo-black.png" alt="Fynd" class="footer-logo-img nav-logo-light"></div>
+    <div class="footer-copy">© 2026 Fynd Studio. AI-powered creative intelligence for India's next brands.</div>
+    <div class="footer-links">
+      <a href="#" onclick="openModal('demoModal')">Book Demo</a>
+      <a href="#">Privacy</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+</div>
+<!-- ════════════════════════════════
+     CREATIVE INTEL PAGE
+════════════════════════════════ -->
+<div id="page-intel" class="page">
+  <div class="intel-hero">
+    <div class="section-label">Creative Intel · Page 01</div>
+    <h1 class="section-title">Your 60-second<br>Creative Health Check.</h1>
+    <p class="intel-hero-desc">Enter your brand URL below. Our AI engine will analyse your creative presence, benchmark against market leaders, and surface exactly where you're losing ground — and money.</p>
+  </div>
+
+  <div class="input-section">
+    <div class="form-card">
+      <div class="form-title">Run Your Brand Audit</div>
+      <div class="form-sub">Takes ~45 seconds. No credit card required.</div>
+      <div class="form-row">
+        <div class="form-group"><label>Brand Name *</label><input type="text" id="brandName" placeholder="e.g. Bewakoof, Nykaa, boAt"></div>
+        <div class="form-group"><label>Website URLs *</label>
+          <div class="url-list" id="urlList">
+            <div class="url-row"><input type="url" class="brand-url-input" placeholder="https://yourbrand.com" required><button class="url-remove-btn" onclick="removeUrl(this)" style="display:none" title="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+          </div>
+          <button class="url-add-btn" type="button" onclick="addUrl()"><span style="font-size:16px;font-weight:600">+</span> Add another URL</button>
+          <div style="font-size:11px;color:var(--mid);margin-top:8px">Add your website, Instagram, YouTube, or any brand URL. We crawl all of them.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Primary Category</label>
+          <select id="brandCategory"><option value="">Select category</option><option>Fashion & Apparel</option><option>Beauty & Skincare</option><option>Food & Beverage</option><option>Consumer Electronics</option><option>Home & Living</option><option>Health & Wellness</option><option>D2C / E-Commerce</option><option>FMCG</option></select>
+        </div>
+        <div class="form-group"><label>Market Segment</label>
+          <select id="brandSegment"><option value="">Select segment</option><option>Luxury</option><option>Premium Mid-Market</option><option>Mass Market</option><option>Value / Budget</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Instagram Handle</label><input type="text" id="brandInsta" placeholder="@yourbrand"></div>
+        <div class="form-group"><label>Monthly Ad Spend (₹)</label>
+          <select id="brandSpend"><option value="">Select range</option><option>Under ₹5 Lakhs</option><option>₹5–20 Lakhs</option><option>₹20–50 Lakhs</option><option>₹50 Lakhs–2 Crore</option><option>Above ₹2 Crore</option></select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="analyze-btn" id="analyzeBtn" onclick="runAnalysis()">
+          <span id="btnText">Analyse My Brand</span>
+          <div class="spinner" id="btnSpinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-section" id="resultsSection">
+
+    <!-- ═══ RESULTS HEADER ═══ -->
+    <div class="dash-card" style="margin-bottom:24px">
+      <div class="dash-card-header row-center">
+        <div style="display:flex;gap:16px;align-items:center">
+          <div class="brand-avatar" id="brandAvatar">—</div>
+          <div>
+            <div class="dash-card-title" id="resultBrandName">Brand Name</div>
+            <div class="dash-card-desc" style="text-transform:none;letter-spacing:0.01em;font-weight:400" id="resultBrandMeta">Category · Segment · March 2026</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary btn-sm" onclick="showPage('battle')">View Full Battle Card →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ AI TOP INSIGHT CARD ═══ -->
+    <div class="dash-card" style="margin-bottom:24px">
+      <div class="dash-card-header row-center" style="gap:24px;padding:24px">
+        <div style="display:flex;gap:16px;align-items:center;flex:1">
+          <div style="flex-shrink:0;width:40px;height:40px;border-radius:var(--border-radius--8,8px);background:var(--foreground);display:flex;align-items:center;justify-content:center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-foreground)" stroke-width="2"><polygon points="12,2 15,9 22,9 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9 9,9"/></svg>
+          </div>
+          <div style="flex:1">
+            <div class="dash-card-desc" style="margin-bottom:8px">AI Key Finding</div>
+            <div id="topInsight" style="font-size:15px;font-weight:500;color:var(--foreground);line-height:1.65">Run the audit to see your top insight.</div>
+          </div>
+        </div>
+        <div style="flex-shrink:0;text-align:center;padding:var(--spacing--16,16px) var(--spacing--24,24px);background:var(--muted);border:1px solid var(--border);border-radius:var(--border-radius--8,8px);min-width:80px">
+          <div class="dash-card-desc" style="margin-bottom:8px">Grade</div>
+          <div id="overallGrade" class="dash-grade">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TRANSPARENCY DISCLAIMER ═══ -->
+    <div id="transparencyBar" class="transparency-bar" style="display:none">
+      <div class="tb-icon">&#9432;</div>
+      <div><span class="tb-label">AI-Generated Analysis</span> <span id="transparencyText">Scores estimated from public content analysis and category benchmarks. For precise metrics including conversion rates and regional performance, brand analytics integration required.</span> <span style="color:var(--primary);cursor:pointer;font-weight:500" onclick="document.getElementById('sourcesSection').scrollIntoView({behavior:'smooth'})">View sources ↓</span></div>
+    </div>
+
+    <!-- ═══ SCORE CARDS GRID (shadcn dashboard pattern) ═══ -->
+    <div class="dash-scores-grid">
+      <!-- Score: Creative Velocity -->
+      <div class="dash-card">
+        <div class="dash-card-header row">
+          <div class="dash-card-header-col">
+            <div class="dash-card-desc">Creative Velocity Score</div>
+            <div class="dash-card-title tabnum" id="score-velocity">—</div>
+          </div>
+          <div class="dash-card-action" id="conf-velocity"></div>
+        </div>
+        <div class="dash-card-content">
+          <div class="score-bar"><div class="score-fill danger" id="bar-velocity" style="width:0%"></div></div>
+        </div>
+        <div class="dash-card-footer">
+          <div class="dash-footer-text" id="delta-velocity">—</div>
+          <div class="dash-footer-sub">How fast you publish new creative content compared to category leaders.</div>
+          <div class="methodology-toggle" onclick="toggleMethod('meth-velocity')">&#9662; How was this calculated?</div>
+          <div class="methodology-panel" id="meth-velocity"></div>
+        </div>
+      </div>
+      <!-- Score: Visual Stagnation -->
+      <div class="dash-card">
+        <div class="dash-card-header row">
+          <div class="dash-card-header-col">
+            <div class="dash-card-desc">Visual Stagnation Risk</div>
+            <div class="dash-card-title tabnum" id="score-stagnation">—</div>
+          </div>
+          <div class="dash-card-action" id="conf-stagnation"></div>
+        </div>
+        <div class="dash-card-content">
+          <div class="score-bar"><div class="score-fill warn" id="bar-stagnation" style="width:0%"></div></div>
+        </div>
+        <div class="dash-card-footer">
+          <div class="dash-footer-text" id="delta-stagnation">—</div>
+          <div class="dash-footer-sub">Risk of creative fatigue — are your visuals repetitive? Higher = higher risk.</div>
+          <div class="methodology-toggle" onclick="toggleMethod('meth-stagnation')">&#9662; How was this calculated?</div>
+          <div class="methodology-panel" id="meth-stagnation"></div>
+        </div>
+      </div>
+      <!-- Score: Regional Relevancy -->
+      <div class="dash-card">
+        <div class="dash-card-header row">
+          <div class="dash-card-header-col">
+            <div class="dash-card-desc">Regional Relevancy Index</div>
+            <div class="dash-card-title tabnum" id="score-regional">—</div>
+          </div>
+          <div class="dash-card-action" id="conf-regional"></div>
+        </div>
+        <div class="dash-card-content">
+          <div class="score-bar"><div class="score-fill warn" id="bar-regional" style="width:0%"></div></div>
+        </div>
+        <div class="dash-card-footer">
+          <div class="dash-footer-text" id="delta-regional">—</div>
+          <div class="dash-footer-sub">How well your brand covers India's regional markets — Tier 2/3 cities, vernacular content.</div>
+          <div class="methodology-toggle" onclick="toggleMethod('meth-regional')">&#9662; How was this calculated?</div>
+          <div class="methodology-panel" id="meth-regional"></div>
+        </div>
+      </div>
+      <!-- Score: AI Opportunity -->
+      <div class="dash-card">
+        <div class="dash-card-header row">
+          <div class="dash-card-header-col">
+            <div class="dash-card-desc">AI Opportunity Score</div>
+            <div class="dash-card-title tabnum" id="score-ai">—</div>
+          </div>
+          <div class="dash-card-action" id="conf-ai"></div>
+        </div>
+        <div class="dash-card-content">
+          <div class="score-bar"><div class="score-fill danger" id="bar-ai" style="width:0%"></div></div>
+        </div>
+        <div class="dash-card-footer">
+          <div class="dash-footer-text" id="delta-ai">—</div>
+          <div class="dash-footer-sub">How much your brand can benefit from AI-powered creative tools.</div>
+          <div class="methodology-toggle" onclick="toggleMethod('meth-ai')">&#9662; How was this calculated?</div>
+          <div class="methodology-panel" id="meth-ai"></div>
+        </div>
+      </div>
+      <!-- Score: Platform Compliance -->
+      <div class="dash-card">
+        <div class="dash-card-header row">
+          <div class="dash-card-header-col">
+            <div class="dash-card-desc">Platform Compliance Score</div>
+            <div class="dash-card-title tabnum" id="score-platform">—</div>
+          </div>
+          <div class="dash-card-action" id="conf-platform"></div>
+        </div>
+        <div class="dash-card-content">
+          <div class="score-bar"><div class="score-fill good" id="bar-platform" style="width:0%"></div></div>
+        </div>
+        <div class="dash-card-footer">
+          <div class="dash-footer-text" id="delta-platform">—</div>
+          <div class="dash-footer-sub">How well your content fits platform best practices — aspect ratios, formats, posting frequency.</div>
+          <div class="methodology-toggle" onclick="toggleMethod('meth-platform')">&#9662; How was this calculated?</div>
+          <div class="methodology-panel" id="meth-platform"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SAVINGS + ALERTS (2-column card layout) ═══ -->
+    <div class="dash-two-col">
+
+      <!-- SAVINGS CARD -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div class="dash-card-desc">AI vs Traditional</div>
+          <div class="dash-card-title" style="font-size:18px;text-transform:none;letter-spacing:-0.01em">How Much Could You Save?</div>
+        </div>
+        <div class="dash-card-content">
+          <!-- Big savings number — centrepiece stat -->
+          <div class="savings-highlight">
+            <div class="dash-card-desc" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Estimated Annual Savings</div>
+            <div class="savings-num" id="savingsAmount">—</div>
+            <div style="font-size:12px;margin-top:8px;color:var(--muted-foreground)">per year switching to AI-powered creative production</div>
+          </div>
+          <!-- Note banner -->
+          <div class="note-banner">
+            <strong>&#9432; Note:</strong> Assumes manual/agency creative production. Actual savings vary if AI tools already in use.
+          </div>
+          <!-- Cost comparison table -->
+          <div class="dash-card-desc" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Cost Comparison</div>
+          <div style="display:grid;grid-template-columns:1fr 80px 60px;gap:4px;font-size:11px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted-foreground);padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:4px">
+            <span>Service</span><span style="text-align:right">Traditional</span><span style="text-align:right">AI</span>
+          </div>
+          <div id="savingsBreakdown"></div>
+          <div id="savingsMethodologyWrap" style="display:none;margin-top:16px">
+            <div class="methodology-toggle" onclick="toggleMethod('savings-methodology')">&#9662; How was this estimated?</div>
+            <div class="methodology-panel" id="savings-methodology"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALERTS + REGIONAL CARD -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div class="dash-card-desc">Immediate Attention</div>
+          <div class="dash-card-title" style="font-size:16px;text-transform:none;letter-spacing:-0.01em">Creative Risk Alerts</div>
+        </div>
+        <div class="dash-card-content">
+          <div class="alert-list" id="alertList"></div>
+        </div>
+        <div class="dash-card-footer" style="flex-direction:column;gap:12px">
+          <div>
+            <div class="dash-card-desc" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px">Regional Presence Gaps</div>
+            <div id="regionalGrid"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ PRIORITY ACTIONS + COMPETITOR BENCHMARK ═══ -->
+    <div class="dash-two-col">
+      <div class="dash-card">
+        <div class="dash-card-header row-center">
+          <div class="dash-card-header-col">
+            <div class="dash-card-desc">What to do next</div>
+            <div class="dash-card-title" style="font-size:16px;text-transform:none;letter-spacing:-0.01em">AI-Prioritised Action Plan</div>
+          </div>
+          <div class="dash-card-action"><span class="dash-outline-badge">Top 3</span></div>
+        </div>
+        <div class="dash-card-content">
+          <div id="priorityActions"><div style="color:var(--muted-foreground);font-size:14px;padding:24px 0;text-align:center">Run audit to see your action plan.</div></div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-header row-center">
+          <div class="dash-card-header-col">
+            <div class="dash-card-desc">Category Analysis</div>
+            <div class="dash-card-title" style="font-size:16px;text-transform:none;letter-spacing:-0.01em">Competitor Benchmark</div>
+          </div>
+          <div class="dash-card-action"><span class="dash-outline-badge">vs. Leaders</span></div>
+        </div>
+        <div class="dash-card-content">
+          <div id="competitorBenchmark"><div style="color:var(--muted-foreground);font-size:14px;padding:24px 0;text-align:center">Run audit to see category benchmarks.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ DATA SOURCES & METHODOLOGY ═══ -->
+    <div id="sourcesSection" class="dash-card" style="display:none;margin-bottom:0">
+      <div class="dash-card-header row">
+        <div class="dash-card-header-col">
+          <div class="dash-card-desc">Analysis References</div>
+          <div class="dash-card-title" style="font-size:16px;text-transform:none;letter-spacing:-0.01em">Data Sources & Methodology</div>
+        </div>
+        <div class="dash-card-action" style="display:flex;gap:12px;align-items:center">
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted-foreground)"><span style="width:6px;height:6px;border-radius:50%;background:var(--primary);display:inline-block"></span> High</div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted-foreground)"><span style="width:6px;height:6px;border-radius:50%;background:var(--muted-foreground);display:inline-block"></span> Medium</div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted-foreground)"><span style="width:6px;height:6px;border-radius:50%;background:var(--destructive);display:inline-block"></span> Low</div>
+        </div>
+      </div>
+      <div class="dash-card-content">
+        <div id="sourcesList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+        <div id="disclaimerText" class="note-banner" style="margin-top:var(--spacing--16,16px)"></div>
+      </div>
+    </div>
+
+    <!-- ═══ CTA STRIP ═══ -->
+    <div class="dash-card" style="margin-top:24px">
+      <div class="dash-card-header row-center">
+        <div class="dash-card-header-col">
+          <div class="dash-card-title" style="font-size:18px;text-transform:none;letter-spacing:-0.01em">Ready to close the gap?</div>
+          <div class="dash-card-desc" style="text-transform:none;letter-spacing:0.01em;font-weight:400">Get the full Battle Card — AI campaign concepts, competitor analysis, Ogilvy strategy, and a 12-month ROI forecast.</div>
+        </div>
+        <div class="dash-card-action" style="display:flex;gap:12px;flex-shrink:0">
+          <button class="btn-primary" onclick="showPage('battle')">Generate Full Battle Card →</button>
+          <button class="btn-ghost" onclick="openModal('demoModal')">Schedule a Demo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo"><img src="/assets/images/fynd-logo-white.png" alt="Fynd" class="footer-logo-img"><img src="/assets/images/fynd-logo-black.png" alt="Fynd" class="footer-logo-img nav-logo-light"></div>
+    <div class="footer-copy">© 2026 Fynd Studio</div>
+    <div class="footer-links"><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('battle')">Battle Cards</a></div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════
+     BATTLE CARDS PAGE
+════════════════════════════════ -->
+<div id="page-battle" class="page">
+  <div class="battle-hero">
+    <div class="battle-hero-left">
+      <div class="section-label">Brand Battle Cards · Page 02</div>
+      <h1 class="section-title">Your AI-powered<br>Strategic Playbook.</h1>
+      <p>A data-rich tactical report mapping untapped markets, AI campaign concepts, competitor breakdowns, granular ROI projections — and a full Ogilvy-style ad campaign strategy generated live by AI.</p>
+      <button class="btn-ghost" style="align-self:flex-start" onclick="document.getElementById('playbook').scrollIntoView({behavior:'smooth'})">View Playbook ↓</button>
+    </div>
+    <div class="dash-card" style="margin-bottom:0">
+      <div class="dash-card-header row-center">
+        <div class="dash-card-header-col">
+          <div class="dash-card-desc" style="display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Live Battle Card Preview</div>
+          <div class="dash-card-title" style="font-size:15px;text-transform:none;letter-spacing:-0.01em">Creative Health Snapshot</div>
+        </div>
+        <div class="dash-card-action"><span class="dash-badge good">Live</span></div>
+      </div>
+      <div class="dash-card-content">
+        <div class="hcp-score-row">
+          <div class="hcp-score"><div class="hcp-score-num">78</div><div class="hcp-score-lbl">AI Opportunity</div></div>
+          <div class="hcp-score"><div class="hcp-score-num">₹62L</div><div class="hcp-score-lbl">Est. Savings/Yr</div></div>
+          <div class="hcp-score"><div class="hcp-score-num">+33%</div><div class="hcp-score-lbl">CTR Lift Potential</div></div>
+        </div>
+      </div>
+      <div class="dash-card-footer" style="gap:10px">
+        <div class="alert-item red"><div class="alert-icon"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--destructive);flex-shrink:0"></span></div><div class="alert-text"><strong>Content Velocity:</strong> Posting 4× less than category leaders. Algorithm visibility dropping.</div></div>
+        <div class="alert-item yellow"><div class="alert-icon"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></span></div><div class="alert-text"><strong>Festival Gap:</strong> Missing Onam, Pongal & Eid campaigns for South & West India.</div></div>
+        <div class="alert-item green"><div class="alert-icon"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0"></span></div><div class="alert-text"><strong>Ogilvy Strategy Ready:</strong> AI can generate full 3-act campaign strategy in seconds.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="playbook-section" id="playbook" style="padding:80px 48px 80px;margin:0 auto;max-width:1200px">
+    <div class="dash-card" style="margin-bottom:32px">
+      <div class="dash-card-header row-center">
+        <div class="dash-card-header-col">
+          <div class="dash-card-desc">Dynamic Playbook</div>
+          <div class="dash-card-title" id="playbookTitle" style="font-size:20px;text-transform:none;letter-spacing:-0.01em">Bewakoof · March 2026</div>
+        </div>
+        <div class="dash-card-action" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:12px;color:var(--muted-foreground)">Report for:</span>
+            <span style="font-size:13px;font-weight:600;color:var(--foreground);font-family:'Inter',sans-serif">Bewakoof</span>
+            <span style="font-size:11px;color:var(--muted-foreground);font-family:'Inter',sans-serif">· Fashion &amp; Apparel · March 2026</span>
+          </div>
+          <button class="btn-ghost btn-sm" onclick="openModal('pdfModal')">Download PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS — 5 tabs now including Ogilvy -->
+    <div class="battle-tabs">
+      <div class="btab active" onclick="switchBattleTab('market',this)">Market Capture</div>
+      <div class="btab" onclick="switchBattleTab('competitor',this)">Competitor Plan</div>
+      <div class="btab" onclick="switchBattleTab('concepts',this)">AI Concepts</div>
+      <div class="btab" onclick="switchBattleTab('roi',this)">Cost & ROI</div>
+      <div class="btab btab-strategy" onclick="switchBattleTab('ogilvy',this)">👑 Strategy</div>
+    </div>
+
+    <!-- TAB: MARKET CAPTURE -->
+    <div id="tab-market" class="btab-content active">
+      <div class="section-loading" style="text-align:center;padding:48px;color:var(--muted-foreground)">Market intelligence will appear here after analysis</div>
+    </div>
+
+        <!-- TAB: COMPETITOR -->
+    <div id="tab-competitor" class="btab-content">
+      <div class="comp-grid">
+        <div class="section-loading" style="text-align:center;padding:48px;color:var(--muted-foreground)">Competitor analysis will appear here after analysis</div>
+      </div>
+    </div>
+
+    <!-- TAB: AI CONCEPTS (generated on-demand) -->
+    <div id="tab-concepts" class="btab-content">
+      <div class="section-loading" style="text-align:center;padding:48px;color:var(--muted-foreground)">AI concepts will appear here after analysis</div>
+    </div>
+
+    <!-- TAB: COST & ROI -->
+    <div id="tab-roi" class="btab-content">
+
+
+      <div class="roi-split">
+
+        <!-- ═══ LEFT: SERVICE SELECTOR ═══ -->
+        <div style="display:flex;flex-direction:column;gap:8px">
+
+          <!-- Video Ads -->
+          <div class="roi-service" id="roi-card-video">
+            <div class="roi-service-head">
+              <div class="roi-chk"><input type="checkbox" id="r2-chk-video" checked onchange="roiCalc()"><div class="roi-chk-vis"></div></div>
+              <div style="flex:1">
+                <div style="font-size:14px;font-weight:600;color:var(--paper)">Video Ads</div>
+                <div style="font-size:11px;color:var(--mid)">30–120s brand videos</div>
+              </div>
+              <div class="roi-price">
+                <div class="roi-price-ai" id="r2-ai-video">₹1L–₹2L</div>
+                <div class="roi-price-trad" id="r2-trad-video">₹12L–₹25L</div>
+              </div>
+            </div>
+            <div class="roi-slider-row">
+              <div class="roi-slider-wrap">
+                <input type="range" min="1" max="4" value="1" id="r2-slider-video" class="roi-range" oninput="roiCalc()">
+                <div style="display:flex;justify-content:space-between;padding:4px 2px 0;font-size:10px;color:var(--muted-foreground)"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+              </div>
+              <div class="roi-qty" id="r2-lbl-video">1</div>
+              <div style="font-size:11px;color:var(--mid);min-width:40px">/month</div>
+            </div>
+          </div>
+
+          <!-- Photoshoots -->
+          <div class="roi-service" id="roi-card-photo">
+            <div class="roi-service-head">
+              <div class="roi-chk"><input type="checkbox" id="r2-chk-photo" checked onchange="roiCalc()"><div class="roi-chk-vis"></div></div>
+              <div style="flex:1">
+                <div style="font-size:14px;font-weight:600;color:var(--paper)">Photoshoots</div>
+                <div style="font-size:11px;color:var(--mid)">50 SKUs per batch</div>
+              </div>
+              <div class="roi-price">
+                <div class="roi-price-ai" id="r2-ai-photo">₹10K–₹60K</div>
+                <div class="roi-price-trad" id="r2-trad-photo">₹8L–₹15L</div>
+              </div>
+            </div>
+            <div class="roi-slider-row">
+              <div class="roi-slider-wrap">
+                <input type="range" min="1" max="3" value="1" id="r2-slider-photo" class="roi-range" oninput="roiCalc()">
+                <div style="display:flex;justify-content:space-between;padding:4px 2px 0;font-size:10px;color:var(--muted-foreground)"><span>1</span><span>2</span><span>3</span></div>
+              </div>
+              <div class="roi-qty" id="r2-lbl-photo">1</div>
+              <div style="font-size:11px;color:var(--mid);min-width:40px">/month</div>
+            </div>
+          </div>
+
+          <!-- Campaigns -->
+          <div class="roi-service" id="roi-card-festival">
+            <div class="roi-service-head">
+              <div class="roi-chk"><input type="checkbox" id="r2-chk-festival" checked onchange="roiCalc()"><div class="roi-chk-vis"></div></div>
+              <div style="flex:1">
+                <div style="font-size:14px;font-weight:600;color:var(--paper)">Campaigns</div>
+                <div style="font-size:11px;color:var(--mid)">Full creative campaigns</div>
+              </div>
+              <div class="roi-price">
+                <div class="roi-price-ai" id="r2-ai-festival">₹3L</div>
+                <div class="roi-price-trad" id="r2-trad-festival">₹6L–₹12L</div>
+              </div>
+            </div>
+            <div class="roi-slider-row">
+              <div class="roi-slider-wrap">
+                <input type="range" min="1" max="5" value="1" id="r2-slider-festival" class="roi-range" oninput="roiCalc()">
+                <div style="display:flex;justify-content:space-between;padding:4px 2px 0;font-size:10px;color:var(--muted-foreground)"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+              </div>
+              <div class="roi-qty" id="r2-lbl-festival">1</div>
+              <div style="font-size:11px;color:var(--mid);min-width:40px">/month</div>
+            </div>
+          </div>
+
+          <!-- Reels -->
+          <div class="roi-service" id="roi-card-reels">
+            <div class="roi-service-head">
+              <div class="roi-chk"><input type="checkbox" id="r2-chk-reels" checked onchange="roiCalc()"><div class="roi-chk-vis"></div></div>
+              <div style="flex:1">
+                <div style="font-size:14px;font-weight:600;color:var(--paper)">Reels</div>
+                <div style="font-size:11px;color:var(--mid)">Short-form 15–30s videos</div>
+              </div>
+              <div class="roi-price">
+                <div class="roi-price-ai" id="r2-ai-reels">₹25K–₹50K</div>
+                <div class="roi-price-trad" id="r2-trad-reels">₹4L–₹8L</div>
+              </div>
+            </div>
+            <div class="roi-slider-row">
+              <div class="roi-slider-wrap">
+                <input type="range" min="1" max="4" value="1" id="r2-slider-reels" class="roi-range" oninput="roiCalc()">
+                <div style="display:flex;justify-content:space-between;padding:4px 2px 0;font-size:10px;color:var(--muted-foreground)"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+              </div>
+              <div class="roi-qty" id="r2-lbl-reels">1</div>
+              <div style="font-size:11px;color:var(--mid);min-width:40px">/month</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ═══ RIGHT: TOTAL COST CARD ═══ -->
+        <div class="roi-summary">
+
+          <div class="roi-total-label">Your Monthly AI-First Cost</div>
+          <div class="roi-total-num" id="r2-ai-total">₹5.2L</div>
+
+          <div class="roi-stat-row">
+            <span class="roi-stat-key">Traditional cost/mo</span>
+            <span class="roi-stat-val" id="r2-trad-total" style="text-decoration:line-through;color:var(--muted-foreground)">₹45L</span>
+          </div>
+          <div class="roi-stat-row">
+            <span class="roi-stat-key">Monthly savings</span>
+            <span class="roi-stat-val hl" id="r2-savings-hero">₹39.8L/yr</span>
+          </div>
+          <div class="roi-stat-row">
+            <span class="roi-stat-key">Cost reduction</span>
+            <span class="roi-stat-val hl" id="r2-badge">↓ 88%</span>
+          </div>
+
+          <div style="height:1px;background:var(--border);margin:16px 0"></div>
+
+          <div class="roi-stat-row">
+            <span class="roi-stat-key">Turnaround</span>
+            <span class="roi-stat-val hl">48 hours</span>
+          </div>
+          <div class="roi-stat-row">
+            <span class="roi-stat-key">Content pieces/mo</span>
+            <span class="roi-stat-val" id="r2-pieces">~69</span>
+          </div>
+          <div class="roi-stat-row">
+            <span class="roi-stat-key">CTR uplift</span>
+            <span class="roi-stat-val hl">+33–41%</span>
+          </div>
+          <div class="roi-stat-row">
+            <span class="roi-stat-key">Est. Y1 revenue</span>
+            <span class="roi-stat-val signal" id="r2-revenue">+₹19.1L</span>
+          </div>
+
+          <button class="btn-primary" onclick="openModal('demoModal')" style="width:100%;margin-top:24px">Get a Precise Quote →</button>
+          <div style="font-size:10px;color:var(--muted-foreground);margin-top:16px;line-height:1.5;text-align:center">Caspa AI 2025 · WizCommerce India 2026</div>
+        </div>
+
+      </div>
+    </div>
+
+            <!-- TAB: STRATEGY (GATED) -->
+    <div id="tab-ogilvy" class="btab-content">
+
+      <!-- GATE OVERLAY -->
+      <div id="strategyGate" style="position:relative">
+        <div class="dash-card" style="padding:60px 40px;text-align:center">
+          <div class="dash-card-content" style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:0">
+            <div style="width:56px;height:56px;border-radius:12px;background:var(--muted);display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:700;color:var(--foreground);letter-spacing:-0.01em">Unlock Full AI Campaign Strategy</div>
+            <div style="font-size:14px;color:var(--muted-foreground);max-width:480px;line-height:1.7">Get the complete Ogilvy-style campaign strategy — slogan, three-act formula, campaign themes, story plots, and pitfall warnings — generated by AI for your brand.</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap;justify-content:center">
+              <input type="email" id="strategyEmail" placeholder="Enter your work email" style="min-width:280px;padding:12px 20px;font-size:14px;border-radius:6px;background:var(--background);border:1px solid var(--border);color:var(--foreground);font-family:'Inter',sans-serif;outline:none">
+              <button class="btn-ghost" onclick="unlockStrategy()">Unlock Strategy →</button>
+            </div>
+            <div style="font-size:11px;color:var(--muted-foreground)">Free. No credit card. Instant access.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRATEGY CONTENT (hidden until unlocked) -->
+      <div id="strategyContent" style="display:none">
+      <div class="ogilvy-container">
+
+        <!-- HEADER -->
+        <div class="dash-card" style="margin-bottom:24px">
+          <div class="dash-card-header">
+            <div class="dash-card-desc">Ogilvy India Formula · Bewakoof · Fashion & Apparel</div>
+            <div class="dash-card-title" style="font-size:22px;margin:4px 0">AI Campaign Strategy</div>
+          </div>
+          <div class="dash-card-content">
+            <div style="font-size:14px;color:var(--muted-foreground);line-height:1.6">Applies the Piyush Pandey–Ogilvy India method — ONE product truth, a two-level slogan, 3-act story plots, and campaign themes built to run for 10+ years.</div>
+          </div>
+        </div>
+
+        <!-- SLOGAN + TRUTH BLOCK -->
+        <div class="strategy-block">
+          <div class="strategy-block-title">The Slogan</div>
+          <div class="slogan-box">
+            <div class="slogan-text">"Bewakoof Raho."</div>
+            <div class="slogan-translation" style="color:var(--electric)">"Stay Foolish. Stay Free."</div>
+            <div class="slogan-explain">The word 'Bewakoof' means foolish — but owning it as a badge of honour flips the script. The person who ignores social pressure to dress boldly, take risks, and express themselves is the freest person in the room. This is not a tagline. It is a philosophy that your core customer already lives by. You just need to name it for them.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px">
+              <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:8px">Product Truth</div>
+              <div style="font-size:16px;font-weight:500;color:var(--paper)">Affordable, bold design that lets you dress like yourself — not like everyone else.</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px">
+              <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:8px">Human Emotion</div>
+              <div style="font-size:16px;font-weight:500;color:var(--electric)">The quiet courage of not caring what others think — and the joy that follows.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THREE-ACT FORMULA -->
+        <div class="strategy-block" style="margin-top:8px">
+          <div class="strategy-block-title">The Three-Act Formula</div>
+          <p style="font-size:16px;color:var(--mid);margin-bottom:24px;line-height:1.6">The product is never the hero. The <em style="color:var(--paper)">situation</em> is the hero. The product is the punchline.</p>
+          <table class="three-act-table">
+            <thead><tr><th>Act</th><th>Duration</th><th>Purpose &amp; Approach</th><th>Brain Chemistry</th></tr></thead>
+            <tbody>
+              <tr><td><strong>01</strong></td><td>0–7s</td><td>Set up a recognisable social situation. No brand. No product. Just a truth that makes the viewer say "that's me."</td><td>Pattern recognition · Dopamine trigger</td></tr>
+              <tr><td><strong>02</strong></td><td>8–22s</td><td>Escalate the tension. The character faces a choice between conformity and self-expression. Stakes feel real.</td><td>Cortisol + empathy · Leaning forward</td></tr>
+              <tr><td><strong>03</strong></td><td>23–30s</td><td>Character chooses freedom. The Bewakoof piece appears naturally — worn, used, chosen. "Bewakoof Raho." fades in. Relief + aspiration.</td><td>Oxytocin + brand encoding</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- CAMPAIGN THEMES -->
+        <div class="strategy-block" style="margin-top:8px">
+          <div class="strategy-block-title">Campaign Themes</div>
+          <p style="font-size:16px;color:var(--mid);margin-bottom:8px;line-height:1.6">Each theme is a well from which dozens of stories can be drawn over 10+ years.</p>
+          <div class="themes-grid">
+            <div class="theme-card"><div class="theme-num">01</div><div class="theme-name">The Brave Bewakoof</div><div class="theme-sub">When being "different" turns out to be the point</div><div class="theme-desc">Mines the tension between conformity and self-expression that every young Indian feels. The hero looks foolish by conventional standards — but turns out to be the only truly free person in the room. References Cadbury's girl-dancing-on-cricket-field insight: the most authentic person is always the most joyful. Works for campus, workplace, family occasions.</div></div>
+            <div class="theme-card"><div class="theme-num">02</div><div class="theme-name">Bewakoof Bonds</div><div class="theme-sub">The friends who got each other when no one else did</div><div class="theme-desc">Celebrates the deep, irrational loyalty of friendships forged through shared weirdness. The most lasting Indian friendships aren't built on similarity — they're built on mutual bewakoofi. Emotionally adjacent to Fevicol's "bond that won't break" but rooted in Gen Z's found-family culture. Highest shareability of all four themes.</div></div>
+            <div class="theme-card"><div class="theme-num">03</div><div class="theme-name">The Nationwide Bewakoof Map</div><div class="theme-sub">Every city has its own beautiful madness</div><div class="theme-desc">Celebrates regional quirks as authentic self-expression. What makes a Mumbaikar, Delhiite, or Bangalorean "bewakoof" in the best sense? Each city's version of joyful nonconformity becomes a campaign story. Creates strong regional relevance while building national identity — ideal for the Tier 2 expansion opportunity identified in Market Capture.</div></div>
+            <div class="theme-card"><div class="theme-num">04</div><div class="theme-name">First Time Bewakoof</div><div class="theme-sub">The terrifying, glorious first time you said "forget it, I'm doing this"</div><div class="theme-desc">Life's best moments often look stupid to observers. First time wearing something bold, first time quitting a stable job, first time telling someone you love them in public. Mines the universal moment of choosing aliveness over safety. Aspirational without being unrelatable — every viewer has their own version of this story.</div></div>
+          </div>
+        </div>
+
+        <!-- STORY PLOTS -->
+        <div class="strategy-block" style="margin-top:8px">
+          <div class="strategy-block-title">Story Plots</div>
+          <p style="font-size:16px;color:var(--mid);margin-bottom:16px;line-height:1.6">Filmable three-act plots. Product appears only in Act 3 — maximum 3–5 seconds of brand visibility.</p>
+          <div class="story-plots">
+            <div class="story-card">
+              <div class="story-theme-tag">Theme 01: The Brave Bewakoof</div>
+              <div class="story-title">The Interview</div>
+              <div class="story-acts">
+                <div class="story-act"><div class="act-label">Act 1 · 0–7s</div><div class="act-desc">A packed Mumbai local. Everyone in identical formal whites and navies. One person in a bold Bewakoof graphic tee stands out — heads turn, eyebrows raise. They don't notice. They're listening to music.</div></div>
+                <div class="story-act"><div class="act-label">Act 2 · 8–22s</div><div class="act-desc">Interview waiting room. Same formal crowd. The interviewer — in her 40s, clearly seen it all — walks out and scans the room. Pauses at the bold tee. Long beat. The candidate's hands grip their portfolio tighter.</div></div>
+                <div class="story-act"><div class="act-label">Act 3 · 23–30s</div><div class="act-desc">The interviewer smiles. "You're the one who sent the brief that actually said something." They walk in together. The Bewakoof logo is visible on the back of the tee for 3 seconds. "Bewakoof Raho." Cut to black.</div></div>
+              </div>
+            </div>
+            <div class="story-card">
+              <div class="story-theme-tag">Theme 02: Bewakoof Bonds</div>
+              <div class="story-title">The 2AM Call</div>
+              <div class="story-acts">
+                <div class="story-act"><div class="act-label">Act 1 · 0–7s</div><div class="act-desc">WhatsApp group "College Bewakoofe " lights up at 2am. Four faces illuminated by phones in four cities. "Raj's wedding is in 23 hours. Where is everyone?"</div></div>
+                <div class="story-act"><div class="act-label">Act 2 · 8–22s</div><div class="act-desc">A montage of improbable journeys — a last-minute flight, a sleeper bus, a borrowed scooter at midnight. Each friend in their own Bewakoof piece, each grinning at the absurdity of what they're doing.</div></div>
+                <div class="story-act"><div class="act-label">Act 3 · 23–30s</div><div class="act-desc">All four arrive simultaneously at the venue, dishevelled, laughing. Raj stares. "You're all idiots." Beat. "I knew you'd come." Group hug. Bewakoof logo visible across four different tees. "Bewakoof Raho."</div></div>
+              </div>
+            </div>
+            <div class="story-card">
+              <div class="story-theme-tag">Theme 04: First Time Bewakoof</div>
+              <div class="story-title">The Quit</div>
+              <div class="story-acts">
+                <div class="story-act"><div class="act-label">Act 1 · 0–7s</div><div class="act-desc">A grey open-plan office. Everyone in identical formals. One person staring at a screen showing their real passion — illustration, music, design. Their desk has a resignation letter in the drawer. It's been there 6 months.</div></div>
+                <div class="story-act"><div class="act-label">Act 2 · 8–22s</div><div class="act-desc">They're about to close the drawer again. Then they see a colleague walk past — comfortable, authentic, unbothered. Something shifts. They open the letter. Type one final thing. Hit send.</div></div>
+                <div class="story-act"><div class="act-label">Act 3 · 23–30s</div><div class="act-desc">Walking out of the building, jacket over shoulder, slow grin spreading. They call someone: "I did it." Beat. "Yes, I wore the Bewakoof shirt." Logo visible on their chest for 3 seconds. "Bewakoof Raho." Cut to black.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PITFALLS -->
+        <div class="strategy-block" style="margin-top:8px">
+          <div class="strategy-block-title">Common Pitfalls to Avoid</div>
+          <div class="pitfalls-grid">
+            <div class="pitfall-card"><div class="pitfall-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="pitfall-text"><strong>Making the product the hero in Act 1.</strong> The viewer must be hooked by the human situation before the brand appears. Product-first = skip.</div></div>
+            <div class="pitfall-card"><div class="pitfall-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="pitfall-text"><strong>Celebrity over character.</strong> Ogilvy's formula works because the audience sees themselves, not a star. Celebrity cameos dilute identification — use them only as supporting cast.</div></div>
+            <div class="pitfall-card"><div class="pitfall-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="pitfall-text"><strong>Price messaging in brand films.</strong> The moment you mention "affordable" in a brand film, you've broken the spell. Price belongs in performance ads, not in brand storytelling.</div></div>
+            <div class="pitfall-card"><div class="pitfall-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="pitfall-text"><strong>Changing the slogan every season.</strong> "Bewakoof Raho" must run for 5+ years across every touchpoint. Consistency is what turns a line into a cultural truth.</div></div>
+            <div class="pitfall-card"><div class="pitfall-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="pitfall-text"><strong>Urban-English monoculture.</strong> The brand's biggest opportunity is Tier 2 India. Every story plot should work in Hindi, Tamil, Telugu and Bengali — or spawn regional variants that do.</div></div>
+            <div class="pitfall-card"><div class="pitfall-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="pitfall-text"><strong>Overloading Act 3 with features.</strong> One product. One logo. One line. Maximum 5 seconds. Any longer and the emotional build of Acts 1–2 is wasted.</div></div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:16px;flex-wrap:wrap">
+          <button class="btn-ghost" onclick="openModal('strategistModal')">Connect with a Creative Strategist →</button>
+          <button class="btn-ghost" onclick="openModal('pdfModal')">Download Full Strategy PDF</button>
+        </div>
+
+      </div>
+      </div><!-- /strategyContent -->
+    </div>
+
+    <!-- DATA SOURCES & METHODOLOGY (Battle Card) -->
+    <div id="battleSourcesSection" class="dash-card" style="display:none;margin-top:24px"></div>
+
+    <!-- FINAL CTA -->
+    <div class="dash-card" style="margin-top:24px">
+      <div class="dash-card-header" style="flex-direction:row;justify-content:space-between;align-items:center;gap:24px">
+        <div>
+          <div class="dash-card-title" style="font-family:var(--font-heading);font-size:20px;line-height:1.2;letter-spacing:-0.02em">Start saving in 48 hours.</div>
+          <div class="dash-card-desc" style="font-size:13px;line-height:1.6;max-width:420px">No retainer. No minimum commitment. First AI campaign delivered in 2 days.</div>
+        </div>
+        <div style="display:flex;gap:12px;flex-shrink:0">
+          <button class="btn-ghost" onclick="openModal('strategistModal')">Connect with a Creative Strategist →</button>
+          <button class="btn-ghost" onclick="openModal('pdfModal')">Download Full Playbook (PDF)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer style="padding:80px 48px;margin:0 auto;max-width:1200px">
+    <div class="footer-logo"><img src="/assets/images/fynd-logo-white.png" alt="Fynd" class="footer-logo-img"><img src="/assets/images/fynd-logo-black.png" alt="Fynd" class="footer-logo-img nav-logo-light"></div>
+    <div class="footer-copy">© 2026 Fynd Studio</div>
+    <div class="footer-links"><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('intel')">Creative Intel</a></div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════
+     CAMPAIGN PROPOSAL PAGE
+════════════════════════════════ -->
+<div id="page-proposal" class="page">
+
+  <!-- ═══ S0: HERO — Centered text stack + media (Fynd pattern) ═══ -->
+  <section class="prop-s0-hero" id="proposalHeroSection">
+    <div class="prop-s0-content">
+      <h1 class="prop-s0-title">Fynd Studio × <span id="proposalBrandTitle">Your Brand</span></h1>
+      <p class="prop-s0-sub" id="proposalHeroSub">A premium, AI-crafted campaign proposal — combining deep brand understanding, strategic diagnosis, and creative firepower into one persuasive page.</p>
+      <div class="prop-s0-actions">
+        <button class="btn-primary" onclick="document.getElementById('proposalSnapshot').scrollIntoView({behavior:'smooth'})">View Proposal ↓</button>
+        <button class="btn-ghost" onclick="openModal('demoModal')">Book a Demo</button>
+      </div>
+    </div>
+    <div class="prop-s0-media">
+      <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&h=680&fit=crop" alt="" class="prop-s0-media-img" id="propHeroBg">
+    </div>
+  </section>
+
+  <!-- ═══ S1: BRAND SNAPSHOT — Centered heading + 3-col image cards (Fynd pattern) ═══ -->
+  <section class="prop-s1" id="proposalSnapshot">
+    <div class="prop-s1-inner">
+      <div class="prop-s1-header">
+        <div class="prop-section-label">01 — Know The Brand</div>
+        <h2 class="prop-section-title">Brand Snapshot</h2>
+        <p class="prop-section-sub">The brand at a glance.</p>
+      </div>
+      <div id="proposalSnapshotContent"></div>
+    </div>
+  </section>
+
+  <!-- ═══ S2: OPPORTUNITY — Editorial with float image ═══ -->
+  <section class="prop-s2" id="proposalOpportunity">
+    <div class="prop-s2-inner">
+      <div class="prop-section-label">02 — Spot The Gap</div>
+      <h2 class="prop-section-title">The Opportunity</h2>
+      <div id="proposalOpportunityContent"></div>
+    </div>
+  </section>
+
+  <!-- ═══ S3: KEY INSIGHTS — Numbered rows with images ═══ -->
+  <section class="prop-s3" id="proposalInsights">
+    <div class="prop-s3-inner">
+      <div class="prop-section-label">03 — Unlock Insights</div>
+      <h2 class="prop-section-title">Key Insights</h2>
+      <p class="prop-section-sub">What the data reveals.</p>
+      <div id="proposalInsightsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ═══ S4: TRANSFORMATION — Dark before/after panels ═══ -->
+  <!-- ═══ S5: CAMPAIGN PLATFORM — Cinematic hero + detail cards ═══ -->
+  <section class="prop-s5" id="proposalCampaign">
+    <div class="prop-s5-hero" id="propImgCampaign">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&h=600&fit=crop" alt="" class="prop-s5-hero-img">
+      <div class="prop-s5-hero-overlay"></div>
+      <div class="prop-s5-hero-text">
+        <div class="prop-section-label" style="color:rgba(255,255,255,0.5)">05 — The Big Idea</div>
+        <div class="prop-s5-campaign-name" id="proposalCampaignName">CAMPAIGN NAME</div>
+      </div>
+    </div>
+    <div class="prop-s5-body">
+      <h2 class="prop-section-title">Campaign Platform</h2>
+      <div id="proposalCampaignContent"></div>
+    </div>
+  </section>
+
+  <!-- ═══ S6: AI-POWERED SOLUTIONS — Horizontal image+content cards ═══ -->
+  <section class="prop-s6" id="proposalSolutions">
+    <div class="prop-s6-inner">
+      <div class="prop-section-label">06 — Build The Engine</div>
+      <h2 class="prop-section-title">AI-Powered Solutions</h2>
+      <p class="prop-section-sub">How we close the gaps.</p>
+      <div id="proposalSolutionsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ═══ S7: VARIANTS — Color-coded bento grid ═══ -->
+  <section class="prop-s7" id="proposalVariants">
+    <div class="prop-s7-inner">
+      <div class="prop-section-label">07 — Scale Everywhere</div>
+      <h2 class="prop-section-title">Audience &amp; Regional Variants</h2>
+      <p class="prop-section-sub">One campaign, many audiences.</p>
+      <div id="proposalVariantsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ═══ S8: IMPACT — Numbered stat cards + trailing image ═══ -->
+  <section class="prop-s8" id="proposalImpact">
+    <div class="prop-s8-inner">
+      <div class="prop-section-label">08 — Measure The Win</div>
+      <h2 class="prop-section-title">Impact Potential</h2>
+      <p class="prop-section-sub">The numbers that matter.</p>
+      <div id="proposalImpactGrid"></div>
+    </div>
+  </section>
+
+  <!-- ═══ S9: CTA — Dark rounded container ═══ -->
+  <section class="prop-s9" id="proposalCta">
+    <div class="prop-s9-box">
+      <h2 id="proposalCtaTitle">Ready to Transform Your Brand?</h2>
+      <p id="proposalCtaDesc">This proposal is just the beginning. Let's turn strategic vision into campaign reality — faster than you thought possible.</p>
+      <div class="prop-s9-actions">
+        <button class="btn-primary" onclick="openModal('demoModal')">Book a Strategy Call →</button>
+        <button class="btn-ghost" onclick="openModal('strategistModal')">Connect with a Strategist</button>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:80px 48px;margin:0 auto;max-width:1200px">
+    <div class="footer-logo"><img src="/assets/images/fynd-logo-white.png" alt="Fynd" class="footer-logo-img"><img src="/assets/images/fynd-logo-black.png" alt="Fynd" class="footer-logo-img nav-logo-light"></div>
+    <div class="footer-copy">© 2026 Fynd Studio</div>
+    <div class="footer-links"><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('battle')">Battle Cards</a><a href="#" onclick="showPage('intel')">Creative Intel</a></div>
+  </footer>
+</div>
+
+<script src="battle-cards.js"></script>
+<script src="campaign-proposal.js"></script>
+<script src="app.js"></script>
+<script>if (typeof lucide !== 'undefined') lucide.createIcons();</script>
+
+</body>
+</html>

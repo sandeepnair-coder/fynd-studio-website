@@ -1,0 +1,91 @@
+/* ══════════════════════════════════════════
+   PROGRESS BARS & SPARK CHARTS
+   ══════════════════════════════════════════ */
+
+/* Score bar */
+.score-bar {
+  height: 4px;
+  background: var(--muted);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.score-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 1s ease;
+}
+.score-fill.danger { background: var(--destructive); }
+.score-fill.warn { background: var(--warn); }
+.score-fill.good { background: var(--good); }
+
+/* Region bar */
+.region-bar {
+  height: 4px;
+  background: var(--muted);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.region-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 9999px;
+  transition: width 0.8s ease;
+}
+
+/* Spend bar */
+.spend-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--muted);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.spend-bar {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+  background: var(--primary);
+}
+
+/* Loading bar */
+.loading-bar {
+  width: 320px;
+  height: 4px;
+  background: var(--muted);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.loading-progress {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+/* Spark chart */
+.spark-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 32px;
+  margin: 14px 0;
+}
+.spark-bar {
+  flex: 1;
+  background: var(--muted);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+  transition: background 0.2s;
+}
+.spark-bar.peak { background: var(--primary); }
+
+/* Confidence dot */
+.confidence-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}

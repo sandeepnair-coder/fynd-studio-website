@@ -1,0 +1,22 @@
+{
+  "name": "fynd-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fynd Studio — AI-Powered Creative Intelligence Platform",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Static site — no build step'",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "culori": "^4.0.2",
+    "shadcn": "^4.0.8"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "busboy": "^1.6.0"
+  }
+}

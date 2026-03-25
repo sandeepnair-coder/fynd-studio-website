@@ -1,0 +1,15 @@
+/* ══════════════════════════════════════════
+   SPACING UTILITIES
+   ══════════════════════════════════════════ */
+
+.gap-sm { gap: 8px; }
+.gap-md { gap: 16px; }
+.gap-lg { gap: 24px; }
+.p-sm { padding: 8px; }
+.p-md { padding: 16px; }
+.p-lg { padding: 24px; }
+.m-sm { margin: 8px; }
+.m-md { margin: 16px; }
+.m-lg { margin: 24px; }
+.mt-16 { margin-top: 16px; }
+.mt-40 { margin-top: 40px; }

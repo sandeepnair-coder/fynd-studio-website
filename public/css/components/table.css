@@ -1,0 +1,275 @@
+/* ══════════════════════════════════════════
+   TABLES & DATA ROWS
+   ══════════════════════════════════════════ */
+
+/* Savings breakdown row */
+.sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.sb-row:last-child { border-bottom: none; }
+.sb-item { font-size: 13px; color: var(--foreground); font-weight: 500; flex: 1; }
+.sb-vals { display: flex; gap: 16px; align-items: center; flex-shrink: 0; }
+.sb-trad { font-size: 13px; color: var(--muted-foreground); text-decoration: line-through; }
+.sb-ai { font-size: 13px; font-weight: 700; color: var(--primary); font-family: var(--font-sans); }
+
+/* Regional grid items */
+.region-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.region-item:last-child { border-bottom: none; }
+.region-name { font-size: 13px; font-weight: 500; color: var(--foreground); }
+.region-val {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Data table */
+.data-table-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow-md);
+}
+.data-table-head {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  gap: 16px;
+  padding: 14px 24px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  border-bottom: 1px solid var(--border);
+}
+.data-table-row {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  gap: 16px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.data-table-row-last {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  gap: 16px;
+  padding: 14px 24px;
+  align-items: center;
+}
+
+/* Pricing table */
+.pricing-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 40px; }
+.pricing-table thead th {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-table tbody tr { transition: background var(--transition-fast); }
+.pricing-table tbody tr:hover { background: var(--hover); }
+.pricing-table tbody tr:last-child { border-bottom: none; }
+.pricing-table tbody td {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-table tbody tr:last-child td { border-bottom: none; }
+.pricing-feature-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 4px;
+}
+.pricing-feature-desc { font-size: 12px; color: var(--muted-foreground); }
+
+/* Comparison table */
+.comparison-table { margin-top: 40px; width: 100%; border-collapse: separate; border-spacing: 0; }
+.comparison-table thead th {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.comparison-table tbody tr { transition: background var(--transition-fast); }
+.comparison-table tbody tr:hover { background: var(--hover); }
+.comparison-table tbody tr:last-child { border-bottom: none; }
+.comparison-table tbody td {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+}
+.comparison-table tbody tr:last-child td { border-bottom: none; }
+.comparison-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 4px;
+}
+.comparison-highlight-row td { color: var(--primary) !important; }
+.comparison-highlight-row .comparison-name { color: var(--primary); }
+.comparison-highlight { color: var(--primary); font-weight: 600; }
+
+/* Competitive landscape table */
+.comp-landscape-table { margin-top: 40px; width: 100%; border-collapse: separate; border-spacing: 0 12px; }
+.comp-landscape-table thead th {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.comp-landscape-table tbody tr { transition: background var(--transition-fast); }
+.comp-landscape-table tbody tr:hover td { background: var(--hover); }
+
+.comp-landscape-table tbody td {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  vertical-align: middle;
+  background: var(--card);
+  border: none;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.comp-landscape-table tbody td:first-child {
+  border-left: 1px solid var(--border);
+  border-top-left-radius: var(--border-radius--16, 16px);
+  border-bottom-left-radius: var(--border-radius--16, 16px);
+}
+.comp-landscape-table tbody td:last-child {
+  border-right: 1px solid var(--border);
+  border-top-right-radius: var(--border-radius--16, 16px);
+  border-bottom-right-radius: var(--border-radius--16, 16px);
+}
+.comp-landscape-table tbody tr:last-child td { border-bottom: 1px solid var(--border); }
+.comp-agency-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 4px;
+}
+.comp-highlight-row {
+  position: relative;
+}
+.comp-highlight-row td {
+  color: var(--muted-foreground) !important;
+  background: var(--card);
+  border-top-color: var(--border);
+  border-bottom-color: var(--border);
+}
+.comp-highlight-row td:first-child {
+  border-left-color: var(--border);
+  border-top-left-radius: var(--border-radius--16, 16px);
+  border-bottom-left-radius: var(--border-radius--16, 16px);
+}
+.comp-highlight-row td:last-child {
+  border-right-color: var(--border);
+  border-top-right-radius: var(--border-radius--16, 16px);
+  border-bottom-right-radius: var(--border-radius--16, 16px);
+}
+.comp-highlight-row .comp-agency-name {
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 14px;
+}
+.comp-highlight-row .comp-turnaround-hl {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+.comp-highlight-row:hover td { background: var(--hover); }
+
+/* Remove any featured-card visual effects */
+.comp-highlight-row td:first-child,
+.comp-highlight-row td:last-child { box-shadow: none; }
+
+/* Three-act table */
+.three-act-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 16px; }
+.three-act-table th {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.three-act-table td {
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.three-act-table tr:last-child td { border-bottom: none; }
+
+/* Rank cells */
+.rank-cell-top {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--foreground);
+}
+.rank-cell {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+/* Competitor metrics */
+.comp-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.comp-metric:last-child { border-bottom: none; }
+.comp-metric .key { color: var(--muted-foreground); font-weight: 500; flex-shrink: 0; line-height: 1.5; }
+.comp-metric .val {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--foreground);
+  text-align: right;
+  line-height: 1.5;
+  max-width: 60%;
+}
+.comp-metric .val.good { color: var(--good); }
+.comp-metric .val.bad { color: var(--destructive); }
+.comp-metric .val.neutral { color: var(--muted-foreground); }

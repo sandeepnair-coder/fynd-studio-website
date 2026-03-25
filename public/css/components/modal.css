@@ -1,0 +1,146 @@
+/* ══════════════════════════════════════════
+   MODAL / DIALOG (shadcn dialog)
+   ══════════════════════════════════════════ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  z-index: 600;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  max-width: 540px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--btn-radius);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-close:hover { background: var(--hover); color: var(--foreground); }
+.modal-close:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+.modal-title {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+.modal-sub {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.modal-field { margin-bottom: 16px; }
+.modal-field label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--muted-foreground);
+  display: block;
+  margin-bottom: 6px;
+}
+.modal-field input,
+.modal-field select,
+.modal-field textarea {
+  width: 100%;
+  background: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--input-radius);
+  padding: 10px 14px;
+  color: var(--foreground);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  resize: vertical;
+  height: 40px;
+}
+.modal-field input:focus,
+.modal-field select:focus,
+.modal-field textarea:focus {
+  border-color: var(--ring);
+  box-shadow: var(--focus-ring);
+}
+.modal-field textarea { min-height: 100px; height: auto; }
+
+.modal-actions { display: flex; gap: 12px; margin-top: 24px; }
+
+.modal-confirm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+  flex: 1;
+}
+.modal-confirm:hover { opacity: 0.9; }
+.modal-confirm:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.modal-confirm-full { width: 100%; margin-top: 16px; }
+
+.modal-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.modal-cancel:hover { background: var(--hover); border-color: var(--hover); color: var(--foreground); }
+.modal-cancel:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+.modal-success { text-align: center; }
+.modal-success .tick { font-size: 40px; margin-bottom: 16px; }
+.modal-success .success-title {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+.modal-success .success-sub { font-size: 14px; color: var(--muted-foreground); line-height: 1.6; }

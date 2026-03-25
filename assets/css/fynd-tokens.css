@@ -1,0 +1,492 @@
+/*
+ * fynd-tokens.css
+ * Fynd One Design System — CSS Custom Properties
+ * Source of truth: One Design System (Figma) + devlink/global.css
+ * Last synced: March 2026
+ *
+ * USAGE:
+ *   HTML:    <link rel="stylesheet" href="fynd-tokens.css">
+ *   CSS:     @import 'fynd-tokens.css';
+ *   JS/TS:   import './fynd-tokens.css';
+ *   Astro:   import '../styles/fynd-tokens.css';
+ *
+ * Always import this file BEFORE any component CSS.
+ * Do NOT override tokens directly — extend via semantic aliases.
+ */
+
+/* ─────────────────────────────────────────────────────
+   FONTS
+   ─────────────────────────────────────────────────────
+
+   FYND SANS (proprietary — titles / headings)
+   ─────────────────────────────────────────────
+   Self-hosted only. Font files must be placed at:
+     /assets/fonts/FyndSans-Regular.woff2
+     /assets/fonts/FyndSans-Medium.woff2
+     /assets/fonts/FyndSans-SemiBold.woff2
+     /assets/fonts/FyndSans-Bold.woff2
+
+   Source: Fynd brand team / design assets repo.
+   Do NOT load via Google Fonts or any public CDN.
+   Contact design@fynd.com to obtain the font files.
+   ─────────────────────────────────────────────────────
+*/
+
+@font-face {
+  font-family: 'Fynd Sans';
+  src: url('/assets/fonts/FyndSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fynd Sans';
+  src: url('/assets/fonts/FyndSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fynd Sans';
+  src: url('/assets/fonts/FyndSans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fynd Sans';
+  src: url('/assets/fonts/FyndSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+   INTER DISPLAY (body text)
+   Source: Google Fonts CDN or self-hosted via @fontsource/inter-display
+   npm:    npm install @fontsource/inter-display
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter+Display:wght@400;500;600;700&display=swap');
+
+/*
+   INTER (buttons / UI labels)
+   Source: Google Fonts CDN or self-hosted via @fontsource/inter
+   npm:    npm install @fontsource/inter
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ─────────────────────────────────────────────────────
+   ICON LIBRARY
+   Source: Lucide Icons (MIT license)
+   CDN:    https://unpkg.com/lucide@latest
+   npm:    npm install lucide  /  npm install lucide-react
+   Docs:   https://lucide.dev
+   Usage (HTML):  <i data-lucide="shopping-bag"></i>
+                  <script src="https://unpkg.com/lucide@latest"></script>
+                  <script>lucide.createIcons();</script>
+   Usage (React): import { ShoppingBag } from 'lucide-react'
+   Usage (Astro): import { ShoppingBag } from 'lucide-react' (with React integration)
+   Stroke width convention: 1.5px (matches Fynd icon style)
+   Size convention: 16px (ui), 20px (feature), 24px (decorative)
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --icon-stroke-width: 1.5px;
+  --icon-size-ui:        16px;
+  --icon-size-feature:   20px;
+  --icon-size-decorative: 24px;
+}
+
+/* ─────────────────────────────────────────────────────
+   TYPOGRAPHY
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* Font families */
+  --font-family--primary:   'Fynd Sans', Arial, sans-serif;     /* headings / titles — PROPRIETARY, self-host only */
+  --font-family--secondary: 'Inter Display', Arial, sans-serif; /* body / subtext    */
+  --font-family--ui:        'Inter', Arial, sans-serif;         /* buttons / labels  */
+
+  /* Figma aliases (slash convention) */
+  --typeface--font-family--title: var(--font-family--primary);
+  --typeface--font-family--body:  var(--font-family--secondary);
+  --font-family--sans:            var(--font-family--ui);
+
+  /* Font sizes */
+  --font-size--body-xs:  0.75rem;    /* 12px */
+  --font-size--body-s:   0.875rem;   /* 14px */
+  --font-size--body-m:   1rem;       /* 16px */
+  --font-size--body-l:   1.125rem;   /* 18px */
+  --font-size--body-xl:  1.25rem;    /* 20px */
+  --font-size--h6:       1rem;       /* 16px */
+  --font-size--h5:       1.5rem;     /* 24px */
+  --font-size--h4:       2rem;       /* 32px */
+  --font-size--h3:       2.5rem;     /* 40px */
+  --font-size--h2:       3.5rem;     /* 56px */
+  --font-size--h1:       4.5rem;     /* 72px */
+
+  /* Figma button scale */
+  --font-size--ui-s:     0.75rem;    /* 12px */
+  --font-size--ui-m:     0.875rem;   /* 14px — button default */
+  --font-size--ui-l:     1rem;       /* 16px */
+
+  /* Font weights */
+  --font-weight--regular: 400;
+  --font-weight--medium:  500;
+  --font-weight--semibold: 600;
+  --font-weight--bold:    700;
+
+  /* Line heights */
+  --line-height--110: 1.1;
+  --line-height--120: 1.2;
+  --line-height--130: 1.3;
+  --line-height--140: 1.4;
+  --line-height--150: 1.5;
+  --line-height--160: 1.6;
+  --line-height--170: 1.7;
+
+  /* Figma line-height aliases */
+  --line-height--ui-m: 20px; /* button line-height */
+
+  /* Letter spacing */
+  --letter-spacing--heading-1: -0.04em;
+  --letter-spacing--heading-2: -0.04em;
+  --letter-spacing--heading-3: -0.03em;
+  --letter-spacing--heading-4: -0.02em;
+  --letter-spacing--heading-5: -0.02em;
+  --letter-spacing--baggy:      0px;   /* buttons / UI labels */
+}
+
+/* ─────────────────────────────────────────────────────
+   COLOR PRIMITIVES — NEUTRALS
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --neutral--neutral-0:   #ffffff;
+  --neutral--neutral-10:  #f8f8f9;
+  --neutral--neutral-20:  #f2f2f2;
+  --neutral--neutral-30:  #d7d7d7;
+  --neutral--neutral-40:  #a0a1a2;
+  --neutral--neutral-50:  #797a7c;
+  --neutral--neutral-60:  #5b5c5d;
+  --neutral--neutral-80:  #4a4b4c;
+  --neutral--neutral-100: #0e0e0e; /* canonical — use for text/title */
+
+  /* ⚠️ devlink neutral-100 is #101319 — use #0e0e0e (Figma) for text, #101319 for dark fill backgrounds */
+  --neutral--neutral-100--devlink: #101319;
+}
+
+/* ─────────────────────────────────────────────────────
+   COLOR PRIMITIVES — BRAND
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* Blue */
+  --blue--blue-10:  #f9fbff;
+  --blue--blue-20:  #d8e2f5;
+  --blue--blue-40:  #5c98f7;
+  --blue--blue-50:  #2f7af6;
+  --blue--blue-60:  #084bb8;
+  --blue--blue-90:  #07285a;
+
+  /* Peach */
+  --peach--peach-10: #fbf7f4;
+  --peach--peach-20: #e7cdbc;
+  --peach--peach-40: #f2c49f;
+  --peach--peach-50: #eeb384;
+  --peach--peach-60: #a4521e;
+  --peach--peach-90: #793c16;
+
+  /* Green */
+  --green--green-10: #f4fbf7;
+  --green--green-20: #c4d9cd;
+  --green--green-40: #a2ddb7;
+  --green--green-50: #80d99f;
+  --green--green-60: #187b3f;
+  --green--green-90: #124f2a;
+
+  /* Gold */
+  --gold--gold-10: #fdf5db;
+  --gold--gold-20: #fbe9ae;
+  --gold--gold-40: #f8d160;
+  --gold--gold-50: #ebb537;
+  --gold--gold-60: #8b6b20;
+  --gold--gold-90: #362a0d;
+
+  /* Lavender */
+  --lavender--lavender-10: #f0e9fd;
+  --lavender--lavender-20: #ceb8fa;
+  --lavender--lavender-40: #8d61f6;
+  --lavender--lavender-50: #703ff5;
+  --lavender--lavender-60: #4322c8;
+  --lavender--lavender-90: #27126c;
+
+  /* Red */
+  --red--red-10: #f8cfd1;
+  --red--red-20: #f1a1a4;
+  --red--red-40: #ea5252;
+  --red--red-50: #e9372e;
+  --red--red-60: #a72218;
+  --red--red-90: #51110b;
+}
+
+/* ─────────────────────────────────────────────────────
+   COLOR PALETTE SHORTCUTS (semantic per-brand aliases)
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* Blue shortcuts */
+  --blue--blue-primary: var(--blue--blue-40);
+  --blue--blue-text:    var(--blue--blue-90);
+  --blue--blue-fill:    var(--blue--blue-10);
+  --blue--blue-stroke:  var(--blue--blue-20);
+
+  /* Peach shortcuts */
+  --peach--peach-primary: var(--peach--peach-40);
+  --peach--peach-text:    var(--peach--peach-90);
+  --peach--peach-fill:    var(--peach--peach-10);
+  --peach--peach-stroke:  var(--peach--peach-20);
+
+  /* Green shortcuts */
+  --green--green-primary: var(--green--green-40);
+  --green--green-text:    var(--green--green-90);
+  --green--green-fill:    var(--green--green-10);
+  --green--green-stroke:  var(--green--green-20);
+
+  /* Gold shortcuts */
+  --gold--gold-primary: var(--gold--gold-40);
+  --gold--gold-text:    var(--gold--gold-90);
+  --gold--gold-fill:    var(--gold--gold-10);
+  --gold--gold-stroke:  var(--gold--gold-20);
+
+  /* Lavender shortcuts */
+  --lavender--lavender-primary: var(--lavender--lavender-40);
+  --lavender--lavender-text:    var(--lavender--lavender-90);
+  --lavender--lavender-fill:    var(--lavender--lavender-10);
+  --lavender--lavender-stroke:  var(--lavender--lavender-20);
+
+  /* Red shortcuts */
+  --red--red-primary: var(--red--red-40);
+  --red--red-text:    var(--red--red-90);
+  --red--red-fill:    var(--red--red-10);
+  --red--red-stroke:  var(--red--red-20);
+}
+
+/* ─────────────────────────────────────────────────────
+   SEMANTIC COLOR ALIASES
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* Text */
+  --text--title:           var(--neutral--neutral-100);   /* #0e0e0e */
+  --text--subtext:         var(--neutral--neutral-60);    /* #5b5c5d */
+  --text--title-inverse:   var(--neutral--neutral-0);     /* #ffffff */
+  --text--subtext-inverse: var(--neutral--neutral-40);    /* #a0a1a2 */
+
+  /* Figma slash aliases (use in components from Figma) */
+  --text--title-figma:   #0e0e0e;
+  --text--subtext-figma: #5b5c5d;
+
+  /* Backgrounds */
+  --background--background-light:   var(--neutral--neutral-0);   /* white     */
+  --background--background-medium:  var(--neutral--neutral-10);  /* #f8f8f9   */
+  --background--background-dark:    var(--neutral--neutral-60);  /* #5b5c5d   */
+  --background--background-darkest: #0e0e0e;                     /* near-black */
+
+  /* Borders */
+  --border--border-light:   var(--neutral--neutral-10); /* #f8f8f9 */
+  --border--border-medium:  var(--neutral--neutral-20); /* #f2f2f2 */
+  --border--border-dark:    var(--neutral--neutral-50); /* #797a7c */
+  --border--border-darkest: var(--neutral--neutral-80); /* #4a4b4c */
+
+  /* Status (feature comparison / data tables) */
+  --status--yes:     #0d7a3a;
+  --status--partial: #9a6700;
+  --status--no:      #c13515;
+}
+
+/* ─────────────────────────────────────────────────────
+   SPACING SCALE
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --spacing--4:   0.25rem;  /*   4px */
+  --spacing--8:   0.5rem;   /*   8px */
+  --spacing--12:  0.75rem;  /*  12px */
+  --spacing--16:  1rem;     /*  16px */
+  --spacing--20:  1.25rem;  /*  20px */
+  --spacing--24:  1.5rem;   /*  24px */
+  --spacing--32:  2rem;     /*  32px */
+  --spacing--40:  2.5rem;   /*  40px */
+  --spacing--56:  3.5rem;   /*  56px */
+  --spacing--80:  5rem;     /*  80px */
+  --spacing--120: 7.5rem;   /* 120px */
+
+  /* Figma shorthand aliases (use when building from Figma components) */
+  --4:   var(--spacing--4);
+  --8:   var(--spacing--8);
+  --12:  var(--spacing--12);
+  --16:  var(--spacing--16);
+  --20:  var(--spacing--20);
+  --24:  var(--spacing--24);
+  --32:  var(--spacing--32);
+  --40:  var(--spacing--40);
+  --56:  var(--spacing--56);
+  --80:  var(--spacing--80);
+  --120: var(--spacing--120);
+}
+
+/* ─────────────────────────────────────────────────────
+   SIZES SCALE (general-purpose)
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --sizes--0:   0rem;
+  --sizes--2:   0.125rem;
+  --sizes--4:   0.25rem;
+  --sizes--6:   0.375rem;
+  --sizes--8:   0.5rem;
+  --sizes--12:  0.75rem;
+  --sizes--14:  0.875rem;
+  --sizes--16:  1rem;
+  --sizes--18:  1.125rem;
+  --sizes--20:  1.25rem;
+  --sizes--24:  1.5rem;
+  --sizes--32:  2rem;
+  --sizes--40:  2.5rem;
+  --sizes--48:  3rem;
+  --sizes--56:  3.5rem;
+  --sizes--64:  4rem;
+  --sizes--72:  4.5rem;
+  --sizes--80:  5rem;
+  --sizes--96:  6rem;
+  --sizes--128: 8rem;
+  --sizes--160: 10rem;
+  --sizes--192: 12rem;
+  --sizes--256: 16rem;
+}
+
+/* ─────────────────────────────────────────────────────
+   BORDER RADIUS
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --border-radius--8:   0.5rem;  /*  8px — inputs, small cards */
+  --border-radius--12:  0.75rem; /* 12px */
+  --border-radius--16:  1rem;    /* 16px — cards               */
+  --border-radius--24:  1.5rem;  /* 24px — CTA boxes           */
+  --border-radius--32:  2rem;    /* 32px                       */
+  --border-radius--pill: 250px;  /* fully rounded — buttons, badges, tags */
+  --border-radius--tag:  2000px; /* tag / badge (from Figma)   */
+
+  /* Figma alias */
+  --borderradius--core--full: var(--border-radius--pill);
+}
+
+/* ─────────────────────────────────────────────────────
+   BREAKPOINTS (reference only — use in @media queries)
+   ───────────────────────────────────────────────────── */
+
+/*
+  Desktop:      min-width: 992px   (default styles)
+  Tablet:       max-width: 991px   (Webflow convention)
+  Tablet alt:   max-width: 1023px  (compare page)
+  Mobile:       max-width: 767px
+  Small mobile: max-width: 479px
+*/
+
+/* ─────────────────────────────────────────────────────
+   LAYOUT CONSTANTS
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --layout--container-max:      1200px;
+  --layout--container-padding:  var(--spacing--32); /* desktop */
+  --layout--container-padding-mobile: 1.25rem;
+  --layout--section-header-max: 720px;
+  --layout--hero-content-max:   720px;
+  --layout--cta-content-max:    640px;
+  --layout--section-gap:        var(--spacing--80);
+  --layout--narrative-gap:      3rem;
+  --layout--cards-gap:          var(--spacing--24);
+}
+
+/* ─────────────────────────────────────────────────────
+   COMPONENT TOKENS — BUTTONS
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --btn--padding-y:      0.875rem;
+  --btn--padding-x:      1.75rem;
+  --btn--padding-y-lg:   1rem;
+  --btn--padding-x-lg:   2rem;
+  --btn--border-radius:  var(--border-radius--pill); /* fully rounded */
+  --btn--font-family:    var(--font-family--ui);
+  --btn--font-size:      var(--font-size--ui-m);     /* 14px */
+  --btn--font-weight:    var(--font-weight--medium);  /* 500  */
+  --btn--line-height:    var(--line-height--ui-m);    /* 20px */
+  --btn--letter-spacing: var(--letter-spacing--baggy); /* 0px */
+  --btn--transition:     background-color 0.2s, border-color 0.2s, color 0.2s;
+
+  /* Primary (dark) */
+  --btn--primary--bg:       #0e0e0e;
+  --btn--primary--color:    #ffffff;
+  --btn--primary--bg-hover: #2a2d36;
+
+  /* Primary light (on dark backgrounds) */
+  --btn--primary-light--bg:       #ffffff;
+  --btn--primary-light--color:    #0e0e0e;
+  --btn--primary-light--bg-hover: #e8e8e8;
+
+  /* Secondary */
+  --btn--secondary--bg:           transparent;
+  --btn--secondary--color:        #0e0e0e;
+  --btn--secondary--border:       var(--neutral--neutral-30);
+  --btn--secondary--bg-hover:     #f5f5f5;
+  --btn--secondary--border-hover: var(--neutral--neutral-40);
+
+  /* Secondary light (on dark backgrounds) */
+  --btn--secondary-light--bg:           transparent;
+  --btn--secondary-light--color:        #ffffff;
+  --btn--secondary-light--border:       #444444;
+  --btn--secondary-light--bg-hover:     rgba(255, 255, 255, 0.05);
+  --btn--secondary-light--border-hover: #666666;
+}
+
+/* ─────────────────────────────────────────────────────
+   COMPONENT TOKENS — BADGES / TAGS
+   ───────────────────────────────────────────────────── */
+
+:root {
+  --badge--padding-y:      var(--spacing--8);
+  --badge--padding-x:      var(--spacing--12);
+  --badge--border-radius:  var(--border-radius--tag); /* 2000px */
+  --badge--font-size:      var(--font-size--body-xs); /* 12px   */
+  --badge--font-weight:    var(--font-weight--regular);
+  --badge--line-height:    var(--line-height--130);
+}
+
+/* ─────────────────────────────────────────────────────
+   COMPONENT TOKENS — CARDS
+   ───────────────────────────────────────────────────── */
+
+:root {
+  /* Verdict card */
+  --card--verdict--bg:         var(--neutral--neutral-10);
+  --card--verdict--radius:     var(--border-radius--16);
+  --card--verdict--padding:    var(--spacing--32);
+  --card--verdict--gap:        0.75rem;
+  --card--verdict--stat-font:  var(--font-family--primary);
+  --card--verdict--stat-size:  3rem;
+  --card--verdict--stat-weight: var(--font-weight--medium);
+
+  /* Pricing card */
+  --card--pricing--border:       1px solid var(--neutral--neutral-20);
+  --card--pricing--radius:       var(--border-radius--16);
+  --card--pricing--padding:      2.5rem 2rem;
+  --card--pricing--gap:          var(--spacing--24);
+  --card--pricing--price-font:   var(--font-family--primary);
+  --card--pricing--price-size:   2.5rem;
+  --card--pricing--price-weight: var(--font-weight--medium);
+  --card--pricing--recommended-border: 2px solid #0e0e0e;
+}

@@ -1,0 +1,197 @@
+/* ══════════════════════════════════════════
+   CARDS (shadcn pattern)
+   ══════════════════════════════════════════ */
+
+/* Base card */
+.dash-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius--16, var(--card-radius));
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  margin-bottom: var(--spacing--24, 24px);
+}
+
+/* Generic .card (shadcn) */
+.card {
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow: var(--card-shadow-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Card Header ── */
+.dash-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--spacing--24, 24px);
+}
+.dash-card-header.row {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.dash-card-header.row-center {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.dash-card-header-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ── Card Title ── */
+.dash-card-title {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+/* Large stat numbers use heading font */
+.dash-card-title.tabnum {
+  font-family: var(--font-heading);
+}
+.dash-card-title.tabnum {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+/* Status colors on title */
+.dash-card-title.danger { color: var(--destructive); }
+.dash-card-title.warn { color: var(--warn); }
+.dash-card-title.good { color: var(--good); }
+
+/* ── Card Description ── */
+.dash-card-desc {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Card Action ── */
+.dash-card-action {
+  flex-shrink: 0;
+}
+
+/* ── Card Content ── */
+.dash-card-content {
+  padding: 0 var(--spacing--24, 24px) var(--spacing--24, 24px);
+}
+
+/* ── Card Footer ── */
+.dash-card-footer {
+  padding: var(--spacing--16, 16px) var(--spacing--24, 24px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.dash-footer-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.dash-footer-sub {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+/* Cards inside scores-grid should stretch */
+.dash-scores-grid .dash-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 3-column stat footer ── */
+.dash-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.dash-stat-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 12px;
+}
+.dash-stat-col:first-child { padding-left: 0; }
+.dash-stat-col:not(:last-child) { border-right: 1px solid var(--border); }
+.dash-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.dash-stat-num {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Grade badge in card ── */
+.dash-badge-lg {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 10px 20px;
+  background: var(--muted);
+  border-radius: var(--badge-radius);
+  border: 1px solid var(--border);
+}
+.dash-grade {
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+}
+
+/* ── Brand avatar ── */
+.brand-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--border-radius--8, var(--card-radius));
+  background: var(--primary);
+  color: var(--primary-foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.brand-name-display {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+.brand-meta-display {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}

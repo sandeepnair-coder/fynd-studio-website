@@ -1,0 +1,47 @@
+/* ══════════════════════════════════════════════════════════════
+   FYND STUDIO — Main Stylesheet
+   ══════════════════════════════════════════════════════════════
+   Import order matters. Tokens first, then reset, then components.
+   To swap presets: only edit tokens.css.
+   ══════════════════════════════════════════════════════════════ */
+
+/* 0. Fynd One Design System foundation tokens */
+@import '../../assets/css/fynd-tokens.css';
+
+/* 1. Project design tokens (maps Fynd tokens to component vars) */
+@import './tokens.css';
+
+/* 2. Reset & base element styles */
+@import './reset.css';
+
+/* 3. Layout primitives */
+@import './layouts/page.css';
+@import './layouts/section.css';
+@import './layouts/grid.css';
+
+/* 4. Components */
+@import './components/card.css';
+@import './components/button.css';
+@import './components/badge.css';
+@import './components/input.css';
+@import './components/progress.css';
+@import './components/alert.css';
+@import './components/modal.css';
+@import './components/nav.css';
+@import './components/tabs.css';
+@import './components/table.css';
+
+/* 5. Page-specific styles */
+@import './pages/home.css';
+@import './pages/intel.css';
+@import './pages/battle.css';
+@import './pages/proposal.css';
+
+/* 6. Utilities (last, so they can override) */
+@import './utilities/typography.css';
+@import './utilities/spacing.css';
+@import './utilities/display.css';
+@import './utilities/animations.css';
+
+/* 7. Responsive overrides (always last) */
+@import './responsive.css';
