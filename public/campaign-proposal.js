@@ -143,6 +143,7 @@ function launchProposalGeneration(brandName, category, segment) {
   if (brandEl) brandEl.textContent = brandName;
 
   overlay.classList.add('show');
+  if (typeof startLoadingDots === 'function') startLoadingDots();
 
   var prog = document.getElementById('proposalLoadingProgress');
   if (prog) {
@@ -168,11 +169,13 @@ function launchProposalGeneration(brandName, category, segment) {
 
     window._proposalLoaderStep(5, 100);
     setTimeout(function() {
+      if (typeof stopLoadingDots === 'function') stopLoadingDots();
       overlay.classList.remove('show');
       _doShowPage('proposal');
     }, 600);
   }).catch(function(err) {
     console.error('Proposal generation failed:', err);
+    if (typeof stopLoadingDots === 'function') stopLoadingDots();
     overlay.classList.remove('show');
     showToast('error', 'Generation Failed', 'Could not generate campaign proposal. Please try again.');
   });

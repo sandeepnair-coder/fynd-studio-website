@@ -165,7 +165,7 @@
     <button class="nav-active" onclick="showPage('home')">Home</button>
     <button onclick="showPage('intel')">Creative Intel</button>
     <button onclick="showPage('battle')">Battle Cards</button>
-    <button onclick="showPage('proposal')">Campaign Proposal</button>
+    <button class="nav-locked" disabled title="Locked for now" aria-disabled="true">Campaign Proposal</button>
     <button class="nav-cta" onclick="openModal('demoModal')">Book a Demo</button>
   </div>
   <div class="nav-actions">
@@ -808,7 +808,31 @@
       </div>
       <div class="form-row">
         <div class="form-group"><label>Primary Category</label>
-          <select id="brandCategory"><option value="">Select category</option><option>Fashion & Apparel</option><option>Beauty & Skincare</option><option>Food & Beverage</option><option>Consumer Electronics</option><option>Home & Living</option><option>Health & Wellness</option><option>D2C / E-Commerce</option><option>FMCG</option></select>
+          <select id="brandCategory">
+            <option value="">Select category</option>
+            <option>Fashion & Apparel</option>
+            <option>Footwear</option>
+            <option>Beauty & Skincare</option>
+            <option>Personal Care / Grooming</option>
+            <option>Food & Beverage</option>
+            <option>Beverages</option>
+            <option>Consumer Electronics</option>
+            <option>Gadgets & Accessories</option>
+            <option>Home & Living</option>
+            <option>Furniture & Decor</option>
+            <option>Health & Wellness</option>
+            <option>Fitness / Sportswear</option>
+            <option>FMCG</option>
+            <option>Luxury</option>
+            <option>Automotive</option>
+            <option>Fintech / Lending</option>
+            <option>Travel & Hospitality</option>
+            <option>Education / EdTech</option>
+            <option>SAAS Software</option>
+            <option>Productivity Tools</option>
+            <option>Gaming / Entertainment</option>
+            <option>D2C / E-Commerce</option>
+          </select>
         </div>
         <div class="form-group"><label>Market Segment</label>
           <select id="brandSegment"><option value="">Select segment</option><option>Luxury</option><option>Premium Mid-Market</option><option>Mass Market</option><option>Value / Budget</option></select>
@@ -1463,7 +1487,7 @@
       <div class="dash-card-header" style="flex-direction:row;justify-content:space-between;align-items:center;gap:24px">
         <div>
           <div class="dash-card-title" style="font-family:var(--font-heading);font-size:20px;line-height:1.2;letter-spacing:-0.02em">Start saving in 48 hours.</div>
-          <div class="dash-card-desc" style="font-size:13px;line-height:1.6;max-width:420px">No retainer. No minimum commitment. First AI campaign delivered in 2 days.</div>
+          <div class="dash-card-desc" style="font-size:12px;line-height:1.5;max-width:420px">No retainer. No minimum commitment. First AI campaign delivered in 2 days.</div>
         </div>
         <div style="display:flex;gap:12px;flex-shrink:0">
           <button class="btn-ghost" onclick="openModal('strategistModal')">Connect with a Creative Strategist →</button>

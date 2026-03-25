@@ -1,4 +1,31 @@
 // ═══════════════════════════════════════════════════
+// ANIMATED LOADING DOTS — cycles "." ".." "..." on active loading steps
+// ═══════════════════════════════════════════════════
+var _loadingDotsTimer = null;
+function startLoadingDots() {
+  stopLoadingDots();
+  var dotCount = 0;
+  _loadingDotsTimer = setInterval(function() {
+    dotCount = (dotCount % 3) + 1;
+    var dots = '.'.repeat(dotCount);
+    document.querySelectorAll('.lstep.active').forEach(function(el) {
+      var span = el.querySelector('.ldots');
+      if (!span) {
+        span = document.createElement('span');
+        span.className = 'ldots';
+        span.style.cssText = 'letter-spacing:2px;margin-left:2px;display:inline;min-width:18px;text-align:left';
+        el.appendChild(span);
+      }
+      span.textContent = dots;
+    });
+  }, 400);
+}
+function stopLoadingDots() {
+  if (_loadingDotsTimer) { clearInterval(_loadingDotsTimer); _loadingDotsTimer = null; }
+  document.querySelectorAll('.ldots').forEach(function(el) { el.remove(); });
+}
+
+// ═══════════════════════════════════════════════════
 // API MODE — controlled by nav toggle switch
 // ═══════════════════════════════════════════════════
 var USE_DUMMY_DATA = (function() {
@@ -408,8 +435,8 @@ async function callClaude(systemPrompt, userPrompt, maxTokens) {
       method: 'POST',
       headers: getApiHeaders(),
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: maxTokens || 2500,
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: maxTokens || 4096,
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }]
       }),
@@ -451,6 +478,7 @@ async function runAnalysis() {
   document.getElementById('analysingBrand').textContent = brandName;
   const overlay = document.getElementById('loadingOverlay');
   overlay.classList.add('show');
+  startLoadingDots();
 
   // Animate loading steps
   const prog = document.getElementById('loadingProgress');
@@ -479,6 +507,7 @@ async function runAnalysis() {
     }
   } catch(err) {
     // ── No fallback — show error and stop ──
+    stopLoadingDots();
     overlay.classList.remove('show');
     if (btn) btn.disabled = false;
     if (btnText) btnText.textContent = 'Analyse My Brand';
@@ -506,6 +535,7 @@ async function runAnalysis() {
 
   // ── UI: Complete loading ──
   setTimeout(() => {
+    stopLoadingDots();
     document.getElementById('step5').className = 'lstep done';
     overlay.classList.remove('show');
     renderResults(brandName, category, segment, data);

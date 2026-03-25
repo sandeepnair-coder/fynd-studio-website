@@ -74,6 +74,17 @@ html:not(.dark) .footer-logo-img.nav-logo-light { display: block; }
   border-bottom: 2px solid transparent;
 }
 .nav-links button:hover { color: var(--foreground); }
+.nav-links button.nav-locked {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-links button.nav-locked[disabled] {
+  cursor: not-allowed;
+  opacity: 0.55;
+  color: var(--muted-foreground);
+  border-bottom-color: transparent;
+}
 .nav-links button:focus-visible {
   outline: none;
 }
