@@ -146,8 +146,43 @@
   border-radius: var(--card-radius);
   padding: 28px 24px;
   box-shadow: var(--card-shadow-md);
+  position: relative;
+  overflow: hidden;
 }
 .divide-panel-offline { opacity: 0.7; }
+
+/* Old vs New Guard visual differentiator */
+.divide-panel-old {
+  border-left: 4px solid var(--peach--peach-stroke, var(--border));
+}
+.divide-panel-old::before {
+  content: '';
+  position: absolute;
+  inset: -40px -80px auto -80px;
+  height: 220px;
+  background: radial-gradient(circle at 20% 20%, var(--peach--peach-fill, rgba(255, 190, 160, 0.35)) 0%, transparent 60%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.divide-panel-new {
+  border-left: 4px solid var(--blue--blue-stroke, var(--border));
+}
+.divide-panel-new::before {
+  content: '';
+  position: absolute;
+  inset: -40px -80px auto -80px;
+  height: 220px;
+  background: radial-gradient(circle at 20% 20%, var(--blue--blue-fill, rgba(92, 152, 247, 0.35)) 0%, transparent 62%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.divide-panel-old > *,
+.divide-panel-new > * {
+  position: relative;
+  z-index: 1;
+}
 .divide-heading {
   font-size: 12px;
   font-weight: 600;

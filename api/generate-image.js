@@ -40,8 +40,7 @@ module.exports = async function handler(req, res) {
     // Supports: http(s):// URLs (downloaded) and /uploads/... (read from local disk)
     if (reference_image && typeof reference_image === 'string') {
       const isRemote = reference_image.startsWith('http');
-      const isLocal = reference_image.startsWith('/uploads/');
-      if (isRemote || isLocal) {
+      if (isRemote) {
         try {
           falImageUrl = await uploadToFalStorage(falKey, reference_image);
           console.log('[FAL] Reference image uploaded to FAL storage:', falImageUrl.substring(0, 100));
@@ -69,38 +68,23 @@ module.exports = async function handler(req, res) {
   }
 };
 
-// Get image bytes and content-type from either a remote URL or a local /uploads/ path
+// Get image bytes and content-type from a remote URL, then upload to FAL storage
 async function uploadToFalStorage(apiKey, source) {
   let buffer, contentType;
 
-  if (source.startsWith('/uploads/')) {
-    // Local file — read directly from disk
-    const fileName = path.basename(source);
-    const localPath = path.join(UPLOAD_DIR, fileName);
-    console.log('[FAL] Reading local reference image from disk:', localPath);
-    if (!fs.existsSync(localPath)) {
-      throw new Error(`Local upload not found: ${localPath}`);
-    }
-    buffer = fs.readFileSync(localPath);
-    const ext = path.extname(fileName).toLowerCase();
-    const extToMime = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.gif': 'image/gif' };
-    contentType = extToMime[ext] || 'image/jpeg';
-    console.log(`[FAL] Loaded local file: ${buffer.length} bytes (${contentType})`);
-  } else {
-    // Remote URL — download it
-    console.log('[FAL] Downloading reference image from URL:', source.substring(0, 80));
-    const downloadRes = await fetchWithTimeout(source, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' },
-    }, 15000);
+  // All sources are now remote URLs (FAL storage or web URLs)
+  console.log('[FAL] Downloading reference image from URL:', source.substring(0, 80));
+  const downloadRes = await fetchWithTimeout(source, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' },
+  }, 15000);
 
-    if (!downloadRes.ok) {
-      throw new Error(`Download failed: ${downloadRes.status}`);
-    }
-
-    contentType = downloadRes.headers.get('content-type') || 'image/jpeg';
-    buffer = Buffer.from(await downloadRes.arrayBuffer());
-    console.log(`[FAL] Downloaded ${buffer.length} bytes (${contentType})`);
+  if (!downloadRes.ok) {
+    throw new Error(`Download failed: ${downloadRes.status}`);
   }
+
+  contentType = downloadRes.headers.get('content-type') || 'image/jpeg';
+  buffer = Buffer.from(await downloadRes.arrayBuffer());
+  console.log(`[FAL] Downloaded ${buffer.length} bytes (${contentType})`);
 
   // Determine file extension from content type
   const extMap = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/jpg': 'jpg' };

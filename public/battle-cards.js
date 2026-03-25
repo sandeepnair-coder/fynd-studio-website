@@ -770,9 +770,73 @@ async function uploadAndLaunchConcepts() {
 
   // Live mode — upload images to server, get URLs
   var btn = document.getElementById('cuGenerateBtn');
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--primary-foreground);border-top-color:transparent;border-radius:50%;animation:spin 0.6s linear infinite"></span> Uploading images...';
+  var generateView = document.getElementById('conceptsGenerateView');
+
+  // Show full-screen generating state over the form
+  if (generateView) {
+    generateView.innerHTML =
+      '<div style="padding:80px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px">' +
+        '<div style="position:relative;width:56px;height:56px;margin-bottom:32px">' +
+          '<div style="position:absolute;inset:0;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite"></div>' +
+          '<div style="position:absolute;inset:6px;border:3px solid var(--border);border-bottom-color:var(--signal, #10b981);border-radius:50%;animation:spin 1.5s linear infinite reverse"></div>' +
+        '</div>' +
+        '<div style="font-size:20px;font-weight:600;color:var(--foreground);margin-bottom:8px">Generating Campaign Visuals</div>' +
+        '<div style="font-size:14px;color:var(--muted-foreground);margin-bottom:32px">for ' + escBattle(brandContext.name || 'your brand') + '</div>' +
+        '<div style="display:flex;flex-direction:column;gap:12px;width:280px;text-align:left">' +
+          '<div class="gen-step active" id="genStep1" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--foreground);transition:opacity 0.3s">' +
+            '<div style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:lstep-pulse 1.2s ease-in-out infinite;flex-shrink:0"></div>' +
+            'Uploading product images<span class="ldots" style="letter-spacing:2px;margin-left:2px;min-width:18px"></span>' +
+          '</div>' +
+          '<div class="gen-step" id="genStep2" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted-foreground);opacity:0.4;transition:opacity 0.3s">' +
+            '<div style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0"></div>' +
+            'Creating lifestyle photo' +
+          '</div>' +
+          '<div class="gen-step" id="genStep3" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted-foreground);opacity:0.4;transition:opacity 0.3s">' +
+            '<div style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0"></div>' +
+            'Generating product photoshoot' +
+          '</div>' +
+          '<div class="gen-step" id="genStep4" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted-foreground);opacity:0.4;transition:opacity 0.3s">' +
+            '<div style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0"></div>' +
+            'Designing digital banner' +
+          '</div>' +
+        '</div>' +
+        '<div style="font-size:11px;color:var(--muted-foreground);margin-top:32px;opacity:0.6">This typically takes 30–60 seconds</div>' +
+      '</div>';
+  }
+
+  // Animate dots on active step
+  var _genDotsTimer = setInterval(function() {
+    var active = document.querySelector('.gen-step.active .ldots');
+    if (!active) return;
+    var dots = (active.textContent.length % 3) + 1;
+    active.textContent = '.'.repeat(dots);
+  }, 400);
+
+  function advanceGenStep(stepNum) {
+    for (var i = 1; i <= 4; i++) {
+      var el = document.getElementById('genStep' + i);
+      if (!el) continue;
+      if (i < stepNum) {
+        el.className = 'gen-step done';
+        el.style.opacity = '0.6';
+        el.style.color = 'var(--muted-foreground)';
+        el.querySelector('div').style.background = 'var(--primary)';
+        var ld = el.querySelector('.ldots');
+        if (ld) ld.remove();
+      } else if (i === stepNum) {
+        el.className = 'gen-step active';
+        el.style.opacity = '1';
+        el.style.color = 'var(--foreground)';
+        el.querySelector('div').style.background = 'var(--primary)';
+        el.querySelector('div').style.animation = 'lstep-pulse 1.2s ease-in-out infinite';
+        if (!el.querySelector('.ldots')) {
+          var span = document.createElement('span');
+          span.className = 'ldots';
+          span.style.cssText = 'letter-spacing:2px;margin-left:2px;min-width:18px';
+          el.appendChild(span);
+        }
+      }
+    }
   }
 
   try {
@@ -800,19 +864,19 @@ async function uploadAndLaunchConcepts() {
     }
 
     // Store uploaded URLs as reference images for FAL
-    window._battleProductImages = data.urls.map(function(u) {
-      return window.location.origin + u;
-    });
+    // URLs are now full FAL storage URLs (not local /uploads/ paths)
+    window._battleProductImages = data.urls;
 
-    if (btn) btn.innerHTML = 'Generating visuals...';
+    advanceGenStep(2);
+    window._advanceGenStep = advanceGenStep;
+    window._clearGenDots = function() { clearInterval(_genDotsTimer); };
     launchConceptsGeneration();
 
   } catch(err) {
+    clearInterval(_genDotsTimer);
     showToast('error', 'Upload failed', err.message);
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = 'Generate AI Visuals';
-    }
+    // Reload the form view
+    location.reload();
   }
 }
 
@@ -825,15 +889,19 @@ async function launchConceptsGeneration() {
   var contentView = document.getElementById('conceptsContent');
   if (!contentView) return;
 
-  // Show loading state
+  // Show loading state — advance the generating steps if available
   if (generateView) generateView.style.display = 'none';
   contentView.style.display = 'block';
-  contentView.innerHTML =
-    '<div style="padding:80px 40px;text-align:center">' +
-      '<div class="spinner" style="display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:24px"></div>' +
-      '<div style="font-size:16px;color:var(--muted-foreground)">Generating campaign visuals for ' + escBattle(brandName) + '...</div>' +
-      '<div style="font-size:12px;color:var(--muted-foreground);margin-top:8px">Creating lifestyle photo, product shot & banner \u2014 this takes 30-60 seconds</div>' +
-    '</div>';
+  if (typeof window._advanceGenStep === 'function') {
+    window._advanceGenStep(2);
+  } else {
+    contentView.innerHTML =
+      '<div style="padding:80px 40px;text-align:center">' +
+        '<div class="spinner" style="display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:24px"></div>' +
+        '<div style="font-size:16px;color:var(--muted-foreground)">Generating campaign visuals for ' + escBattle(brandName) + '...</div>' +
+        '<div style="font-size:12px;color:var(--muted-foreground);margin-top:8px">Creating lifestyle photo, product shot & banner \u2014 this takes 30-60 seconds</div>' +
+      '</div>';
+  }
 
   // Build prompt with brand context
   var userPrompt = 'Brand: ' + brandName + '\nCategory: ' + category + '\nMarket Segment: ' + segment;
@@ -881,12 +949,16 @@ async function launchConceptsGeneration() {
     if (!battleCardData) battleCardData = {};
     battleCardData.concepts = conceptsData;
 
+    // Clear generating state
+    if (typeof window._clearGenDots === 'function') window._clearGenDots();
+
     // Render multi-format visual cards
     renderConceptCards(conceptsData, brandName);
     window._conceptsGenerated = true;
     showToast('success', 'Visuals ready!', 'AI campaign visuals generated. Creating images...');
 
   } catch(err) {
+    if (typeof window._clearGenDots === 'function') window._clearGenDots();
     contentView.innerHTML =
       '<div style="padding:40px;text-align:center;color:var(--primary)">' +
         '<div style="font-size:16px;margin-bottom:16px">Visual generation failed</div>' +

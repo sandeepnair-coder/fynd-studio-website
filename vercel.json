@@ -15,6 +15,9 @@
     },
     "api/generate-image.js": {
       "maxDuration": 60
+    },
+    "api/upload-temp.js": {
+      "maxDuration": 30
     }
   },
   "rewrites": [

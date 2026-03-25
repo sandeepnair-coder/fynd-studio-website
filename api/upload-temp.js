@@ -1,33 +1,13 @@
+// api/upload-temp.js
+// Uploads product images directly to FAL storage (works on Vercel serverless)
+// Returns FAL storage URLs instead of local file paths
+
 const Busboy = require('busboy');
-const fs = require('fs');
-const path = require('path');
 const crypto = require('crypto');
 
-const UPLOAD_DIR = path.join(__dirname, '..', 'tmp', 'uploads');
+const FAL_UPLOAD_URL = 'https://rest.alpha.fal.ai/storage/upload/initiate';
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const MAX_FILES = 6; // 5 products + 1 logo
-const FILE_TTL_MS = 60 * 60 * 1000; // 1 hour
-
-// Ensure upload directory exists
-if (!fs.existsSync(UPLOAD_DIR)) {
-  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-}
-
-function cleanOldFiles() {
-  try {
-    const now = Date.now();
-    const files = fs.readdirSync(UPLOAD_DIR);
-    for (const file of files) {
-      const filePath = path.join(UPLOAD_DIR, file);
-      const stat = fs.statSync(filePath);
-      if (now - stat.mtimeMs > FILE_TTL_MS) {
-        fs.unlinkSync(filePath);
-      }
-    }
-  } catch (e) {
-    // ignore cleanup errors
-  }
-}
 
 module.exports = function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -40,8 +20,11 @@ module.exports = function handler(req, res) {
     return res.end(JSON.stringify({ error: 'Method not allowed' }));
   }
 
-  // Clean old files on each upload
-  cleanOldFiles();
+  const falKey = process.env.FAL_API_KEY;
+  if (!falKey) {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ error: 'FAL_API_KEY not configured' }));
+  }
 
   const contentType = req.headers['content-type'] || '';
   if (!contentType.includes('multipart/form-data')) {
@@ -49,7 +32,7 @@ module.exports = function handler(req, res) {
     return res.end(JSON.stringify({ error: 'Content-Type must be multipart/form-data' }));
   }
 
-  const writePromises = [];
+  const fileBuffers = []; // collect { buffer, contentType, ext }
   let finished = false;
 
   try {
@@ -59,48 +42,46 @@ module.exports = function handler(req, res) {
     });
 
     bb.on('file', (fieldname, stream, info) => {
-      const ext = path.extname(info.filename || '.jpg').toLowerCase() || '.jpg';
-      const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+      const ext = (info.filename || '.jpg').split('.').pop().toLowerCase() || 'jpg';
+      const allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
       if (!allowed.includes(ext)) {
-        stream.resume(); // drain and skip
+        stream.resume();
         return;
       }
 
-      const uuid = crypto.randomUUID();
-      const safeName = uuid + ext;
-      const filePath = path.join(UPLOAD_DIR, safeName);
-      const writeStream = fs.createWriteStream(filePath);
+      const chunks = [];
+      const mime = info.mimeType || 'image/jpeg';
 
-      // Track each file write as a promise so bb.on('close') can wait for all of them
-      const p = new Promise((resolve, reject) => {
-        writeStream.on('close', () => resolve('/uploads/' + safeName));
-        writeStream.on('error', (err) => {
-          try { fs.unlinkSync(filePath); } catch (e) {}
-          reject(err);
-        });
-        stream.on('error', (err) => {
-          writeStream.destroy();
-          try { fs.unlinkSync(filePath); } catch (e) {}
-          reject(err);
-        });
+      stream.on('data', (chunk) => chunks.push(chunk));
+      stream.on('end', () => {
+        const buffer = Buffer.concat(chunks);
+        if (buffer.length > 0) {
+          fileBuffers.push({ buffer, contentType: mime, ext });
+        }
       });
-      writePromises.push(p);
-
-      stream.pipe(writeStream);
     });
 
     bb.on('close', async () => {
       if (finished) return;
       finished = true;
+
+      if (fileBuffers.length === 0) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: 'No valid files uploaded' }));
+      }
+
       try {
-        // Wait for all file writes to complete before responding
-        const urls = await Promise.all(writePromises);
-        console.log('[upload-temp] saved', urls.length, 'files:', urls);
+        // Upload all files to FAL storage in parallel
+        const uploadPromises = fileBuffers.map((file, i) => uploadToFal(falKey, file, i));
+        const urls = await Promise.all(uploadPromises);
+        console.log('[upload-temp] Uploaded', urls.length, 'files to FAL storage');
+
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ urls }));
       } catch (err) {
+        console.error('[upload-temp] FAL upload error:', err.message);
         res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'File write failed: ' + err.message }));
+        res.end(JSON.stringify({ error: 'Upload to storage failed: ' + err.message }));
       }
     });
 
@@ -121,3 +102,41 @@ module.exports = function handler(req, res) {
     }
   }
 };
+
+async function uploadToFal(apiKey, file, index) {
+  const { buffer, contentType, ext } = file;
+  const fileName = `product_${index}_${crypto.randomUUID().substring(0, 8)}.${ext}`;
+
+  // Step 1: Initiate upload on FAL storage
+  const initRes = await fetch(FAL_UPLOAD_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Key ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      file_name: fileName,
+      content_type: contentType.split(';')[0],
+    }),
+  });
+
+  if (!initRes.ok) {
+    const errBody = await initRes.text().catch(() => '');
+    throw new Error(`FAL init failed: ${initRes.status} ${errBody.substring(0, 100)}`);
+  }
+
+  const { file_url, upload_url } = await initRes.json();
+
+  // Step 2: PUT the image bytes to the presigned URL
+  const uploadRes = await fetch(upload_url, {
+    method: 'PUT',
+    headers: { 'Content-Type': contentType.split(';')[0] },
+    body: buffer,
+  });
+
+  if (!uploadRes.ok) {
+    throw new Error(`FAL PUT failed: ${uploadRes.status}`);
+  }
+
+  return file_url;
+}
