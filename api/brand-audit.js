@@ -51,7 +51,7 @@ module.exports = async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 2500,
+        max_tokens: 3500,
         system: system,
         messages: [{ role: 'user', content: user }]
       }),
@@ -98,9 +98,9 @@ module.exports = async function handler(req, res) {
 }
 
 function buildSystemPrompt() {
-  return `You are an Indian D2C brand strategist. Produce a creative health check as JSON only.
+  return `You are an Indian D2C brand strategist. Produce a creative health check as valid JSON only.
 
-Rules: Be specific to Indian market. Provide confidence (high/medium/low) and brief methodology for each score. No markdown, no backticks.
+CRITICAL: You MUST return the COMPLETE JSON with ALL fields filled. Keep descriptions SHORT (under 15 words each) to fit within token limits. No markdown, no backticks. Every field is required.
 
 JSON structure:
 {
