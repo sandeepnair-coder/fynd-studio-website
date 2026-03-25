@@ -591,15 +591,21 @@ function renderResults(brandName, category, segment, data) {
 
   // Scores — handle both old flat format and new nested format
   const sc = data.scores || data;
+  // Defensive: parse to number, default to 0 if NaN/undefined
+  function safeNum(v, fallback) { var n = parseInt(v, 10); return isNaN(n) ? (fallback || 0) : n; }
+  var velVal = safeNum(sc.velocity, 35);
+  var regVal = safeNum(sc.regional, 50);
+  var aiVal  = safeNum(sc.ai, 20);
+  var platVal = safeNum(sc.platform, 40);
   const stagNum = (sc.stagnation === 'HIGH' || sc.stagnation === 82) ? 82
                 : (sc.stagnation === 'MEDIUM' || sc.stagnation === 55) ? 55 : 28;
 
   [
-    { id:'velocity',   val: sc.velocity,   color: sc.velocity   < 50 ? 'danger' : 'warn',  delta: `↓ ${100-sc.velocity}% below category leader` },
-    { id:'stagnation', val: stagNum,        color: 'warn',                                   delta: `${sc.stagnation} RISK — Creative fatigue detected` },
-    { id:'regional',   val: sc.regional,   color: sc.regional   < 50 ? 'warn'   : 'good',  delta: `↑ Opportunity in South & East India` },
-    { id:'ai',         val: sc.ai,         color: 'danger',                                 delta: `High AI adoption potential identified` },
-    { id:'platform',   val: sc.platform,   color: sc.platform   < 40 ? 'danger' : 'good',  delta: `+${100-sc.platform}% headroom vs category leaders` },
+    { id:'velocity',   val: velVal,         color: velVal   < 50 ? 'danger' : 'warn',  delta: `↓ ${100-velVal}% below category leader` },
+    { id:'stagnation', val: stagNum,        color: 'warn',                               delta: `${sc.stagnation || 'MEDIUM'} RISK — Creative fatigue detected` },
+    { id:'regional',   val: regVal,         color: regVal   < 50 ? 'warn'   : 'good',  delta: `↑ Opportunity in South & East India` },
+    { id:'ai',         val: aiVal,          color: 'danger',                             delta: `High AI adoption potential identified` },
+    { id:'platform',   val: platVal,        color: platVal  < 40 ? 'danger' : 'good',  delta: `+${100-platVal}% headroom vs category leaders` },
   ].forEach(s => {
     const ve = document.getElementById('score-'+s.id);
     const be = document.getElementById('bar-'+s.id);
@@ -648,10 +654,16 @@ function renderResults(brandName, category, segment, data) {
   if (gradeEl && data.overallGrade) gradeEl.textContent = data.overallGrade;
 
   // Savings
-  document.getElementById('savingsAmount').textContent = data.savings;
-  document.getElementById('savingsBreakdown').innerHTML = data.breakdown.map(b =>
-    `<div class="sb-row"><span class="sb-item">${b.item}</span><div class="sb-vals"><span class="sb-trad">${b.trad}</span><span class="sb-ai">${b.ai}</span></div></div>`
-  ).join('') || '<div style="color:var(--muted-foreground);font-size:13px;padding:8px 0">No breakdown available.</div>';
+  document.getElementById('savingsAmount').textContent = data.savings || 'Assessment pending';
+  var breakdownHtml = '';
+  if (data.breakdown && Array.isArray(data.breakdown) && data.breakdown.length) {
+    breakdownHtml = data.breakdown.map(b =>
+      `<div class="sb-row"><span class="sb-item">${b.item || ''}</span><div class="sb-vals"><span class="sb-trad">${b.trad || '—'}</span><span class="sb-ai">${b.ai || '—'}</span></div></div>`
+    ).join('');
+  } else {
+    breakdownHtml = '<div style="color:var(--muted-foreground);font-size:13px;padding:8px 0">Cost breakdown not available for this analysis.</div>';
+  }
+  document.getElementById('savingsBreakdown').innerHTML = breakdownHtml;
 
   // Savings methodology
   if (data.savingsMethodology) {
@@ -685,14 +697,18 @@ function renderResults(brandName, category, segment, data) {
   }
 
   // Alerts — handle both string text and bold-tagged text
-  document.getElementById('alertList').innerHTML = data.alerts.map(a =>
-    `<div class="alert-item ${a.type}"><div class="alert-icon">${a.icon}</div><div class="alert-text">${a.text}</div></div>`
-  ).join('');
+  if (data.alerts && Array.isArray(data.alerts) && data.alerts.length) {
+    document.getElementById('alertList').innerHTML = data.alerts.map(a =>
+      `<div class="alert-item ${a.type || 'yellow'}"><div class="alert-icon">${a.icon || '⚠'}</div><div class="alert-text">${a.text || ''}</div></div>`
+    ).join('');
+  }
 
   // Regions
-  document.getElementById('regionalGrid').innerHTML = data.regions.map(r =>
-    `<div class="region-item"><div class="region-name">${r.name}</div><div class="region-bar-track"><div class="region-bar-fill" style="width:${r.score}%"></div></div><div class="region-score">${r.score}</div></div>`
-  ).join('');
+  if (data.regions && Array.isArray(data.regions) && data.regions.length) {
+    document.getElementById('regionalGrid').innerHTML = data.regions.map(r =>
+      `<div class="region-item"><div class="region-name">${r.name || ''}</div><div class="region-bar-track"><div class="region-bar-fill" style="width:${safeNum(r.score)}%"></div></div><div class="region-score">${safeNum(r.score)}</div></div>`
+    ).join('');
+  }
 
   // Priority actions
   const prioEl = document.getElementById('priorityActions');
