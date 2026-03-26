@@ -62,10 +62,10 @@
 
 <!-- ── DEMO MODAL ── -->
 <div class="modal-backdrop" id="demoModal">
-  <div class="modal" id="demoModalInner">
+  <div class="modal" id="demoModalInner" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle">
     <button class="modal-close" onclick="closeModal('demoModal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div id="demoFormView">
-      <div class="modal-title">Book a Strategy Demo</div>
+      <div class="modal-title" id="demoModalTitle">Book a Strategy Demo</div>
       <div class="modal-sub">Our creative strategists will walk you through a live AI audit of your brand. Typically 30 minutes.</div>
       <div class="modal-field"><label>Full Name</label><input type="text" id="demoName" placeholder="Your name"></div>
       <div class="modal-field"><label>Brand / Company</label><input type="text" id="demoBrand" placeholder="Brand name"></div>
@@ -94,10 +94,10 @@
 
 <!-- ── STRATEGIST MODAL ── -->
 <div class="modal-backdrop" id="strategistModal">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="stratModalTitle">
     <button class="modal-close" onclick="closeModal('strategistModal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div id="stratFormView">
-      <div class="modal-title">Connect with a Creative Strategist</div>
+      <div class="modal-title" id="stratModalTitle">Connect with a Creative Strategist</div>
       <div class="modal-sub">Tell us a bit about your brand and what you're trying to solve. We'll match you with the right strategist within 24 hours.</div>
       <div class="modal-field"><label>Brand Name</label><input type="text" id="stratBrand" placeholder="Your brand"></div>
       <div class="modal-field"><label>What's your biggest creative challenge?</label><textarea id="stratChallenge" placeholder="e.g. We need to improve our regional content reach and reduce production costs..."></textarea></div>
@@ -150,7 +150,7 @@
           <span class="toggle-slider"></span>
         </label>
       </div>
-      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu" aria-expanded="false" aria-controls="navSubPlatform">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
@@ -990,7 +990,7 @@
           </div>
           <div id="savingsBreakdown"></div>
           <div id="savingsMethodologyWrap" style="display:none;margin-top:16px">
-            <div class="methodology-toggle" onclick="toggleMethod('savings-methodology')">&#9662; How was this estimated?</div>
+            <button type="button" class="methodology-toggle" aria-expanded="false" onclick="toggleMethod('savings-methodology', this)">&#9662; How was this estimated?</button>
             <div class="methodology-panel" id="savings-methodology"></div>
           </div>
         </div>
@@ -1116,33 +1116,33 @@
     </div>
 
     <!-- TABS — 5 tabs now including Ogilvy -->
-    <div class="battle-tabs">
-      <div class="btab active" onclick="switchBattleTab('market',this)">Market Capture</div>
-      <div class="btab" onclick="switchBattleTab('competitor',this)">Competitor Plan</div>
-      <div class="btab" onclick="switchBattleTab('concepts',this)">AI Concepts</div>
-      <div class="btab" onclick="switchBattleTab('roi',this)">Cost & ROI</div>
-      <div class="btab btab-strategy" onclick="switchBattleTab('ogilvy',this)">👑 Strategy</div>
+    <div class="battle-tabs" role="tablist">
+      <button class="btab active" role="tab" id="btab-market" aria-selected="true" tabindex="0" aria-controls="tab-market" onclick="switchBattleTab('market',this)">Market Capture</button>
+      <button class="btab" role="tab" id="btab-competitor" aria-selected="false" tabindex="-1" aria-controls="tab-competitor" onclick="switchBattleTab('competitor',this)">Competitor Plan</button>
+      <button class="btab" role="tab" id="btab-concepts" aria-selected="false" tabindex="-1" aria-controls="tab-concepts" onclick="switchBattleTab('concepts',this)">AI Concepts</button>
+      <button class="btab" role="tab" id="btab-roi" aria-selected="false" tabindex="-1" aria-controls="tab-roi" onclick="switchBattleTab('roi',this)">Cost & ROI</button>
+      <button class="btab btab-strategy" role="tab" id="btab-ogilvy" aria-selected="false" tabindex="-1" aria-controls="tab-ogilvy" onclick="switchBattleTab('ogilvy',this)">👑 Strategy</button>
     </div>
 
     <!-- TAB: MARKET CAPTURE -->
-    <div id="tab-market" class="btab-content active">
+    <div id="tab-market" class="btab-content active" role="tabpanel" aria-labelledby="btab-market">
       <div class="section-loading" style="text-align:center;padding:48px;color:var(--muted-foreground)">Market intelligence will appear here after analysis</div>
     </div>
 
         <!-- TAB: COMPETITOR -->
-    <div id="tab-competitor" class="btab-content">
+    <div id="tab-competitor" class="btab-content" role="tabpanel" aria-labelledby="btab-competitor">
       <div class="comp-grid">
         <div class="section-loading" style="text-align:center;padding:48px;color:var(--muted-foreground)">Competitor analysis will appear here after analysis</div>
       </div>
     </div>
 
     <!-- TAB: AI CONCEPTS (generated on-demand) -->
-    <div id="tab-concepts" class="btab-content">
+    <div id="tab-concepts" class="btab-content" role="tabpanel" aria-labelledby="btab-concepts">
       <div class="section-loading" style="text-align:center;padding:48px;color:var(--muted-foreground)">AI concepts will appear here after analysis</div>
     </div>
 
     <!-- TAB: COST & ROI -->
-    <div id="tab-roi" class="btab-content">
+    <div id="tab-roi" class="btab-content" role="tabpanel" aria-labelledby="btab-roi">
 
 
       <div class="roi-split">
@@ -1290,7 +1290,7 @@
     </div>
 
             <!-- TAB: STRATEGY (GATED) -->
-    <div id="tab-ogilvy" class="btab-content">
+    <div id="tab-ogilvy" class="btab-content" role="tabpanel" aria-labelledby="btab-ogilvy">
 
       <!-- GATE OVERLAY -->
       <div id="strategyGate" style="position:relative">

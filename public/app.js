@@ -110,15 +110,55 @@ var DUMMY_ANALYSIS_DATA = {
 };
 
 // ── MOBILE NAV TOGGLE ──
+var _mobileNavEscHandler = null;
+
 function toggleMobileNav() {
   var nav = document.querySelector('.site-nav');
-  if (nav) nav.classList.toggle('nav-open');
+  var hamburger = document.querySelector('.nav-hamburger');
+  if (!nav) return;
+
+  nav.classList.toggle('nav-open');
+  var isOpen = nav.classList.contains('nav-open');
+
+  // Update aria-expanded
+  if (hamburger) {
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+
+  // Add/remove ESC key handler
+  if (isOpen) {
+    _mobileNavEscHandler = function(e) {
+      if (e.key === 'Escape') {
+        nav.classList.remove('nav-open');
+        if (hamburger) {
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.focus();
+        }
+        document.removeEventListener('keydown', _mobileNavEscHandler);
+        _mobileNavEscHandler = null;
+      }
+    };
+    document.addEventListener('keydown', _mobileNavEscHandler);
+  } else {
+    if (_mobileNavEscHandler) {
+      document.removeEventListener('keydown', _mobileNavEscHandler);
+      _mobileNavEscHandler = null;
+    }
+  }
 }
 // Close mobile nav when a link is clicked
 document.addEventListener('click', function(e) {
   if (e.target.closest('.nav-sub-link') || e.target.closest('.nav-sub-cta')) {
     var nav = document.querySelector('.site-nav');
-    if (nav) nav.classList.remove('nav-open');
+    var hamburger = document.querySelector('.nav-hamburger');
+    if (nav) {
+      nav.classList.remove('nav-open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    }
+    if (_mobileNavEscHandler) {
+      document.removeEventListener('keydown', _mobileNavEscHandler);
+      _mobileNavEscHandler = null;
+    }
   }
 });
 
@@ -268,14 +308,50 @@ function _doShowPage(id) {
 
 // ── BATTLE TABS ──
 function switchBattleTab(id, el) {
-  document.querySelectorAll('.btab').forEach(t => t.classList.remove('active'));
-  if(el) el.classList.add('active');
+  document.querySelectorAll('.btab').forEach(function(t) {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+    t.setAttribute('tabindex', '-1');
+  });
+  // If el not provided (programmatic call), find the tab by id
+  var activeTab = el || document.getElementById('btab-' + id);
+  if (activeTab) {
+    activeTab.classList.add('active');
+    activeTab.setAttribute('aria-selected', 'true');
+    activeTab.setAttribute('tabindex', '0');
+  }
   document.querySelectorAll('.btab-content').forEach(c => c.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   if(id === 'roi') { setTimeout(roiCalc, 60); }
   // Re-personalize when switching tabs to catch any remaining placeholders
   setTimeout(personalizeBattleCards, 100);
 }
+
+// Keyboard navigation for battle tabs
+document.addEventListener('keydown', function(e) {
+  var tab = document.activeElement;
+  if (!tab || tab.getAttribute('role') !== 'tab' || !tab.closest('.battle-tabs')) return;
+
+  var tabs = Array.prototype.slice.call(tab.closest('[role="tablist"]').querySelectorAll('[role="tab"]'));
+  var index = tabs.indexOf(tab);
+  var newIndex = -1;
+
+  if (e.key === 'ArrowRight') {
+    newIndex = (index + 1) % tabs.length;
+  } else if (e.key === 'ArrowLeft') {
+    newIndex = (index - 1 + tabs.length) % tabs.length;
+  } else if (e.key === 'Home') {
+    newIndex = 0;
+  } else if (e.key === 'End') {
+    newIndex = tabs.length - 1;
+  }
+
+  if (newIndex >= 0) {
+    e.preventDefault();
+    tabs[newIndex].focus();
+    tabs[newIndex].click();
+  }
+});
 
 // ── TOAST SYSTEM ──
 function showToast(type, title, msg, duration=4000) {
@@ -293,9 +369,31 @@ function showToast(type, title, msg, duration=4000) {
 }
 
 // ── MODAL SYSTEM ──
+var _modalPreviousFocus = null;
+var _modalEscHandler = null;
+
 function openModal(id) {
-  document.getElementById(id).classList.add('open');
+  _modalPreviousFocus = document.activeElement;
+  var backdrop = document.getElementById(id);
+  backdrop.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Focus the first focusable element inside the modal dialog
+  var dialog = backdrop.querySelector('[role="dialog"]') || backdrop.querySelector('.modal');
+  if (dialog) {
+    var focusable = dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length > 0) {
+      setTimeout(function() { focusable[0].focus(); }, 50);
+    }
+  }
+
+  // Add ESC key handler
+  _modalEscHandler = function(e) {
+    if (e.key === 'Escape') {
+      closeModal(id);
+    }
+  };
+  document.addEventListener('keydown', _modalEscHandler);
 }
 function closeModal(id) {
   document.getElementById(id).classList.remove('open');
@@ -304,6 +402,18 @@ function closeModal(id) {
   const modal = document.getElementById(id);
   modal.querySelectorAll('[id$="SuccessView"]').forEach(v => v.style.display='none');
   modal.querySelectorAll('[id$="FormView"]').forEach(v => v.style.display='');
+
+  // Remove ESC handler
+  if (_modalEscHandler) {
+    document.removeEventListener('keydown', _modalEscHandler);
+    _modalEscHandler = null;
+  }
+
+  // Return focus to the element that opened the modal
+  if (_modalPreviousFocus && _modalPreviousFocus.focus) {
+    _modalPreviousFocus.focus();
+    _modalPreviousFocus = null;
+  }
 }
 // close on backdrop click
 document.querySelectorAll('.modal-backdrop').forEach(b => {
@@ -573,9 +683,14 @@ function showAnalysisError(brandName, errorMsg) {
   window._battleBrand = null;
 }
 
-function toggleMethod(id) {
+function toggleMethod(id, btnEl) {
   var el = document.getElementById(id);
   if (el) el.classList.toggle('open');
+  // Toggle aria-expanded on the button if provided
+  if (btnEl) {
+    var isOpen = el && el.classList.contains('open');
+    btnEl.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
 }
 
 function animVal(el, target) {
