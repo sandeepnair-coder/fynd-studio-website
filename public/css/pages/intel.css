@@ -4,7 +4,7 @@
    ══════════════════════════════════════════ */
 
 .intel-hero {
-  padding: var(--spacing--80, 80px) var(--spacing--48, 48px) var(--spacing--40, 40px);
+  padding: var(--spacing--32, 32px) var(--spacing--48, 48px) var(--spacing--40, 40px);
   max-width: var(--layout--container-max, 1200px);
   margin: 0 auto;
 }
@@ -581,6 +581,11 @@
   flex-direction: column;
   gap: var(--spacing--16, 16px);
 }
+/* Case study card type variants (accent top border) */
+.cs-card.type-a { border-top: 3px solid var(--blue--blue-primary, var(--electric)); }
+.cs-card.type-b { border-top: 3px solid var(--green--green-primary, var(--good)); }
+.cs-card.type-c { border-top: 3px solid var(--gold--gold-primary, var(--warn)); }
+
 .cs-brand {
   font-family: var(--font-sans);
   font-size: var(--font-size--body-m, 16px);

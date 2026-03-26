@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){document.documentElement.classList.remove('dark');try{localStorage.removeItem('theme');}catch(e){}})();</script>
 <title>Fynd Studio · AI-Powered Creative Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,10 +150,6 @@
           <span class="toggle-slider"></span>
         </label>
       </div>
-      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle theme">
-        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
       <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -202,7 +199,7 @@
       <span class="line3">It Deserves Impact.</span>
     </h1>
     <p class="hero-sub">India's ₹1.59 Lakh Crore ad market is now 58% digital — and growing at 15% YoY. If your creative strategy is still built for 2020, you're not just losing relevance — you're losing market share.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px;opacity:0.5">
+    <div class="hero-sources">
       <span class="source-tag">Source: <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener">GroupM TYNY 2026</a></span>
       <span class="source-tag">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener">Madison PMAR 2026</a></span>
     </div>
@@ -258,22 +255,22 @@
     <h2 class="section-title">The market in 60 seconds.</h2>
     <div class="d2c-hero-stats">
       <div class="d2c-stat-card">
-        <div class="d2c-stat-num" style="color:var(--signal)">58%</div>
+        <div class="d2c-stat-num">58%</div>
         <div class="d2c-stat-label">India's ad spend is now majority digital, growing at 15% YoY while traditional media grows just 2%.</div>
         <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Madison PMAR 2025</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">GroupM TYNY 2025</a></div>
       </div>
       <div class="d2c-stat-card">
-        <div class="d2c-stat-num" style="color:var(--electric)">3.2×</div>
+        <div class="d2c-stat-num d2c-stat-num--electric">3.2×</div>
         <div class="d2c-stat-label">Higher ROI on AI-driven campaigns vs traditional production. D2C brands report 3.2× returns with AI creative workflows.</div>
         <div class="d2c-stat-source"><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/ai-powered-marketing-and-sales-reach-new-heights-with-generative-ai" target="_blank" rel="noopener" class="text-source">McKinsey AI Marketing Report 2024</a></div>
       </div>
       <div class="d2c-stat-card">
-        <div class="d2c-stat-num" style="color:var(--signal)">+50%</div>
+        <div class="d2c-stat-num">+50%</div>
         <div class="d2c-stat-label">Quick Commerce (Blinkit, Zepto, Instamart) is the fastest-growing ad channel, creating a new digital storefront.</div>
         <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a></div>
       </div>
       <div class="d2c-stat-card">
-        <div class="d2c-stat-num" style="color:var(--muted-foreground)">−10%</div>
+        <div class="d2c-stat-num d2c-stat-num--muted">−10%</div>
         <div class="d2c-stat-label">Linear TV ad volumes crashed 10% last year as audiences moved to CTV and short-form video.</div>
         <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a></div>
       </div>
@@ -281,10 +278,10 @@
   </section>
 
   <!-- PLATFORM AD SPEND DISTRIBUTION -->
-  <section class="section reveal" style="border-top:1px solid var(--border)">
+  <section class="section reveal border-t-subtle">
     <div class="section-label">Platform Ad Spend Distribution</div>
     <h2 class="section-title">Where India's ₹92,000 Crore<br>digital ad budget flows in 2025.</h2>
-    <p style="font-size:16px;color:var(--muted-foreground);line-height:1.7;max-width:520px;margin-bottom:16px;">Most D2C brands default to Instagram and Google. Here's the full picture —<br>including where the biggest whitespace gaps are hiding.</p>
+    <p class="section-desc">Most D2C brands default to Instagram and Google. Here's the full picture —<br>including where the biggest whitespace gaps are hiding.</p>
 
     <div class="spend-section">
       <!-- LEFT: Platform Table -->
@@ -294,7 +291,7 @@
         <div class="spend-row">
           <div class="spend-icon">🔍</div>
           <div class="spend-name">Google Search + Display</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:100%;background:var(--primary)"></div></div>
+          <div class="spend-bar-wrap"><div class="spend-bar spend-bar--100"></div></div>
           <div class="spend-val">₹28,500 Cr</div>
           <div class="spend-yoy">+12% YoY</div>
         </div>
@@ -302,7 +299,7 @@
         <div class="spend-row">
           <div class="spend-icon">▶</div>
           <div class="spend-name">YouTube (Video + Shorts)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:72%"></div></div>
+          <div class="spend-bar-wrap"><div class="spend-bar spend-bar--72"></div></div>
           <div class="spend-val">₹20,500 Cr</div>
           <div class="spend-yoy">+18% YoY</div>
         </div>
@@ -310,7 +307,7 @@
         <div class="spend-row">
           <div class="spend-icon">📸</div>
           <div class="spend-name">Meta (Instagram + Facebook)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:63%;background:var(--primary);opacity:0.8"></div></div>
+          <div class="spend-bar-wrap"><div class="spend-bar spend-bar--63"></div></div>
           <div class="spend-val">₹18,000 Cr</div>
           <div class="spend-yoy">+20% YoY</div>
         </div>
@@ -318,7 +315,7 @@
         <div class="spend-row">
           <div class="spend-icon">🛒</div>
           <div class="spend-name">Flipkart + Amazon Ads</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:32%;background:var(--primary);opacity:0.6"></div></div>
+          <div class="spend-bar-wrap"><div class="spend-bar spend-bar--32"></div></div>
           <div class="spend-val">₹9,200 Cr</div>
           <div class="spend-yoy">+28% YoY</div>
         </div>
@@ -326,7 +323,7 @@
         <div class="spend-row">
           <div class="spend-icon">📺</div>
           <div class="spend-name">JioCinema + Hotstar (CTV)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:25%;background:var(--primary);opacity:0.7"></div></div>
+          <div class="spend-bar-wrap"><div class="spend-bar spend-bar--25"></div></div>
           <div class="spend-val">₹7,200 Cr</div>
           <div class="spend-yoy">+33% YoY</div>
         </div>
@@ -334,7 +331,7 @@
         <div class="spend-row">
           <div class="spend-icon">⚡</div>
           <div class="spend-name">Q-Commerce (Blinkit / Zepto)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:14%;background:var(--primary);opacity:0.5"></div></div>
+          <div class="spend-bar-wrap"><div class="spend-bar spend-bar--14"></div></div>
           <div class="spend-val">₹4,100 Cr</div>
           <div class="spend-yoy">+50% YoY</div>
         </div>
@@ -342,7 +339,7 @@
         <div class="spend-row">
           <div class="spend-icon">💬</div>
           <div class="spend-name">ShareChat + Moj (Vernacular)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:11%;background:var(--primary);opacity:0.4"></div></div>
+          <div class="spend-bar-wrap"><div class="spend-bar spend-bar--11"></div></div>
           <div class="spend-val">₹3,200 Cr</div>
           <div class="spend-yoy">+45% YoY</div>
         </div>
@@ -369,19 +366,19 @@
   </section>
 
   <!-- COMPETITIVE LANDSCAPE -->
-  <section class="section reveal" style="border-top:1px solid var(--border)">
+  <section class="section reveal border-t-subtle">
     <div class="section-label">Competitive Landscape</div>
     <h2 class="section-title">Who you're up against<br>and where we fit.</h2>
-    <p style="font-size:14px;color:var(--mid);margin-bottom:8px">Based on India's Hottest Agencies 2025 ranking · <a href="https://campaignbriefasia.com/2026/02/09/ogilvy-rises-up-to-take-out-agency-of-the-year-in-campaign-brief-asias-2025-india-creative-rankings-mccann-moves-up-to-2-leo-ranks-3/" target="_blank" rel="noopener" style="color:var(--signal);text-decoration:underline;text-underline-offset:3px">Campaign Brief Asia</a></p>
+    <p class="section-desc--sm">Based on India's Hottest Agencies 2025 ranking · <a href="https://campaignbriefasia.com/2026/02/09/ogilvy-rises-up-to-take-out-agency-of-the-year-in-campaign-brief-asias-2025-india-creative-rankings-mccann-moves-up-to-2-leo-ranks-3/" target="_blank" rel="noopener" style="color:var(--signal);text-decoration:underline;text-underline-offset:3px">Campaign Brief Asia</a></p>
 
     <table class="comp-landscape-table">
       <thead>
         <tr>
-          <th style="width:48px;text-align:center">Rank</th>
+          <th>Rank</th>
           <th>Agency</th>
           <th>Type</th>
           <th>AI Capability</th>
-          <th style="text-align:center">Turnaround</th>
+          <th>Turnaround</th>
           <th>Key Clients</th>
         </tr>
       </thead>
@@ -394,7 +391,7 @@
           </td>
           <td>Integrated Creative</td>
           <td>Borderless Creativity (GenAI integrated)</td>
-          <td style="text-align:center">4–6 weeks</td>
+          <td>4–6 weeks</td>
           <td>Amazon, Cadbury, Coca-Cola</td>
         </tr>
         <tr>
@@ -405,7 +402,7 @@
           </td>
           <td>Full-Service Creative</td>
           <td>Craft AI studio for production</td>
-          <td style="text-align:center">4–6 weeks</td>
+          <td>4–6 weeks</td>
           <td>L'Oréal, Nescafé, Mastercard</td>
         </tr>
         <tr>
@@ -416,7 +413,7 @@
           </td>
           <td>Creative & Strategy</td>
           <td>AI-augmented ideation workflows</td>
-          <td style="text-align:center">3–5 weeks</td>
+          <td>3–5 weeks</td>
           <td>Amazon, Bajaj, P&G</td>
         </tr>
         <tr>
@@ -427,7 +424,7 @@
           </td>
           <td>Integrated Creative</td>
           <td>Tribal DDB digital + AI tools</td>
-          <td style="text-align:center">3–5 weeks</td>
+          <td>3–5 weeks</td>
           <td>Volkswagen, Johnson & Johnson</td>
         </tr>
         <tr>
@@ -438,7 +435,7 @@
           </td>
           <td>Creative & Media</td>
           <td>Havas AI content suite</td>
-          <td style="text-align:center">3–5 weeks</td>
+          <td>3–5 weeks</td>
           <td>Hyundai, Reckitt, Godrej</td>
         </tr>
         <tr>
@@ -449,7 +446,7 @@
           </td>
           <td>Full-Service Digital</td>
           <td>Data + AI creative iteration</td>
-          <td style="text-align:center">2–3 weeks</td>
+          <td>2–3 weeks</td>
           <td>D2C brands, BFSI, Tata</td>
         </tr>
         <tr>
@@ -460,7 +457,7 @@
           </td>
           <td>Performance + Social</td>
           <td>DASH platform + INNOWAT AR/VR lab</td>
-          <td style="text-align:center">1–2 weeks</td>
+          <td>1–2 weeks</td>
           <td>Royal Enfield, Tata</td>
         </tr>
         <tr>
@@ -471,18 +468,18 @@
           </td>
           <td>Integrated Digital</td>
           <td>AddiktSchbang · AI-powered creative</td>
-          <td style="text-align:center">1–2 weeks</td>
+          <td>1–2 weeks</td>
           <td>Aditya Birla, Nestlé</td>
         </tr>
         <tr class="comp-highlight-row">
-          <td style="text-align:center;font-family:'Inter',sans-serif;font-weight:800;color:var(--electric)">—</td>
+          <td class="comp-highlight-rank">—</td>
           <td>
             <div class="comp-agency-name">Fynd Studio ✦</div>
             <span class="comp-agency-tag ai-native">AI-Native</span>
           </td>
-          <td style="color:var(--electric)">AI-First Design Studio</td>
-          <td style="color:var(--electric)">Fully generative · shoots, ads, video in 48hrs</td>
-          <td style="text-align:center"><span class="comp-turnaround-hl">48 hours</span></td>
+          <td class="comp-highlight-accent">AI-First Design Studio</td>
+          <td class="comp-highlight-accent">Fully generative · shoots, ads, video in 48hrs</td>
+          <td><span class="comp-turnaround-hl">48 hours</span></td>
           <td class="text-half-white">D2C · Fashion · FMCG</td>
         </tr>
       </tbody>
@@ -495,8 +492,8 @@
     <h2 class="section-title">Offline is fading.<br>Digital is the arena.</h2>
     <div class="grid-2 mt-40">
       <!-- OFFLINE -->
-      <div class="divide-panel-offline" style="opacity:0.7">
-        <div class="divide-heading" style="color:var(--mid)">Offline · The Echo Chamber</div>
+      <div class="divide-panel-offline">
+        <div class="divide-heading divide-heading--muted">Offline · The Echo Chamber</div>
         <div class="divide-col-stack">
           <div class="divide-row"><span class="divide-item-label">Television (Linear)</span><span class="divide-item-val-signal">−5%</span></div>
           <div class="divide-row"><span class="divide-item-label">Radio</span><span class="divide-item-val-signal">−5%</span></div>
@@ -507,7 +504,7 @@
       </div>
       <!-- DIGITAL -->
       <div class="divide-panel-digital">
-        <div class="divide-heading" style="color:var(--electric)">Digital · The Arena</div>
+        <div class="divide-heading divide-heading--electric">Digital · The Arena</div>
         <div class="divide-col-stack">
           <div class="divide-row"><span class="divide-item-label-bright">Retail Media (E-com Ads)</span><span class="divide-item-val-electric">+27%</span></div>
           <div class="divide-row"><span class="divide-item-label-bright">Digital Video (YouTube, OTT)</span><span class="divide-item-val-electric">+21%</span></div>
@@ -543,7 +540,7 @@
     <div class="grid-2 mt-40">
       <!-- WINNING -->
       <div class="divide-panel-win">
-        <div class="divide-heading-sm" style="color:var(--electric)">Rising Trends</div>
+        <div class="divide-heading-sm">Rising Trends</div>
         <div class="divide-col-stack-lg">
           <div><div class="divide-trend-title">Connected TV (CTV)</div><div class="divide-trend-body">+33% growth. ₹7,200 Cr market in 2025. Reaching affluent homes on JioCinema and Hotstar.</div><div class="divide-trend-stat-electric">+33% YoY · D2C first-mover window open</div></div>
           <div><div class="divide-trend-title">Vernacular AI Content</div><div class="divide-trend-body">+45% higher growth in Tier 2/3 cities. Only 12% of D2C brands have a vernacular content strategy.</div><div class="divide-trend-stat-electric">+45% growth · Massive white space</div></div>
@@ -552,7 +549,7 @@
       </div>
       <!-- LOSING -->
       <div class="divide-panel-lose">
-        <div class="divide-heading-sm" style="color:var(--signal)">Declining Trends</div>
+        <div class="divide-heading-sm">Declining Trends</div>
         <div class="divide-col-stack-lg">
           <div><div class="divide-trend-title">30-Second TV Spots</div><div class="divide-trend-body">Losing to 15-second digital videos. TV volumes crashed −10% while CTV grew +33%.</div><div class="divide-trend-stat-signal">−10% volumes · Pay DTH shrank 12.4%</div></div>
           <div><div class="divide-trend-title">Generic Banner Ads</div><div class="divide-trend-body">Display is the slowest-growing digital format at just +7%. Static display is dying in a video-first world.</div><div class="divide-trend-stat-signal">+7% · Slowest digital format</div></div>
@@ -691,7 +688,7 @@
           <li>Direct access to a Creative Strategist who can turn all of this into live campaigns in 48 hours.</li>
         </ul>
         <div class="hiw-time-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> Total time: Under 10 minutes from URL to full strategy</div>
-        <button class="btn-primary" style="margin-top:32px;width:100%;display:flex;justify-content:center" onclick="showPage('intel')">Run Your Free Audit →</button>
+        <button class="btn-primary" onclick="showPage('intel')">Run Your Free Audit →</button>
       </aside>
     </div>
   </section>
@@ -699,11 +696,11 @@
   <!-- ═══════════════════════════════════════
        SECTION 5: CASE STUDIES — THE PROOF
   ═══════════════════════════════════════ -->
-  <section class="section" id="case-studies-section" style="border-top:1px solid var(--border)">
+  <section class="section border-t-subtle" id="case-studies-section">
     <div class="section-label">The Proof</div>
     <h2 class="section-title">From data to dominance:<br>our partners.</h2>
     <p class="text-desc-muted">Early movers in India's D2C space are already seeing compounding returns. Here's what switching to AI-first creative looks like in practice.</p>
-    <div style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:rgba(0,229,192,0.06);border:1px solid rgba(0,229,192,0.15);font-size:10px;color:var(--electric);margin-top:12px;margin-bottom:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Verified partner results · Names withheld under NDA</div>
+    <div class="verified-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Verified partner results · Names withheld under NDA</div>
     <div class="case-studies-grid">
       <div class="cs-card type-a">
         <div class="cs-brand">Fashion D2C Brand</div>
@@ -741,7 +738,7 @@
   <section class="section border-t-subtle">
     <div class="section-label">The Engine</div>
     <h2 class="section-title">The intelligence behind<br>the insight.</h2>
-    <p class="text-desc-muted" style="font-size:15px">We don't use a single AI model. Fynd Studio runs a multi-layer generative stack — each layer optimised for a specific creative task.</p>
+    <p class="section-desc">We don't use a single AI model. Fynd Studio runs a multi-layer generative stack — each layer optimised for a specific creative task.</p>
     <div class="tech-grid">
       <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4.9 19.1A16 16 0 0 1 12 2"/><path d="M7.8 16.2A10 10 0 0 1 12 6"/><circle cx="12" cy="12" r="2" fill="white"/></svg></div><div class="tech-name">Market Signal AI</div><div class="tech-abbr">REAL-TIME INTELLIGENCE</div><div class="tech-desc">Crawls 1000+ sources to detect market trends, regional signals, and competitor movements in real-time. Feeds directly into your Creative Health Check scores.</div></div>
       <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="tech-name">Creative Velocity Engine</div><div class="tech-abbr">GENERATIVE PRODUCTION</div><div class="tech-desc">Generates production-quality video, images, and copy in 48 hours. Fine-tuned on Indian fashion, skin tones, and cultural contexts — not Western datasets.</div></div>

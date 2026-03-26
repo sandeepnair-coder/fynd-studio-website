@@ -2,8 +2,16 @@
    PAGE LAYOUT
    ══════════════════════════════════════════ */
 
-/* Page system */
-.page { display: none; min-height: 100vh; }
+/* Page system — pad below fixed .site-nav */
+html {
+  scroll-padding-top: var(--site-nav-offset);
+}
+.page {
+  display: none;
+  min-height: 100vh;
+  padding-top: var(--site-nav-offset);
+  box-sizing: border-box;
+}
 .page.active { display: block; }
 
 /* Scroll reveal */

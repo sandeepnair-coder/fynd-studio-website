@@ -101,20 +101,17 @@ nav.site-nav {
   padding: 10px 48px 12px;
   background: color-mix(in srgb, var(--background) 70%, transparent);
 }
-/* shadcn Tabs–style: line indicator (bottom border), no filled chip */
 .nav-sub-links {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 4px 2px;
-  border-bottom: 1px solid var(--border);
+  gap: 4px 8px;
 }
 .nav-sub-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px 10px;
-  margin-bottom: -1px;
+  padding: 8px 14px;
   border-radius: 0;
   font-family: var(--font-ui);
   font-size: 11px;
@@ -131,7 +128,7 @@ nav.site-nav {
 .nav-sub-link:hover {
   color: var(--foreground);
   background: transparent;
-  border-bottom-color: var(--border);
+  border-bottom-color: transparent;
 }
 .nav-sub-link:focus-visible {
   outline: 2px solid var(--ring);

@@ -30,7 +30,7 @@
   .brand-profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   /* Proposal: tablet adjustments */
-  .prop-s0-hero { padding: 120px 32px 60px; }
+  .prop-s0-hero { padding: 40px 32px 60px; }
   .prop-s1-inner { padding: 60px 32px; }
   .prop-s1-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .prop-s1-card--wide { grid-column: span 2; }
@@ -106,24 +106,14 @@
     padding: 12px 0 12px 12px;
     margin-bottom: 0;
     border-radius: 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: none;
     border-left: 3px solid transparent;
     font-size: 13px;
   }
   .nav-sub-link:hover {
-    border-bottom-color: var(--border);
     border-left-color: color-mix(in srgb, var(--primary) 40%, transparent);
   }
   .nav-sub-link.nav-active {
-    border-bottom-color: var(--border);
-    border-left-color: var(--primary);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-sub-link:last-of-type {
-    border-bottom: none;
-  }
-  .nav-sub-link.nav-active:last-of-type {
-    border-bottom: none;
     border-left-color: var(--primary);
   }
   .nav-sub-link--locked,
@@ -143,8 +133,8 @@
   }
   .nav-actions { margin-left: 0; }
 
-  /* ── Hero ── */
-  .hero { padding: 120px 24px 60px; }
+  /* ── Hero (top spacing is on .page via --site-nav-offset) ── */
+  .hero { padding: 32px 24px 60px; }
   .hero-title { font-size: clamp(28px, 6vw, 48px); }
   .hero-sub { font-size: 15px; padding: 0 8px; }
   .hero-badge { font-size: 11px; padding: 5px 12px; }
@@ -155,7 +145,7 @@
   .section { padding: 60px 24px; }
   .section-title { font-size: 24px; }
   .intel-hero,
-  .battle-hero { padding: 100px 24px 32px; }
+  .battle-hero { padding: 28px 24px 32px; }
   .input-section,
   .playbook-section { padding: 0 24px 40px; }
   .results-section { padding: 0 24px 60px; }
@@ -174,7 +164,7 @@
   .comp-grid { grid-template-columns: 1fr; }
 
   /* Proposal: mobile collapse */
-  .prop-s0-hero { padding: 100px 24px 48px; }
+  .prop-s0-hero { padding: 32px 24px 48px; }
   .prop-s0-content { margin-bottom: 32px; }
   .prop-s0-sub { font-size: 15px; }
   .prop-s0-actions { flex-direction: column; width: 100%; }
@@ -316,7 +306,7 @@
   .api-toggle-label { font-size: 10px; }
 
   /* ── Hero ── */
-  .hero { padding: 100px 16px 40px; }
+  .hero { padding: 24px 16px 40px; }
   .hero-title { font-size: 24px; }
   .hero-sub { font-size: 14px; }
   .hero-badge { font-size: 10px; padding: 4px 10px; gap: 6px; }
@@ -330,7 +320,7 @@
   .section { padding: 40px 16px; }
   .section-title { font-size: 20px; }
   .intel-hero,
-  .battle-hero { padding: 80px 16px 24px; }
+  .battle-hero { padding: 24px 16px 24px; }
   .input-section,
   .playbook-section { padding: 0 16px 32px; }
   .results-section { padding: 0 16px 40px; }
@@ -349,7 +339,7 @@
   .dash-stat-row { grid-template-columns: 1fr; }
 
   /* ── Proposal: small mobile ── */
-  .prop-s0-hero { padding: 80px 16px 32px; }
+  .prop-s0-hero { padding: 24px 16px 32px; }
   .prop-s0-content { margin-bottom: 24px; gap: 16px; }
   .prop-s0-sub { font-size: 14px; }
   .prop-s0-media { border-radius: 8px; }

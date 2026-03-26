@@ -214,6 +214,12 @@
 .comp-highlight-row td:first-child,
 .comp-highlight-row td:last-child { box-shadow: none; }
 
+/* Column alignment (extracted from inline styles) */
+.comp-landscape-table th:first-child,
+.comp-landscape-table td:first-child { text-align: center; width: 48px; }
+.comp-landscape-table th:nth-child(5),
+.comp-landscape-table td:nth-child(5) { text-align: center; }
+
 /* Three-act table */
 .three-act-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 16px; }
 .three-act-table th {

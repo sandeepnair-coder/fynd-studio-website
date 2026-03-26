@@ -122,20 +122,12 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ── THEME TOGGLE (dark/light mode) ──
-function toggleTheme() {
-  const html = document.documentElement;
-  const isDark = html.classList.toggle('dark');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-}
-// Apply saved theme on load (default to dark)
+// ── Theme: light only (no dark mode) ──
 (function initTheme() {
-  const saved = localStorage.getItem('theme');
-  if (saved === 'light') {
-    // light mode - don't add dark class
-  } else {
-    document.documentElement.classList.add('dark');
-  }
+  document.documentElement.classList.remove('dark');
+  try {
+    localStorage.removeItem('theme');
+  } catch (e) {}
 })();
 
 // Hero rotation removed — static text

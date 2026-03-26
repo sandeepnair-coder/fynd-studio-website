@@ -33,7 +33,7 @@
    S0: HERO — Centered text stack + media (Fynd pattern)
    ═══════════════════════════════════════════ */
 .prop-s0-hero {
-  padding: 140px 48px 80px;
+  padding: 48px 48px 80px;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;

@@ -60,6 +60,14 @@
   --radius-2xl: var(--border-radius--32, 2rem);
   --radius-pill: var(--border-radius--pill, 250px);
 
+  /* Inverse surface — dark cards on light pages (guard-compare, CTA blocks) */
+  --surface-inverse: #161616;
+  --border-inverse: rgba(255, 255, 255, 0.08);
+  --border-inverse-subtle: rgba(255, 255, 255, 0.12);
+  --text-inverse: #ffffff;
+  --text-inverse-muted: rgba(255, 255, 255, 0.7);
+  --text-inverse-dim: rgba(255, 255, 255, 0.45);
+
   /* Typography — Fynd three-font system */
   --font-sans: var(--font-family--secondary, 'Inter Display', Arial, sans-serif);
   --font-heading: var(--font-family--primary, 'Fynd Sans', Arial, sans-serif);
@@ -162,4 +170,14 @@
 
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
+
+  /* Fixed .site-nav (top + sub row) — scroll / page offset */
+  --site-nav-offset: 128px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    /* Single collapsed nav row (sub links in hamburger) */
+    --site-nav-offset: 72px;
+  }
 }
