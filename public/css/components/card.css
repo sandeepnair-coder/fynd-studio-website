@@ -12,6 +12,14 @@
   margin-bottom: var(--spacing--24, 24px);
 }
 
+/* Allow popovers/tooltips that hang below the header (e.g. Intel grade help).
+   z-index above .toast-container (700) so the panel isn’t covered by toasts. */
+.dash-card.dash-card--overflow-visible {
+  overflow: visible;
+  position: relative;
+  z-index: 720;
+}
+
 /* Generic .card (shadcn) */
 .card {
   border-radius: var(--card-radius);
@@ -193,5 +201,63 @@
 }
 .brand-meta-display {
   font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+/* ── Brand profile cards (Creative Intel) — shadcn Card structure ── */
+.brand-profile-card {
+  border-radius: var(--border-radius--16, 0.75rem);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.brand-profile-card .bp-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem 0.5rem;
+}
+.brand-profile-card .bp-card-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+.brand-profile-card .bp-card-header-text {
+  flex: 1;
+  min-width: 0;
+}
+/* CardTitle analogue — compact label */
+.brand-profile-card .bp-card-label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+/* CardContent analogue */
+.brand-profile-card .bp-card-content {
+  padding: 0 1.5rem 1.25rem;
+}
+.brand-profile-card .bp-card-value {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--foreground);
+  font-weight: 400;
+  margin: 0;
+}
+.brand-profile-card--empty {
+  grid-column: 1 / -1;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
   color: var(--muted-foreground);
 }

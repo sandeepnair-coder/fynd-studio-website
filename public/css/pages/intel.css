@@ -631,3 +631,122 @@
   color: var(--muted-foreground);
   font-weight: 500;
 }
+
+/* ── Results: grade badge + education popover (hover / focus) ── */
+.intel-grade-wrap {
+  position: relative;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.intel-grade-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 6px;
+}
+.intel-grade-badge {
+  text-align: center;
+  padding: var(--spacing--16, 16px) var(--spacing--24, 24px);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius--8, 8px);
+  min-width: 80px;
+}
+.intel-grade-help {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-top: 2px;
+  padding: 0;
+  border: none;
+  border-radius: var(--border-radius--8, 8px);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: help;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.intel-grade-help:hover,
+.intel-grade-help:focus-visible {
+  color: var(--foreground);
+  background: var(--muted);
+  outline: none;
+}
+.intel-grade-help:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring, var(--primary));
+}
+.intel-grade-popover {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius--8, 8px);
+  box-shadow: var(--card-shadow-lg);
+  z-index: 100;
+  text-align: left;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+/* Bridge hover gap between badge and panel */
+.intel-grade-popover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+.intel-grade-wrap:hover .intel-grade-popover,
+.intel-grade-wrap:focus-within .intel-grade-popover {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.intel-grade-popover-title {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+  margin: 0 0 8px;
+}
+.intel-grade-popover-intro {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  margin: 0 0 10px;
+}
+.intel-grade-scale {
+  margin: 0;
+  padding-left: 18px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+.intel-grade-scale li {
+  margin-bottom: 6px;
+}
+.intel-grade-scale li:last-child {
+  margin-bottom: 0;
+}
+.intel-grade-scale strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+@media (max-width: 480px) {
+  .intel-grade-popover {
+    right: auto;
+    left: 0;
+  }
+}

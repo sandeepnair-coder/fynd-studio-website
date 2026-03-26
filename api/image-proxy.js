@@ -9,9 +9,16 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Missing url parameter' });
   }
 
-  // Security: only proxy from PixelBin delivery domain
-  if (!imageUrl.startsWith('https://delivery.pixelbin.io/')) {
-    return res.status(403).json({ error: 'Only PixelBin delivery URLs allowed' });
+  // Security: only proxy from allowed image CDN domains
+  const allowedPrefixes = [
+    'https://delivery.pixelbin.io/',
+    'https://v3b.fal.media/',
+    'https://fal.media/',
+    'https://storage.googleapis.com/fal-'
+  ];
+  var allowed = allowedPrefixes.some(function(prefix) { return imageUrl.startsWith(prefix); });
+  if (!allowed) {
+    return res.status(403).json({ error: 'Only allowed image CDN URLs permitted' });
   }
 
   try {

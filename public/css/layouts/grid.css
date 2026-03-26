@@ -9,6 +9,20 @@
   gap: 16px;
   margin-bottom: 24px;
 }
+
+/* Creative Intel — brand profile (shadcn Card pattern, 3-col desktop) */
+.brand-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.brand-profile-grid .brand-profile-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
 .dash-two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -136,8 +150,12 @@
 /* Generic 2-col */
 .grid-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
+  align-items: stretch;
+}
+.grid-2 > * {
+  min-width: 0;
 }
 
 /* Spend section split */

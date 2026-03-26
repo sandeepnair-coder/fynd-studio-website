@@ -22,35 +22,35 @@ var DUMMY_BATTLE_DATA = {
   yourBrand: { desc: 'Currently under-indexing on content velocity and AI adoption', confidence: 'estimated',
     posts: '12', er: '1.8%', mix: '70% Static / 20% Reels / 10% Stories', festivals: '3', ai: '~15%', potential: '4× content output at 70% lower cost with AI' },
   markets: [
-    { title: 'South India',    desc: 'Tamil Nadu & Karnataka show 3× higher D2C fashion growth. Missing Onam, Pongal campaigns.',      opp: '₹2.5Cr untapped market', confidence: 'estimated' },
-    { title: 'East India',     desc: 'Bengal & Odisha emerging D2C hubs. Durga Puja fashion spending up 180% YoY.',                    opp: '₹1.8Cr addressable',     confidence: 'estimated' },
-    { title: 'Northeast',      desc: 'Fastest-growing e-commerce region. Zero competition in premium streetwear.',                     opp: '₹80L first-mover advantage', confidence: 'estimated' },
-    { title: 'Tier-2 Cities',  desc: 'Jaipur, Lucknow, Indore showing 2.5× fashion app installs. Price-sensitive but brand-aware.',    opp: '₹3.2Cr expansion potential', confidence: 'estimated' }
+    { title: 'Bangalore-Chennai Metro',    desc: 'Combined 8.2M Gen-Z population with 34% of India\'s online streetwear spend. Bangalore alone has 2.4× higher avg. fashion AOV than national average. Both cities index high on graphic tee + sneaker search volume.',      opp: '₹3.8Cr (₹420Cr category × 0.9% addressable)', confidence: 'estimated', source: 'Redseer D2C Fashion Report 2024 + Google Trends' },
+    { title: 'Delhi-NCR Student Cluster',     desc: 'DU + JNU + Amity campuses = 800K+ students. Streetwear search volume +210% YoY in Noida-Gurgaon belt. Competitors Bewakoof and The Souled Store each spend ₹15L/month on campus activations here.',                    opp: '₹5.2Cr (₹1200Cr youth fashion × 0.43%)',     confidence: 'estimated', source: 'SimilarWeb + campus marketing data' },
+    { title: 'Pune-Hyderabad IT Corridor',      desc: 'IT professionals aged 22-28 have 3.2× higher discretionary spend on casual fashion. Weekend streetwear culture is strong — 68% of purchases happen Thu-Sun. Zero brand-specific targeting from competitors.',                     opp: '₹2.1Cr addressable in 12 months', confidence: 'estimated', source: 'Flipkart Fashion Trends Q3 2024' },
+    { title: 'Jaipur-Lucknow-Indore Tier-2',  desc: 'Fashion app installs up 2.5× in these cities. Average order value ₹680 (lower than metros) but repeat rate is 1.8× higher. Price-sensitive but highly brand-loyal once acquired. Free delivery threshold is the key conversion lever.',    opp: '₹4.1Cr (highest repeat-rate cluster)', confidence: 'estimated', source: 'Bain-Flipkart India E-commerce Report 2024' }
   ],
   platforms: [
-    { rank: 1, title: 'Instagram Reels', desc: 'Algorithm heavily favors Reels — 3× reach vs static. Brand doing only 20% Reels.', opp: '+180% reach potential' },
-    { rank: 2, title: 'YouTube Shorts',  desc: 'Untapped channel. Category leaders getting 500K+ views per Short.',                opp: '+2.5× new audience' },
-    { rank: 3, title: 'WhatsApp Channels', desc: 'Direct-to-consumer broadcast. 40% higher conversion than email.',                opp: '+35% repeat purchase rate' },
-    { rank: 4, title: 'Pinterest India',  desc: 'Fashion discovery platform growing 85% YoY in India. Low competition.',            opp: '+60% consideration lift' }
+    { rank: 1, title: 'Instagram Reels', desc: 'Competitors average 4.2% engagement on product Reels vs 1.1% on static posts. Brand currently at 20% Reels mix — category leaders are at 65%. Algorithm gives 3× organic reach to Reels in fashion discovery feed.', opp: '+45K monthly Reels reach in 18-24 demo at ₹0.8 CPE' },
+    { rank: 2, title: 'YouTube Shorts',  desc: 'Untapped channel — zero brand presence vs Bewakoof\'s 500K avg. views per Short. YouTube\'s fashion discovery audience skews male 18-25, matching brand demo. Shoppable Shorts launched in India Q2 2024.',                opp: 'First 50 Shorts in 90 days → projected 2.5M total views' },
+    { rank: 3, title: 'Snapchat Spotlight', desc: 'India\'s fastest-growing social platform for 16-22 age group (+180% DAU YoY). Streetwear brands see 5.2× higher save rate vs Instagram. Zero competitor presence — true first-mover window.',                opp: '30K followers in 60 days at ₹0.3 cost per follower' },
+    { rank: 4, title: 'WhatsApp Channels',  desc: 'Direct broadcast to existing customers. Fashion brands report 40% higher conversion vs email, 28% higher AOV. Ideal for flash drops and limited editions that drive urgency.',            opp: '+35% repeat purchase rate within opted-in base' }
   ],
   seasonal: [
-    { title: 'Onam Collection',    desc: 'Kerala fashion market peaks Aug-Sep. Zero brand presence currently.',  opp: 'Aug 15 – Sep 10 window' },
-    { title: 'Durga Puja Drop',    desc: 'Bengal\'s biggest fashion moment. Competitors launch 30+ creatives.',  opp: 'Sep 20 – Oct 5 window' },
-    { title: 'Eid Fashion',        desc: 'Pan-India modest fashion moment. 2× higher AOV than regular sales.',  opp: 'Mar – Apr window' },
-    { title: 'Summer Streetwear',  desc: 'Gen-Z streetwear demand spikes 200% in April-May. UGC-driven.',       opp: 'Apr 1 – May 30 window' }
+    { title: 'Pre-Diwali Fashion Rush',    desc: 'Oct 1-20: 42% of annual casual wear purchases happen in this 3-week window. Google search volume for "trendy t-shirts" +380% vs baseline. Flipkart Big Billion Days typically falls here — brands that pre-seed content see 2.8× higher BBD conversion.',  opp: 'Sep 25 – Oct 20 (start content by Sep 10)' },
+    { title: 'Back to College Drop',    desc: 'Jul 1-25: 2.3M students start new academic year. First purchase is usually casual wear — 78% of students buy 3+ outfits. Hostel move-in creates social media moments. Competitors launch campus ambassador programs here.',  opp: 'Jun 15 – Jul 25 (campus seeding by Jun 1)' },
+    { title: 'IPL Season Collection',        desc: 'Mar 22 – May 26: Cricket creates peak male fashion engagement. Fan merchandise + streetwear crossover drives +120% higher social engagement. Brands that run IPL-themed content see 3.1× higher story views.',  opp: 'Mar 15 – May 30 (content bank by Mar 1)' },
+    { title: 'New Year Refresh',  desc: 'Dec 26 – Jan 15: Post-Christmas wardrobe refresh. Gift card redemptions peak. "New year new style" search +240%. End-of-season + new arrivals creates a unique overlap window. Competitors typically go dark — low CPM opportunity.',       opp: 'Dec 20 – Jan 15 (lowest CPM of the year)' }
   ],
   trends: [
-    { tag: 'urgent',   title: 'AI-Generated Lookbooks',    stat: '+320%',  statLabel: 'adoption growth', desc: 'Top D2C brands are shipping AI-generated lookbooks in 48 hours instead of 3-week photoshoots. Cost reduction: 85%.', action: 'Launch first AI lookbook within 2 weeks', source: 'Industry benchmarks 2025' },
-    { tag: 'rising',   title: 'Regional Language Reels',    stat: '3.2×',   statLabel: 'higher engagement', desc: 'Hindi + regional language Reels outperform English-only content by 3.2×. South Indian languages showing fastest growth.', action: 'Create Tamil & Telugu content templates', source: 'Social media analytics' },
-    { tag: 'emerging', title: 'Shoppable Short Videos',     stat: '+180%',  statLabel: 'conversion lift', desc: 'Instagram & YouTube shoppable videos driving 180% higher conversion than static product posts. Early movers gaining 2× ROAS.', action: 'Integrate product tags in all video content', source: 'E-commerce reports' },
-    { tag: 'rising',   title: 'UGC Creator Collaborations', stat: '+85%',   statLabel: 'brand recall', desc: 'Micro-influencer UGC content driving 85% higher brand recall than polished brand content. Cost per engagement 60% lower.', action: 'Launch UGC creator program with 20 creators', source: 'D2C brand benchmarks' }
+    { tag: 'urgent',   title: 'AI Virtual Try-On for Apparel',    stat: '2.8×',  statLabel: 'conversion lift (Myntra 2024 data)', desc: 'Myntra reports 2.8× higher conversion when virtual try-on is available for casual wear. Amazon Fashion launched AR try-on for t-shirts in India Q4 2024. This brand has zero try-on capability — every competitor will have it by Q2 2025.', action: 'Integrate Fynd Studio AI try-on for top 20 SKUs within 30 days. Expected +18% conversion uplift.', source: 'Myntra Fashion Report 2024 + Amazon India press release' },
+    { tag: 'rising',   title: 'Vernacular Content Drives 3× Sales',    stat: '3.2×',   statLabel: 'higher purchase intent (Hindi vs English)', desc: 'Hindi + regional language Reels drive 3.2× higher purchase intent than English-only content for mass-market fashion. Tamil Nadu shows the fastest growth in vernacular fashion search. Brand\'s content is 100% English — missing 68% of the addressable audience.', action: 'Produce Hindi + Tamil content for top 10 products. Test Reels with Hindi voiceover for 30 days.', source: 'ShareChat-Kantar India Digital Report 2024' },
+    { tag: 'emerging', title: 'Resale-Ready Fashion Positioning',     stat: '+240%',  statLabel: 'resale search growth YoY (India)', desc: 'Indian consumers increasingly factor resale value into purchase decisions. Brands positioning as "resale-friendly" see 24% higher willingness-to-pay. ThriftFlip and Relove report 240% growth in branded casual wear resale. This is a positioning opportunity, not a channel.', action: 'Add "Resale Value Rating" to product pages. Partner with 1 resale platform for authentication.', source: 'Bain India Luxury & Fashion Report 2024 + ThriftFlip growth data' },
+    { tag: 'rising',   title: 'Micro-Creator Armies (50-500 followers)',   stat: '4.6×',   statLabel: 'higher trust score vs macro-influencers', desc: 'Nano-influencers (500-5K followers) in fashion generate 4.6× higher trust scores than macro influencers. Cost per authentic UGC post is ₹200-500 vs ₹25K+ for macro. Bewakoof runs 200+ nano-creators/month. This brand appears to have zero creator program.', action: 'Recruit 50 campus nano-creators at ₹300/post. Target 200 UGC posts/month within 60 days.', source: 'Kofluence India Influencer Marketing Report 2024' }
   ],
   methodology: {
-    competitorSelection: 'Selected based on direct competition in youth fashion segment, social media presence, and market positioning similarity',
-    metricsApproach: 'Estimated from brand knowledge, social media benchmarks, and Indian D2C category norms',
-    limitationsNote: 'Metrics are AI-estimated based on brand knowledge and category benchmarks; actual values may vary'
+    competitorSelection: 'Selected based on direct product overlap (graphic tees, streetwear), price parity (₹499-1499 range), same target demo (18-25 male, metro + tier-2), and social media presence in India',
+    metricsApproach: 'Cross-referenced SimilarWeb traffic estimates, Instagram public profile analytics, Flipkart/Myntra category data, and Redseer/Bain India D2C reports',
+    limitationsNote: 'Engagement rates and posting frequency are estimated from public profile sampling (last 30 posts). Market sizing uses top-down TAM with conservative addressable share assumptions. Actual figures may vary ±25%.'
   },
-  dataSources: ['Social media analytics platforms', 'Indian fashion industry reports', 'D2C brand performance benchmarks', 'E-commerce marketplace data']
+  dataSources: ['Redseer India D2C Fashion Report 2024', 'Bain-Flipkart India E-commerce Report 2024', 'SimilarWeb traffic analytics', 'Instagram public profile analysis (last 30 posts)', 'Google Trends India — fashion category keywords']
 };
 
 // ── BATTLE CARD LOADER (event-driven, synced with actual API progress) ──
@@ -143,62 +143,128 @@ var BATTLE_ICONS = {
 };
 
 var BATTLE_CARD_PROMPT = [
-  "You are an expert brand strategist. You will receive a brand name, category, and website data.",
+  "You are a senior brand strategist and market researcher with deep expertise in Indian consumer markets.",
+  "You will receive a brand name, category, website data, and possibly brand audit data.",
   "",
-  "YOUR JOB: Deeply analyze THIS SPECIFIC BRAND and produce a battle card that is IMPOSSIBLE to confuse with any other brand's battle card.",
+  "YOUR JOB: Produce a battle card that is so specific to THIS brand that it would be IMPOSSIBLE to reuse for any other brand. Every insight must be actionable and grounded in real market data.",
   "",
-  "BEFORE writing ANY JSON, think through these questions about the brand:",
-  "- What EXACTLY does this brand sell? (not the category — the actual products, SKUs, price points)",
-  "- Who are their DIRECT competitors? (brands selling similar products at similar price points in India)",
-  "- Which Indian REGIONS matter most for THIS product category? (luggage = airport cities, fashion = metro youth, food = regional tastes)",
-  "- Which PLATFORMS work best for THIS product type? (visual products = Instagram/Pinterest, B2B = LinkedIn, tech = YouTube reviews)",
-  "- Which FESTIVALS/SEASONS drive purchases in THIS category? (luggage = vacation seasons, fashion = Diwali/wedding, food = harvest festivals)",
-  "- What TRENDS are specifically reshaping THIS category right now? (not generic D2C trends — category-specific shifts)",
+  "═══ RESEARCH METHODOLOGY ═══",
+  "Before generating ANY data, mentally research these questions:",
   "",
-  "CRITICAL RULES:",
-  "- Every field must be SPECIFIC to this brand and its category. If analyzing a luggage brand, markets should mention travel hubs, not generic 'Tier-2 cities'.",
-  "- Platforms should explain WHY that platform matters for THIS category specifically.",
-  "- Seasonal campaigns should be relevant to THIS product (not generic Diwali for every brand).",
-  "- Trends must be about THIS industry, not generic AI/D2C trends.",
-  "- For each trend, ground `title`, `desc`, and `action` in the BRAND WEBSITE DATA (product categories, positioning, and pricing tier). Avoid generic wording when the website data contradicts it.",
-  "- Competitors must be REAL brands selling similar products in India.",
-  "- Every metric must have a numeric value. Never 'Data unavailable'.",
+  "1. BRAND DEEP-DIVE:",
+  "   - What are this brand's TOP 5 products by likely revenue? (from website data)",
+  "   - What is the price band? (₹500-1000? ₹1000-3000? ₹3000+?)",
+  "   - Who is the primary buyer persona? (age, gender, income, city tier, lifestyle)",
+  "   - What is their current content strategy? (from social links in website data)",
+  "   - Where do they sell? (own website, Amazon, Flipkart, Myntra, offline?)",
+  "",
+  "2. COMPETITOR RESEARCH (find REAL competitors):",
+  "   - Who sells the same products at ±30% of this brand's price?",
+  "   - Who targets the same buyer persona in India?",
+  "   - Who is winning on social media in this exact niche?",
+  "   - Include 1 category leader, 1 direct rival, 1 fast-rising disruptor, 1 from adjacent category",
+  "",
+  "3. MARKET INTELLIGENCE (India-specific):",
+  "   - Which SPECIFIC cities/clusters have the highest demand for THIS product?",
+  "   - Use real Indian market data: tier-1 vs tier-2 penetration, regional spending patterns",
+  "   - Reference real data points: e-commerce growth rates, app install data, Google Trends for product keywords",
+  "   - Mention SPECIFIC cities (not just 'South India' — say 'Bangalore + Chennai metro cluster')",
+  "   - Include addressable market size with calculation basis",
+  "",
+  "4. PLATFORM STRATEGY (data-backed):",
+  "   - Rank by THIS brand's specific content type and buyer demo",
+  "   - Include platform-specific metrics: avg. reach per post type, cost per engagement, conversion rates",
+  "   - Reference what competitors are doing on each platform",
+  "   - If a platform is NOT relevant (e.g., LinkedIn for mass-market footwear), SAY WHY and rank it lower",
+  "",
+  "5. SEASONAL CALENDAR (revenue-linked):",
+  "   - Identify the 4 HIGHEST revenue moments for THIS specific product category in India",
+  "   - Each must include: what buyer behavior changes, how much spending increases, and WHY",
+  "   - Include at least 1 non-obvious opportunity (not just Diwali/Holi — find category-specific moments)",
+  "   - Reference real shopping data: Flipkart Big Billion Days impact on this category, Amazon Great Indian Festival, etc.",
+  "",
+  "6. TREND ANALYSIS (must be current and specific):",
+  "   - Each trend must be about THIS SPECIFIC industry/category — NOT generic D2C/AI trends",
+  "   - Stats must be plausible and sourced (industry reports, platform data, market research firms)",
+  "   - The 'action' must be something THIS brand can do in the next 30-60 days",
+  "   - Include at least 1 consumer behavior shift (not just technology trends)",
+  "   - Include at least 1 trend that represents a THREAT if not acted on",
+  "",
+  "═══ DATA QUALITY RULES ═══",
+  "- NEVER use generic descriptions that could apply to any brand. Test: read your output and ask 'could this be about a different brand?' If yes, rewrite.",
+  "- NEVER use placeholder phrases like 'emerging D2C hub', 'growing market', 'rising fast' without specific data",
+  "- Every market opportunity MUST include a basis for the ₹ figure (e.g., '₹180Cr footwear category × 12% online share × 8% addressable')",
+  "- Every trend stat MUST cite a credible source type (Redseer, Bain-Flipkart, Statista, SimilarWeb, platform analytics)",
+  "- Platform 'opp' must be a SPECIFIC metric goal (e.g., '+45K monthly Reels reach targeting 18-24 male' — not generic '+180% reach')",
+  "- Seasonal 'desc' must explain the BUYER BEHAVIOR (e.g., 'College students buy 2.3 pairs of shoes in July for new academic year' — not 'Back to college shopping')",
+  "- Competitor 'gap' must be a specific, actionable insight (e.g., 'Publishes 3× more video content targeting same demo on Reels' — not 'Posting more content')",
+  "",
+  "═══ ANTI-PATTERNS (you will FAIL if you do these) ═══",
+  "- Generic regions: 'South India is growing' → FAIL. Say 'Bangalore-Chennai metro cluster: 34% of India's online footwear spend'",
+  "- Generic platforms: 'Instagram has high engagement' → FAIL. Say 'Instagram Reels: 78% of <brand category> discovery happens here. Competitors average 4.2% ER on product Reels vs 1.1% on static.'",
+  "- Generic trends: 'AI-generated content is growing' → FAIL. Say 'AI Virtual Try-On for footwear: Myntra reports 2.8× higher conversion when try-on is available. <brand> has zero try-on capability.'",
+  "- Generic seasonals: 'Diwali shopping' → FAIL. Say 'Pre-Diwali Footwear Rush (Oct 1-20): 42% of annual sneaker sales happen in this 3-week window. Search volume for <category> +380% vs baseline.'",
   "",
   "Respond ONLY with valid JSON. No markdown. No backticks.",
   "",
   "JSON structure:",
   "{",
   "  \"competitors\": [",
-  "    {\"name\":\"<REAL competitor brand name>\",\"desc\":\"<what they sell, their positioning vs this brand>\",\"badge\":\"Category Leader|Fast Mover|Rising Fast|Market Leader|High Spend\",",
-  "     \"badgeClass\":\"leader|rising\",\"confidence\":\"verified|estimated\",\"dataSource\":\"<how you know this>\",",
-  "     \"posts\":\"<estimated monthly posts>\",\"postsClass\":\"good|neutral|bad\",",
-  "     \"er\":\"<engagement rate %>\",\"erClass\":\"good|neutral|bad\",",
-  "     \"mix\":\"<content format split>\",\"mixClass\":\"good|neutral|bad\",",
-  "     \"festivals\":\"<how many regional/festival campaigns they run>\",\"festivalsClass\":\"good|neutral|bad\",",
-  "     \"ai\":\"<estimated AI adoption %>\",\"aiClass\":\"good|neutral|bad\",",
-  "     \"gap\":\"<specific gap vs the brand being analyzed>\",\"gapClass\":\"bad|neutral\"}",
+  "    {\"name\":\"<REAL competitor — must be a real brand selling in India>\",",
+  "     \"desc\":\"<2 sentences: what they sell, their positioning vs THIS brand, WHY they are a threat>\",",
+  "     \"badge\":\"Category Leader|Fast Mover|Rising Fast|Market Leader|High Spend\",",
+  "     \"badgeClass\":\"leader|rising\",\"confidence\":\"verified|estimated\",",
+  "     \"dataSource\":\"<specific source: e.g., 'Instagram @handle analysis, SimilarWeb traffic data'>\",",
+  "     \"posts\":\"<monthly posts with format — e.g., '48 (32 Reels, 12 Static, 4 Carousel)'>\",\"postsClass\":\"good|neutral|bad\",",
+  "     \"er\":\"<engagement rate with context — e.g., '3.2% (industry avg: 1.8%)'>\",\"erClass\":\"good|neutral|bad\",",
+  "     \"mix\":\"<content format split with context>\",\"mixClass\":\"good|neutral|bad\",",
+  "     \"festivals\":\"<specific festivals they activate on>\",\"festivalsClass\":\"good|neutral|bad\",",
+  "     \"ai\":\"<AI usage with specifics — e.g., '~35% (AI lookbooks + virtual try-on)'>\",\"aiClass\":\"good|neutral|bad\",",
+  "     \"gap\":\"<SPECIFIC actionable gap — what are they doing that THIS brand isn't?>\",\"gapClass\":\"bad|neutral\"}",
   "  ],",
-  "  \"yourBrand\":{\"desc\":\"<what this brand is and does — from website data>\",\"confidence\":\"verified|estimated\",",
-  "    \"posts\":\"<est monthly posts>\",\"er\":\"<est engagement %>\",\"mix\":\"<format split>\",\"festivals\":\"<festival campaigns>\",\"ai\":\"<AI adoption %>\",\"potential\":\"<growth target>\"},",
+  "  \"yourBrand\":{\"desc\":\"<what THIS brand is from website data — products, positioning, price range>\",\"confidence\":\"verified|estimated\",",
+  "    \"posts\":\"<est monthly posts>\",\"er\":\"<est engagement %>\",\"mix\":\"<format split>\",\"festivals\":\"<festival campaigns>\",\"ai\":\"<AI adoption %>\",",
+  "    \"potential\":\"<specific growth target with rationale — e.g., '4× content output + 35% lower CPA by shifting to 70% video format'>\"},",
   "  \"markets\":[",
-  "    {\"title\":\"<region/city cluster relevant to THIS product>\",\"desc\":\"<WHY this region matters for THIS brand's category — mention specific cities, buyer behavior, cultural factors>\",\"opp\":\"<revenue opportunity in ₹ Cr>\",\"confidence\":\"verified|estimated\"}",
+  "    {\"title\":\"<SPECIFIC city cluster — e.g., 'Bangalore-Chennai Metro Cluster'>\",",
+  "     \"desc\":\"<3 sentences: specific cities, population/spending data, buyer behavior unique to this cluster, WHY this brand's products fit here. Reference real data points.>\",",
+  "     \"opp\":\"<₹ opportunity with calculation basis — e.g., '₹12Cr (₹850Cr market × 1.4% addressable share)'>\",",
+  "     \"confidence\":\"verified|estimated\",",
+  "     \"source\":\"<data source — e.g., 'Redseer 2024 footwear report + Google Trends search volume'>\"}",
   "  ],",
   "  \"platforms\":[",
-  "    {\"rank\":1,\"title\":\"<platform name>\",\"desc\":\"<WHY this platform matters for THIS specific product category — not generic platform facts>\",\"opp\":\"<specific measurable goal for this brand>\"}",
+  "    {\"rank\":1,\"title\":\"<platform name>\",",
+  "     \"desc\":\"<2-3 sentences: WHY this platform for THIS brand's product + buyer demo. Include platform-specific data. Reference what competitors do here.>\",",
+  "     \"opp\":\"<specific measurable 90-day goal — e.g., '+45K monthly Reels reach in 18-24M demo at ₹0.8 CPE'>\"}",
   "  ],",
   "  \"seasonal\":[",
-  "    {\"title\":\"<campaign name relevant to THIS category>\",\"desc\":\"<WHY this season/festival drives sales for THIS product type — connect to buyer behavior>\",\"opp\":\"<timing window>\"}",
+  "    {\"title\":\"<specific campaign name tied to THIS category>\",",
+  "     \"desc\":\"<2-3 sentences: WHAT buyer behavior changes, HOW MUCH spending increases, WHY this matters for THIS product specifically. Include real shopping data.>\",",
+  "     \"opp\":\"<timing window with preparation lead time — e.g., 'Sep 15 – Oct 10 (start content production by Aug 25)'>\"}",
   "  ],",
   "  \"trends\":[",
-  "    {\"tag\":\"rising|emerging|urgent\",\"title\":\"<trend specific to THIS industry/category>\",\"stat\":\"<real stat like +180% or 3.2x>\",\"statLabel\":\"<what the stat measures>\",",
-  "     \"desc\":\"<2 sentences explaining how this trend specifically impacts THIS brand's category>\",\"action\":\"<specific action for THIS brand>\",\"source\":\"<credible source>\"}",
+  "    {\"tag\":\"rising|emerging|urgent\",",
+  "     \"title\":\"<specific trend in THIS category — not generic D2C/AI trends>\",",
+  "     \"stat\":\"<real stat with source context — e.g., '+280%' or '2.8×'>\",",
+  "     \"statLabel\":\"<precisely what the stat measures — e.g., 'conversion lift with virtual try-on (Myntra 2024)'>\",",
+  "     \"desc\":\"<2-3 sentences: how this trend specifically impacts THIS brand. Reference the brand's current state vs where the market is going. Include competitive pressure.>\",",
+  "     \"action\":\"<specific 30-60 day action for THIS brand — what to build/launch/test, expected impact>\",",
+  "     \"source\":\"<credible named source — e.g., 'Bain-Flipkart India E-commerce Report 2024, Redseer D2C Pulse Q3 2024'>\"}",
   "  ],",
-  "  \"methodology\":{\"competitorSelection\":\"<how you chose these specific competitors>\",\"metricsApproach\":\"<data sources used>\",\"limitationsNote\":\"<honest limitations>\"},",
-  "  \"dataSources\":[\"<source 1>\",\"<source 2>\",\"<source 3>\",\"<source 4>\",\"<source 5>\"]",
+  "  \"methodology\":{",
+  "    \"competitorSelection\":\"<why these 4 competitors and not others>\",",
+  "    \"metricsApproach\":\"<specific data sources and estimation methods used>\",",
+  "    \"limitationsNote\":\"<honest limitations — what data was estimated vs verified>\"},",
+  "  \"dataSources\":[\"<named source 1>\",\"<named source 2>\",\"<named source 3>\",\"<named source 4>\",\"<named source 5>\"]",
   "}",
   "",
   "Provide exactly 4 competitors, 4 markets, 4 platforms, 4 seasonal, 4 trends.",
-  "EVERY field must be brand-specific and category-specific. If I can copy-paste your output to a different brand and it still makes sense, you have FAILED."
+  "QUALITY CHECK before responding:",
+  "1. Read each market — does it mention SPECIFIC cities and real data? If not, rewrite.",
+  "2. Read each platform — does the 'opp' have a specific metric with a number? If not, rewrite.",
+  "3. Read each seasonal — does it explain WHY buying behavior changes? If not, rewrite.",
+  "4. Read each trend — is it about THIS SPECIFIC category (not generic AI/D2C)? If not, rewrite.",
+  "5. Read each competitor gap — can the brand ACT on it this month? If not, make it actionable."
 ].join("\n");
 
 function escBattle(s) {
@@ -298,25 +364,82 @@ async function generateBattleCardData(brandName, category, segment) {
     userPrompt += '\n\nWebsite URLs provided but could not be scraped. Use your knowledge of this brand if available.';
   }
 
-  // If we already have brand audit data, pass key insights
+  // If we already have brand audit data, pass full intelligence
   if (ad) {
-    userPrompt += '\n\nBrand audit already completed. Key findings:';
+    userPrompt += '\n\n═══ BRAND AUDIT INTELLIGENCE (from Creative Intel analysis) ═══';
+    // Brand profile cards
+    if (ad.brandProfile && Array.isArray(ad.brandProfile)) {
+      ad.brandProfile.forEach(function(item) {
+        if (item.label && item.value) {
+          userPrompt += '\n• ' + item.label + ': ' + item.value;
+        }
+      });
+    }
     if (ad.scores) {
       var sc = ad.scores;
-      userPrompt += '\n- Creative Velocity: ' + sc.velocity + '/100';
-      userPrompt += '\n- Stagnation Risk: ' + sc.stagnation;
-      userPrompt += '\n- Regional Score: ' + sc.regional + '/100';
-      userPrompt += '\n- AI Opportunity: ' + sc.ai + '/100';
-      userPrompt += '\n- Platform Score: ' + sc.platform + '/100';
+      userPrompt += '\n\nCreative Health Scores:';
+      userPrompt += '\n• Creative Velocity: ' + sc.velocity + '/100';
+      userPrompt += '\n• Stagnation Risk: ' + sc.stagnation;
+      userPrompt += '\n• Regional Score: ' + sc.regional + '/100 (use this to identify weak regions)';
+      userPrompt += '\n• AI Opportunity: ' + sc.ai + '/100';
+      userPrompt += '\n• Platform Score: ' + sc.platform + '/100 (use this to rank platforms)';
     }
-    if (ad.topInsight) userPrompt += '\n- Top Insight: ' + ad.topInsight;
-    if (ad.savings) userPrompt += '\n- Est. Savings: ' + ad.savings;
-    if (ad.competitorBenchmark && ad.competitorBenchmark.summary) {
-      userPrompt += '\n- Competitor Context: ' + ad.competitorBenchmark.summary;
+    if (ad.topInsight) userPrompt += '\n• Key Insight: ' + ad.topInsight;
+    if (ad.savings) userPrompt += '\n• Est. Annual AI Savings: ' + ad.savings;
+    if (ad.competitorBenchmark) {
+      var cb = ad.competitorBenchmark;
+      userPrompt += '\n\nCompetitive Benchmark:';
+      if (cb.summary) userPrompt += '\n• Position: ' + cb.summary;
+      if (cb.postsPerMonth) userPrompt += '\n• Brand Posts/Month: ' + cb.postsPerMonth;
+      if (cb.categoryLeaderPosts) userPrompt += '\n• Category Leader Posts/Month: ' + cb.categoryLeaderPosts;
+      if (cb.aiAdoptionPct) userPrompt += '\n• Brand AI Adoption: ' + cb.aiAdoptionPct + '%';
+      if (cb.categoryAvgAiPct) userPrompt += '\n• Category Avg AI Adoption: ' + cb.categoryAvgAiPct + '%';
+    }
+    // Alerts — red/yellow/green findings
+    if (ad.alerts && Array.isArray(ad.alerts) && ad.alerts.length) {
+      userPrompt += '\n\nBrand Alerts (critical findings):';
+      ad.alerts.forEach(function(a) {
+        var txt = typeof a === 'string' ? a : (a.text || a.message || JSON.stringify(a));
+        userPrompt += '\n• ' + txt;
+      });
+    }
+    // Regional scores
+    if (ad.regions && Array.isArray(ad.regions) && ad.regions.length) {
+      userPrompt += '\n\nRegional Penetration Scores:';
+      ad.regions.forEach(function(r) {
+        userPrompt += '\n• ' + (r.name || r.region) + ': ' + (r.score || r.value) + '/100';
+      });
+      userPrompt += '\nUse these scores to identify weak regions as market opportunities.';
+    }
+    // Priorities
+    if (ad.priorities && Array.isArray(ad.priorities) && ad.priorities.length) {
+      userPrompt += '\n\nAction Priorities:';
+      ad.priorities.forEach(function(p) {
+        var txt = typeof p === 'string' ? p : (p.title || p.text || JSON.stringify(p));
+        userPrompt += '\n• ' + txt;
+      });
+    }
+    // Cost breakdown
+    if (ad.breakdown && Array.isArray(ad.breakdown) && ad.breakdown.length) {
+      userPrompt += '\n\nCost Per Asset (Traditional vs AI):';
+      ad.breakdown.forEach(function(b) {
+        userPrompt += '\n• ' + (b.item || b.label) + ': Traditional ' + (b.trad || b.traditional) + ' → AI ' + (b.ai || b.aiCost);
+      });
     }
   }
 
-  userPrompt += '\n\nGenerate a complete battle card analysis (WITHOUT the strategy or concepts sections — omit "strategy" and "concepts" keys entirely). All competitors must be REAL brands competing in this exact category in India. Provide estimated values for ALL metrics — use your brand knowledge, social media benchmarks, and Indian D2C category norms. NEVER return "Data unavailable" for any field. Mark confidence as "estimated" where you infer from benchmarks.';
+  userPrompt += '\n\n═══ GENERATION INSTRUCTIONS ═══';
+  userPrompt += '\nGenerate a complete battle card analysis (WITHOUT strategy or concepts sections).';
+  userPrompt += '\n\nQUALITY REQUIREMENTS:';
+  userPrompt += '\n1. All competitors must be REAL brands you can verify exist and compete in this category in India.';
+  userPrompt += '\n2. Market opportunities must cite SPECIFIC cities (not just regions) with addressable market calculations.';
+  userPrompt += '\n3. Platform rankings must include specific metrics and competitor benchmarks on each platform.';
+  userPrompt += '\n4. Seasonal campaigns must explain the buyer behavior shift (WHY people buy more of THIS product at THIS time).';
+  userPrompt += '\n5. Trends must be category-specific with named sources — NOT generic "AI is growing" or "D2C is rising".';
+  userPrompt += '\n6. Every metric must have a numeric value. NEVER return "Data unavailable".';
+  userPrompt += '\n7. If the brand audit shows a low regional score, identify those regions as market OPPORTUNITIES.';
+  userPrompt += '\n8. If the brand audit shows a low platform score, explain which platforms need work and WHY.';
+  userPrompt += '\n9. Mark confidence as "estimated" where you infer from benchmarks — be honest about uncertainty.';
 
   // Step 3: Calling AI
   if (window._battleLoaderStep) window._battleLoaderStep(3, 40);
@@ -560,97 +683,132 @@ var VISUAL_TYPES = [
   }
 ];
 
-// ═══ UNIVERSAL PRODUCT-INTELLIGENT CAMPAIGN PROMPT ═══
-// Works for ANY product category: footwear, beverages, electronics, cosmetics, vehicles, etc.
-// Forces product classification BEFORE any creative generation.
+// ═══ BRAND-INTELLIGENT USE CASE PROMPT ═══
+// Derives three specific use cases from brand intelligence (Creative Intel + Battle Card data).
+// Each use case is grounded in what the brand does, who they sell to, and their market context.
 var CONCEPTS_PROMPT = [
-  "You are a commercial creative director working across ALL product categories.",
-  "You will receive: brand name, product category, and website data.",
-  "Your job: UNDERSTAND the product first, then generate a campaign concept with 3 visual assets.",
+  "You are a commercial creative director who creates brand-specific campaign visuals.",
+  "You receive: brand name, category, BRAND INTELLIGENCE (what the brand does, target audience, positioning, competitors, seasonal moments, trends), and an uploaded product image reference.",
   "",
-  "STEP 1 — PRODUCT UNDERSTANDING (mandatory):",
-  "Analyze the product deeply. The productContext object is REQUIRED.",
-  "- type: specific product (e.g. 'lightweight mesh running sneaker', 'cold-pressed juice 250ml', 'wireless earbuds', 'anti-aging serum dropper bottle')",
-  "- category: footwear | beverage | electronics | cosmetics | apparel | luggage | home-goods | automobile | food | personal-care",
-  "- useCase: athletic | casual-daily | professional | cooking | skincare | commuting | entertainment | outdoor | travel",
-  "- appropriateScenes: 4 SPECIFIC environments where this product naturally appears",
-  "- inappropriateScenes: 4 environments that would look forced for this product",
-  "- sourceAngle: typical product photo angle (side-profile | front-facing | 3/4-view | top-down)",
-  "- positioning: premium | mass-market | luxury | functional | aspirational",
+  "YOUR JOB: Read the brand intelligence, then derive THREE SPECIFIC USE CASES for this brand's product. Each use case must be impossible to confuse with another brand's use case.",
   "",
-  "STEP 2 — SCENE RULES FOR LIFESTYLE:",
+  "═══ STEP 1: UNDERSTAND THE BRAND (mandatory) ═══",
+  "Read ALL brand intelligence provided. Extract:",
+  "- What EXACTLY the brand sells (products, price range, SKUs)",
+  "- WHO their customers are (age, lifestyle, aspirations, demographics)",
+  "- HOW the brand positions itself (premium, mass-market, aspirational, functional, luxury)",
+  "- WHAT competitors are doing (content gaps, opportunities)",
+  "- WHICH seasonal moments or trends matter for this brand RIGHT NOW",
+  "",
+  "═══ STEP 2: DERIVE THREE USE CASES FROM BRAND INTELLIGENCE ═══",
+  "Each use case MUST be derived from the brand data — not generic.",
+  "",
+  "USE CASE 1 — LIFESTYLE SHOOT:",
+  "- Create a SPECIFIC real-world scenario where THIS brand's target customer naturally uses THIS product",
+  "- The scenario MUST reflect the brand's positioning and target audience from the intelligence data",
+  "- Premium brand → upscale setting (lounge, boutique hotel, art gallery)",
+  "- Youth/streetwear → urban campus, street market, festival, rooftop",
+  "- Wellness/health → morning routine, yoga studio, nature trail, clean kitchen",
+  "- Mass-market → everyday moments (commute, family dinner, weekend outing)",
+  "- Reference the brand's actual customer demographic in the scene",
+  "",
+  "USE CASE 2 — PRODUCT PHOTOSHOOT:",
+  "- Create a studio/catalog context that matches HOW this brand sells and its price tier",
+  "- Premium/luxury → dark gradient, dramatic three-point lighting, reflective surface",
+  "- Mass-market → clean bright white, even lighting, minimal shadow",
+  "- Artisanal/handmade → textured natural surface (wood, linen, stone)",
+  "- Tech/gadgets → matte dark surface, colored accent lighting, geometric props",
+  "- The photoshoot style must match where this product is sold (e-commerce hero, catalog, retail display)",
+  "- ABSOLUTE RULE: Preserve the EXACT viewing angle of the uploaded product. Do NOT rotate, flip, or reveal unseen surfaces. ONLY enhance with lighting, backdrop, shadows, reflections.",
+  "",
+  "USE CASE 3 — SOCIAL MEDIA POST:",
+  "- Create a SPECIFIC Instagram/social campaign moment tied to the brand's ACTUAL marketing context",
+  "- If SEASONAL CAMPAIGNS were identified in the brand intelligence, use the most relevant upcoming one",
+  "- If TRENDS were identified, tie the post to the most urgent or rising trend",
+  "- If neither is available, create a moment based on the brand's target audience behavior on social media",
+  "- The post must feel like it belongs on THIS brand's actual Instagram feed — not a generic brand",
+  "- Product must be the hero — prominent, well-lit, clearly visible in an aspirational scene",
+  "",
+  "═══ STEP 3: SCENE RULES ═══",
   "The scene MUST match the product's actual use context:",
   "  Footwear: running→trail/park, casual→sidewalk/café, formal→office/dinner. NEVER indoors on carpet.",
   "  Beverages: energy→gym/sports, juice→kitchen/picnic, premium→executive/spa. NEVER formal office.",
   "  Electronics: headphones→commute/desk, phone→café/street. NEVER swimming pool.",
   "  Cosmetics: skincare→bathroom/vanity, makeup→mirror/prep. NEVER gym.",
-  "  NEVER force festive/cultural themes unless the product genuinely fits.",
+  "  Fashion: streetwear→urban/campus, ethnic→festive/cultural, formal→office/dinner.",
+  "  Luggage: travel→airport/hotel lobby, daily→commute/office. NEVER bedroom.",
+  "  NEVER force festive/cultural themes unless the brand intelligence specifically mentions seasonal campaigns.",
   "  When uncertain, choose SAFE and NEUTRAL over bold and wrong.",
   "",
-  "STEP 3 — PRODUCT PHOTOSHOOT RULES:",
-  "- Preserve the SAME viewing angle as the source image",
-  "- Do NOT rotate, flip, or reveal unseen surfaces",
-  "- Enhance ONLY with: lighting, backdrop, shadows, reflections",
-  "- Do NOT invent structural details not visible in the source",
+  "═══ STEP 4: PRODUCT FIDELITY RULES (CRITICAL — read carefully) ═══",
+  "The imagePrompt must NEVER describe the product's physical appearance.",
+  "DO NOT mention: color, material, texture, shape, sole, stitching, mesh, laces, buttons, pattern, fabric, or any physical product detail.",
+  "The reference image IS the product. Any text description of the product will CONFLICT with the reference image and cause FAL to generate a WRONG product.",
   "",
-  "STEP 4 — SOCIAL POST RULES:",
-  "The social post is a 3:4 portrait format designed for Instagram/social media:",
-  "- Product naturally integrated into an aspirational lifestyle scene",
-  "- The product must be the hero — prominent, well-lit, clearly visible",
-  "- Scene should feel like a premium brand's Instagram post",
-  "- Aspirational but realistic — commercially usable",
-  "- Clean composition suitable for social media feed",
-  "- NO text, NO typography, NO brand name, NO watermarks in the image",
+  "WRONG: 'A person wearing a green mesh running shoe with yellow sole on a park trail'",
+  "RIGHT: 'A person wearing the exact product from the reference image, walking on a sunlit park trail'",
   "",
-  "STEP 5 — COLOR RULE:",
-  "For lifestyle and product shots: NEVER specify the product color.",
-  "Write: 'the exact product matching the reference image in color, shape, and design'.",
-  "For banner: describe the product generally since OpenAI generates the complete banner.",
+  "WRONG: 'Studio shot of a black leather sneaker with white rubber outsole on dark surface'",
+  "RIGHT: 'Studio shot of the exact product from the reference image on a dark matte surface, three-point lighting'",
+  "",
+  "In ALL imagePrompts, refer to the product ONLY as:",
+  "- 'the exact product from the reference image'",
+  "- 'the product shown in the reference image'",
+  "- 'the uploaded product'",
+  "NEVER describe what the product looks like. NEVER guess colors, materials, or features.",
+  "",
+  "- The uploaded product image is the absolute source of truth for appearance",
+  "- ALL three visuals: NO text, NO logos, NO watermarks, NO typography",
   "",
   "OUTPUT FORMAT — valid JSON only, no markdown, no backticks:",
   "{",
   "  \"productContext\": {",
-  "    \"type\": \"<specific product>\",",
+  "    \"type\": \"<specific product inferred from brand intelligence + category>\",",
   "    \"category\": \"<broad category>\",",
   "    \"useCase\": \"<primary use context>\",",
   "    \"appropriateScenes\": [\"scene1\", \"scene2\", \"scene3\", \"scene4\"],",
-  "    \"inappropriateScenes\": [\"scene1\", \"scene2\", \"scene3\", \"scene4\"],",
-  "    \"sourceAngle\": \"<viewing angle>\",",
-  "    \"positioning\": \"<market positioning>\"",
+  "    \"sourceAngle\": \"<viewing angle of uploaded product>\",",
+  "    \"positioning\": \"<from brand intelligence: premium | mass-market | luxury | functional | aspirational>\"",
   "  },",
   "  \"campaign\": {",
-  "    \"title\": \"Campaign Name\",",
+  "    \"title\": \"Campaign Name — tied to brand positioning and intelligence\",",
   "    \"subtitle\": \"BRAND x THEME\",",
-  "    \"desc\": \"2-3 sentence campaign description\",",
+  "    \"desc\": \"2-3 sentences explaining why these three use cases matter for THIS brand specifically, referencing the brand intelligence\",",
   "    \"tags\": [\"tag1\", \"tag2\", \"tag3\"]",
   "  },",
   "  \"visuals\": [",
   "    {",
   "      \"type\": \"lifestyle\",",
-  "      \"title\": \"Short title\",",
-  "      \"desc\": \"1-sentence description\",",
-  "      \"imagePrompt\": \"<Realistic scene from appropriateScenes. Person naturally using the exact product from the reference image. Describe environment, lighting, mood. Product clearly visible. Photorealistic, 16:9. No text, no logos.>\"",
+  "      \"title\": \"<Specific use case title — e.g. 'Airport Lounge Moment' or 'Campus Street Style' or 'Morning Wellness Ritual'>\",",
+  "      \"useCase\": \"<2 sentences: WHY this scenario fits this brand's customer + WHICH brand intelligence data point informed this choice>\",",
+  "      \"desc\": \"<1-sentence visual description>\",",
+  "      \"imagePrompt\": \"<SCENE-ONLY prompt — NEVER describe the product. Example: 'A young college student walking on a sunlit urban campus, naturally wearing the exact product from the reference image. Warm golden hour light, shallow depth of field, candid editorial photography. The product is clearly visible and central. 16:9. No text, no logos.' Describe ONLY the person, environment, lighting, mood. Refer to the product ONLY as 'the exact product from the reference image'. DO NOT mention product color, material, shape, or any physical feature.>\"",
   "    },",
   "    {",
   "      \"type\": \"product\",",
-  "      \"title\": \"Short title\",",
-  "      \"desc\": \"1-sentence description\",",
-  "      \"imagePrompt\": \"<Studio shot. Exact product from reference at same angle. Describe surface, lighting, background. Do NOT show unseen surfaces. 1:1 square. No text.>\"",
+  "      \"title\": \"<Specific use case title>\",",
+  "      \"useCase\": \"<2 sentences: WHY this photoshoot style matches the brand's price tier>\",",
+  "      \"desc\": \"<1-sentence visual description>\",",
+  "      \"imagePrompt\": \"<SCENE-ONLY prompt — NEVER describe the product. Example: 'Professional studio photograph. The exact product from the reference image placed on a dark matte surface. Three-point lighting with soft key light. Subtle shadow and reflection. Clean gradient background. Same viewing angle as the reference image. 1:1 square. No text.' Describe ONLY the surface, lighting, background. Refer to product ONLY as 'the exact product from the reference image'. DO NOT mention product color, material, shape, sole, stitching, or any physical feature.>\"",
   "    },",
   "    {",
   "      \"type\": \"social\",",
-  "      \"title\": \"Short title\",",
-  "      \"desc\": \"1-sentence description\",",
-  "      \"imagePrompt\": \"<Premium social media post for [BRAND]. The [product type] from the reference image is the hero, naturally placed in an aspirational lifestyle scene. Product clearly visible and prominent. Beautiful composition suitable for Instagram feed. 3:4 portrait format. Photorealistic, premium lighting. No text, no logos, no watermarks.>\"",
+  "      \"title\": \"<Specific use case title>\",",
+  "      \"useCase\": \"<2 sentences: WHICH seasonal campaign or trend this ties to>\",",
+  "      \"desc\": \"<1-sentence visual description>\",",
+  "      \"imagePrompt\": \"<SCENE-ONLY prompt — NEVER describe the product. Example: 'Premium Instagram photograph. The exact product from the reference image as the hero element, placed in a vibrant seasonal setting with warm autumn tones and soft natural light. Shallow depth of field. Product is prominent and clearly visible. 3:4 portrait. No text, no logos.' Describe ONLY the scene, mood, setting, lighting. Refer to product ONLY as 'the exact product from the reference image'. DO NOT mention product color, material, or features.>\"",
   "    }",
   "  ]",
   "}",
   "",
-  "RULES:",
+  "CRITICAL RULES:",
+  "- You MUST read and use the brand intelligence to derive each use case. Generic use cases = FAILURE.",
+  "- Each visual's useCase field MUST explain the specific connection to brand data (audience, positioning, seasonal campaign, or trend).",
+  "- If I can copy-paste your output to a different brand and it still makes sense, you have FAILED.",
   "- productContext is REQUIRED before any prompts.",
-  "- Lifestyle scene from appropriateScenes only.",
-  "- Product shot preserves source angle exactly.",
-  "- Social post must feel like a premium brand Instagram post — product-first, aspirational.",
+  "- Lifestyle scene must come from the brand's actual customer context — not a generic aspirational scene.",
+  "- Product shot style must match the brand's price tier and sales channel.",
+  "- Social post must tie to a specific marketing moment (seasonal campaign, trend, or audience behavior from the intelligence data).",
   "- For all three types: never specify product color — defer to reference image.",
   "- When uncertain, choose safe and neutral."
 ].join("\n");
@@ -734,7 +892,7 @@ function renderConceptsPlaceholder(brandName) {
     '<div id="conceptsGenerateView">' +
       '<div class="cu-form">' +
         '<div class="cu-title">AI Campaign Visuals</div>' +
-        '<div class="cu-sub">Upload your product images and we\'ll generate three campaign assets — a <strong style="color:var(--foreground)">Lifestyle Photo</strong>, <strong style="color:var(--foreground)">Product Photoshoot</strong>, and <strong style="color:var(--foreground)">Digital Banner</strong>.</div>' +
+        '<div class="cu-sub">Upload your product images and we\'ll generate three brand-specific use cases — a <strong style="color:var(--foreground)">Lifestyle Shoot</strong>, <strong style="color:var(--foreground)">Product Photoshoot</strong>, and <strong style="color:var(--foreground)">Social Media Post</strong> — all derived from your brand analysis.</div>' +
 
         '<div class="cu-field">' +
           '<div class="cu-label">Product Images <span class="cu-req">*</span> <span class="cu-count" id="cuCount">0 / 5</span></div>' +
@@ -918,7 +1076,7 @@ async function uploadAndLaunchConcepts() {
           '</div>' +
           '<div class="gen-step" id="genStep4" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted-foreground);opacity:0.4;transition:opacity 0.3s">' +
             '<div style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0"></div>' +
-            'Designing digital banner' +
+            'Creating social media post' +
           '</div>' +
         '</div>' +
         '<div style="font-size:11px;color:var(--muted-foreground);margin-top:32px;opacity:0.6">This typically takes 30–60 seconds</div>' +
@@ -1028,7 +1186,7 @@ async function launchConceptsGeneration() {
     '<div style="padding:80px 40px;text-align:center">' +
       '<div class="spinner" style="display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:24px"></div>' +
       '<div style="font-size:16px;color:var(--muted-foreground)">Generating campaign visuals for ' + escBattle(brandName) + '...</div>' +
-      '<div style="font-size:12px;color:var(--muted-foreground);margin-top:8px">Creating lifestyle photo, product shot & banner \u2014 this takes 30-60 seconds</div>' +
+      '<div style="font-size:12px;color:var(--muted-foreground);margin-top:8px">Creating lifestyle shoot, product photoshoot & social media post \u2014 this takes 30-60 seconds</div>' +
     '</div>';
 
   // Build prompt with brand context
@@ -1066,27 +1224,110 @@ async function launchConceptsGeneration() {
     userPrompt += '\nUse the website data to understand the brand\'s positioning and tone. But the UPLOADED PRODUCT IMAGE determines what product to feature — NOT the website catalog.';
   }
 
-  // Pass brand intel from Creative Intel audit (if available)
+  // ═══ PASS ALL BRAND INTELLIGENCE — Creative Intel audit + Battle Card data ═══
+  // This is the core data the AI uses to derive brand-specific use cases.
   var auditData = window.lastAnalysisData;
+  var bcData = battleCardData;
+
+  userPrompt += '\n\n═══════════════════════════════════════════════════════';
+  userPrompt += '\n  BRAND INTELLIGENCE — USE THIS TO DERIVE USE CASES';
+  userPrompt += '\n═══════════════════════════════════════════════════════';
+
+  // 1. Brand Profile (from Creative Intel audit)
   if (auditData) {
-    userPrompt += '\n\n═══ BRAND INTELLIGENCE (from Creative Intel audit) ═══';
+    userPrompt += '\n\n── BRAND PROFILE (from Creative Intel audit) ──';
     if (auditData.brandProfile && Array.isArray(auditData.brandProfile)) {
       auditData.brandProfile.forEach(function(item) {
         if (item.label && item.value) {
-          userPrompt += '\n' + item.label + ': ' + item.value;
+          userPrompt += '\n• ' + item.label + ': ' + item.value;
         }
       });
     }
-    if (auditData.topInsight) {
-      userPrompt += '\nKey Insight: ' + auditData.topInsight;
-    }
     if (auditData.overallGrade) {
-      userPrompt += '\nBrand Grade: ' + auditData.overallGrade;
+      userPrompt += '\n• Creative Health Grade: ' + auditData.overallGrade;
     }
-    userPrompt += '\nUse this brand intelligence to make the campaign contextually relevant — match the brand\'s positioning, audience, and tone.';
+    if (auditData.topInsight) {
+      userPrompt += '\n• Key Insight: ' + auditData.topInsight;
+    }
+    if (auditData.savings) {
+      userPrompt += '\n• Estimated AI Savings: ' + auditData.savings;
+    }
+    if (auditData.competitorBenchmark && auditData.competitorBenchmark.summary) {
+      userPrompt += '\n• Competitive Position: ' + auditData.competitorBenchmark.summary;
+    }
+    // Alerts (red/yellow/green findings)
+    if (auditData.alerts && Array.isArray(auditData.alerts) && auditData.alerts.length) {
+      userPrompt += '\n• Brand Alerts:';
+      auditData.alerts.forEach(function(a) {
+        var alertText = typeof a === 'string' ? a : (a.text || a.message || JSON.stringify(a));
+        userPrompt += '\n  - ' + alertText;
+      });
+    }
+    // Priorities (action items)
+    if (auditData.priorities && Array.isArray(auditData.priorities) && auditData.priorities.length) {
+      userPrompt += '\n• Action Priorities:';
+      auditData.priorities.forEach(function(p) {
+        var prioText = typeof p === 'string' ? p : (p.title || p.text || JSON.stringify(p));
+        userPrompt += '\n  - ' + prioText;
+      });
+    }
   }
 
-  userPrompt += '\n\nGenerate a campaign concept with three visual assets. Every visual MUST feature the uploaded ' + (uploadCategory || category) + ' product. Never substitute with a different product type.';
+  // 2. Battle Card — Competitor Intelligence
+  if (bcData && bcData.competitors && bcData.competitors.length) {
+    userPrompt += '\n\n── COMPETITOR LANDSCAPE (from Battle Card analysis) ──';
+    bcData.competitors.forEach(function(c) {
+      userPrompt += '\n• ' + c.name + ': ' + (c.desc || '') + ' | Gap: ' + (c.gap || 'N/A');
+    });
+    if (bcData.yourBrand) {
+      userPrompt += '\n• Your Brand Status: ' + (bcData.yourBrand.desc || '') + ' | Potential: ' + (bcData.yourBrand.potential || '');
+    }
+  }
+
+  // 3. Battle Card — Seasonal Campaigns (CRITICAL for social media use case)
+  if (bcData && bcData.seasonal && bcData.seasonal.length) {
+    userPrompt += '\n\n── SEASONAL CAMPAIGNS (use for social media post use case) ──';
+    bcData.seasonal.forEach(function(s) {
+      userPrompt += '\n• ' + s.title + ': ' + s.desc + ' | Window: ' + (s.opp || '');
+    });
+    userPrompt += '\nPick the most relevant seasonal moment for the social media post use case.';
+  }
+
+  // 4. Battle Card — Emerging Trends (CRITICAL for social media use case)
+  if (bcData && bcData.trends && bcData.trends.length) {
+    userPrompt += '\n\n── EMERGING TRENDS (use for social media post use case) ──';
+    bcData.trends.forEach(function(t) {
+      userPrompt += '\n• [' + (t.tag || 'trend').toUpperCase() + '] ' + t.title + ': ' + (t.stat || '') + ' ' + (t.statLabel || '') + ' — ' + (t.desc || '');
+    });
+    userPrompt += '\nIf no seasonal campaign is a better fit, tie the social post to the most urgent or rising trend.';
+  }
+
+  // 5. Battle Card — Market Opportunities
+  if (bcData && bcData.markets && bcData.markets.length) {
+    userPrompt += '\n\n── MARKET OPPORTUNITIES ──';
+    bcData.markets.forEach(function(m) {
+      userPrompt += '\n• ' + m.title + ': ' + m.desc + ' | Opportunity: ' + (m.opp || '');
+    });
+  }
+
+  // 6. Battle Card — Platform Priorities
+  if (bcData && bcData.platforms && bcData.platforms.length) {
+    userPrompt += '\n\n── PLATFORM PRIORITIES ──';
+    bcData.platforms.forEach(function(p) {
+      userPrompt += '\n• #' + p.rank + ' ' + p.title + ': ' + p.desc;
+    });
+  }
+
+  userPrompt += '\n\n═══════════════════════════════════════════════════════';
+  userPrompt += '\n  END BRAND INTELLIGENCE';
+  userPrompt += '\n═══════════════════════════════════════════════════════';
+
+  userPrompt += '\n\nUsing the brand intelligence above, generate THREE USE CASES with campaign visuals:';
+  userPrompt += '\n1. LIFESTYLE SHOOT — a scenario derived from the brand\'s target audience and positioning';
+  userPrompt += '\n2. PRODUCT PHOTOSHOOT — a studio style that matches the brand\'s price tier and sales channel';
+  userPrompt += '\n3. SOCIAL MEDIA POST — tied to a specific seasonal campaign or trend from the intelligence data';
+  userPrompt += '\n\nEvery visual MUST feature the uploaded ' + (uploadCategory || category) + ' product. The uploaded product image is the ONLY product to feature. Never substitute with a different product type.';
+  userPrompt += '\nEach useCase field must cite the specific brand data point that informed the choice.';
 
   try {
     var rawText = await callClaude(CONCEPTS_PROMPT, userPrompt, 3000);
@@ -1167,7 +1408,7 @@ function renderConceptCards(conceptsData, brandName) {
       '</div>' +
       '<div class="ai-concept-details">' +
         '<div class="ai-concept-title">' + escBattle(visual.title) + '</div>' +
-        '<div class="ai-concept-desc">' + escBattle(visual.desc) + '</div>' +
+        (visual.useCase ? '<div class="ai-concept-usecase" style="font-size:12px;color:var(--primary);line-height:1.5;margin-bottom:6px;padding:8px 10px;background:color-mix(in srgb, var(--primary) 6%, transparent);border-radius:6px;border-left:2px solid var(--primary)">' + escBattle(visual.useCase) + '</div>' : '') +
       '</div>' +
     '</div>';
   });
@@ -1191,44 +1432,57 @@ function renderConceptCards(conceptsData, brandName) {
 
 // ═══ TYPE-SPECIFIC PROMPT BUILDERS ═══
 // Each media type has distinct priorities and guardrails.
-// Lifestyle + Product → FAL nano-banana-pro (image-to-image with reference)
-// Banner → OpenAI image generation (complete ad creative with text)
+// ALL 3 types → FAL nano-banana-pro (image-to-image with reference)
+// CRITICAL: prompts must NEVER describe the product — only the scene/environment.
+// The reference image IS the product. Text descriptions of product details conflict with it.
 
-// LIFESTYLE: Priority = contextual realism
+// Strip product-describing words from GPT-4o imagePrompts as a safety net.
+// These cause FAL to invent product details instead of using the reference image.
+function sanitizeImagePrompt(prompt) {
+  // Replace specific product color/material/feature descriptions with generic reference
+  return prompt
+    .replace(/\b(green|blue|red|black|white|yellow|orange|pink|purple|brown|grey|gray|beige|navy|olive|maroon|teal|gold|silver)\s+(mesh|leather|suede|canvas|rubber|nylon|fabric|knit|textile|foam|sole|outsole|midsole|upper|lace|strap|buckle|zipper|button|stitch|panel|overlay|tongue|heel|toe|collar|eyelet|pull.?tab|logo|swoosh|stripe)\b/gi, 'the exact product from the reference image')
+    .replace(/\bwith\s+(a\s+)?(thick|thin|chunky|flat|curved|textured|smooth|ribbed|padded|cushioned|ventilated)\s+(sole|outsole|midsole|heel|strap|band|cuff|collar)\b/gi, '')
+    .replace(/\b(mesh|leather|suede|canvas|knit|woven|synthetic|rubber|foam|gel|neoprene|patent|faux)\s+(upper|body|exterior|surface|finish|construction|material)\b/gi, 'the product from the reference image');
+}
+
+// LIFESTYLE: Priority = contextual realism — must look like a real photograph
 function buildLifestylePrompt(visual, brandName) {
   var parts = [];
   parts.push('CRITICAL: Do NOT render any text, words, letters, logos, watermarks. Pure visual scene only.');
+  parts.push('This MUST look like a real photograph taken by a professional photographer — NOT an AI-generated image. Real skin textures, natural imperfections, genuine fabric folds, real-world lighting with natural shadows.');
 
   if (window._battleProductImages && window._battleProductImages.length > 0) {
-    parts.push('A reference product image is provided. The product in the scene MUST match the reference image exactly in color, shape, material, and design. Do NOT change the product color.');
+    parts.push('A reference product image is provided. The product in the scene MUST be identical to the reference image. Do NOT add, change, or invent any product details — no extra colors, no extra materials, no extra features. The reference image is the ONLY source of truth for the product.');
   }
 
   if (visual.imagePrompt) {
-    parts.push(visual.imagePrompt);
+    parts.push(sanitizeImagePrompt(visual.imagePrompt));
   } else {
-    parts.push('Lifestyle editorial photography for ' + brandName + '. A person naturally using the exact product from the reference image in a realistic, aspirational setting. Photorealistic, 16:9, warm natural lighting.');
+    parts.push('Lifestyle editorial photography for ' + brandName + '. A person naturally using the exact product from the reference image in a realistic setting. Shot on professional camera, natural ambient lighting, real environment.');
   }
 
-  parts.push('Wide-angle cinematic composition, 16:9, shallow depth of field, editorial quality. Product clearly visible and central.');
+  parts.push('Wide-angle cinematic composition, 16:9, shallow depth of field, editorial quality. Product clearly visible and central. Real photograph aesthetic — film grain, natural color grading, genuine textures. Do NOT add any details to the product that are not in the reference image.');
   return parts.join(' ');
 }
 
-// PRODUCT: Priority = geometry fidelity
+// PRODUCT: Priority = geometry fidelity — real studio photograph
 function buildProductPrompt(visual, brandName) {
   var parts = [];
   parts.push('CRITICAL: Do NOT render any text, words, letters, logos, or watermarks.');
+  parts.push('This MUST look like a real product photograph taken in a professional photography studio — NOT a 3D render or AI art. Real surface textures, real material reflections, genuine shadows from actual studio lights.');
 
   if (window._battleProductImages && window._battleProductImages.length > 0) {
-    parts.push('ABSOLUTE RULE: A reference product image is provided. Preserve the EXACT same viewing angle, color, shape, material, and design. Do NOT rotate. Do NOT show unseen surfaces. ONLY enhance with lighting, backdrop, shadows, reflections. Output = same product in a premium studio, NOT a redesigned product.');
+    parts.push('ABSOLUTE RULE: A reference product image is provided. The product must be PIXEL-IDENTICAL to the reference — same viewing angle, same colors, same materials, same design. Do NOT add, change, or invent ANY product detail. Do NOT rotate or show unseen surfaces. ONLY change the environment: lighting, backdrop, shadows, reflections.');
   }
 
   if (visual.imagePrompt) {
-    parts.push(visual.imagePrompt);
+    parts.push(sanitizeImagePrompt(visual.imagePrompt));
   } else {
-    parts.push('Premium studio product photography. Same viewing angle as reference. Dark gradient background. Three-point lighting. Subtle shadow and reflection. 1:1 square. High-end e-commerce hero shot.');
+    parts.push('Premium studio product photography. Same viewing angle as reference. Clean background. Professional three-point lighting setup. Natural shadow and subtle reflection on surface. 1:1 square. High-end e-commerce hero shot.');
   }
 
-  parts.push('Sharp focus, dramatic lighting, 1:1 square. Product identical to reference image.');
+  parts.push('Sharp focus, professional studio lighting, 1:1 square. Product identical to reference image. Do NOT add any features, colors, or materials not visible in the reference image.');
   return parts.join(' ');
 }
 
@@ -1237,26 +1491,31 @@ function buildProductPrompt(visual, brandName) {
 function buildSocialPrompt(visual, brandName) {
   var parts = [];
   parts.push('CRITICAL: Do NOT render any text, words, letters, logos, watermarks. Pure visual scene only.');
+  parts.push('This MUST look like a real photograph taken for a brand Instagram account — NOT an AI-generated image. Real textures, natural lighting, genuine environment, authentic materials.');
 
   if (window._battleProductImages && window._battleProductImages.length > 0) {
-    parts.push('A reference product image is provided. The product MUST match the reference image exactly in color, shape, material, and design. Do NOT change the product color.');
+    parts.push('A reference product image is provided. The product MUST be identical to the reference image. Do NOT add, change, or invent any product details — no extra colors, no extra materials, no extra features. The reference image is the ONLY source of truth for the product appearance.');
   }
 
   if (visual.imagePrompt) {
-    parts.push(visual.imagePrompt);
+    parts.push(sanitizeImagePrompt(visual.imagePrompt));
   } else {
-    parts.push('Premium social media post for ' + brandName + '. The exact product from the reference image is the hero element, naturally placed in an aspirational lifestyle scene. Product clearly visible and prominent. Beautiful composition for Instagram feed. Photorealistic, premium lighting.');
+    parts.push('Premium social media photograph for ' + brandName + '. The exact product from the reference image is the hero, naturally placed in a real-world aspirational scene. Product clearly visible and prominent. Beautiful composition suitable for Instagram feed. Professional photography, natural lighting.');
   }
 
-  parts.push('3:4 portrait format. Shallow depth of field. The product is the central focus. Aspirational but commercially usable. No text, no logos.');
+  parts.push('3:4 portrait format. Shallow depth of field. The product is the central focus. Real photograph aesthetic — natural color grading, genuine textures, film-quality look. No text, no logos. Do NOT add any features to the product not visible in the reference image.');
   return parts.join(' ');
 }
 
 async function generateConceptImages(visuals, brandName) {
-  // Run sequentially to avoid PixelBin queue overload (concurrent requests cause timeouts)
+  // Run sequentially to avoid FAL queue overload (concurrent requests cause timeouts)
   for (var i = 0; i < visuals.length; i++) {
     var vType = VISUAL_TYPES.find(function(vt) { return vt.key === visuals[i].type; }) || VISUAL_TYPES[i % 3];
     await generateSingleConceptImage(visuals[i], brandName, i, vType);
+    // Brief pause between requests to let FAL queue breathe
+    if (i < visuals.length - 1) {
+      await new Promise(function(r) { setTimeout(r, 1500); });
+    }
   }
 }
 
@@ -1292,9 +1551,9 @@ async function generateSingleConceptImage(visual, brandName, index, vType) {
       console.log('[concept ' + index + '] FAL i2i (' + visual.type + '):', body.reference_image.substring(0, 80));
     }
 
-    // Try up to 2 attempts — auto-retry once on failure
+    // Try up to 3 attempts — auto-retry on failure (3rd image often hits rate limits)
     var imageUrl = null;
-    for (var attempt = 1; attempt <= 2; attempt++) {
+    for (var attempt = 1; attempt <= 3; attempt++) {
       try {
         var res = await fetch('/api/generate-image', {
           method: 'POST',
@@ -1305,30 +1564,24 @@ async function generateSingleConceptImage(visual, brandName, index, vType) {
         if (!res.ok) {
           var errData = await res.json().catch(function() { return {}; });
           console.warn('[concept ' + index + '] FAL attempt ' + attempt + ' failed:', errData.error || res.status);
-          if (attempt < 2) continue; // retry
+          if (attempt < 3) { await new Promise(function(r) { setTimeout(r, 2000); }); continue; }
           break;
         }
 
         var data = await res.json();
         if (!data.image_url) {
           console.warn('[concept ' + index + '] No image_url in attempt ' + attempt);
-          if (attempt < 2) continue;
+          if (attempt < 3) { await new Promise(function(r) { setTimeout(r, 2000); }); continue; }
           break;
         }
 
-        // Verify the image actually loads
-        var verified = data.image_url.startsWith('data:') ? true : await verifyImageLoads(data.image_url);
-        if (!verified) {
-          console.warn('[concept ' + index + '] Image failed to load in attempt ' + attempt);
-          if (attempt < 2) continue;
-          break;
-        }
-
+        // Trust the server — FAL returned COMPLETED so the image exists.
+        // Skip client-side verification which causes false failures due to CORS/CDN timing.
         imageUrl = data.image_url;
         break; // success
       } catch (retryErr) {
         console.warn('[concept ' + index + '] Attempt ' + attempt + ' exception:', retryErr.message);
-        if (attempt < 2) continue;
+        if (attempt < 3) { await new Promise(function(r) { setTimeout(r, 2000); }); continue; }
       }
     }
 
@@ -1338,193 +1591,19 @@ async function generateSingleConceptImage(visual, brandName, index, vType) {
       return;
     }
 
-    // Render the generated image
+    // Render the generated image with fallback via image proxy on error
+    var proxyUrl = '/api/image-proxy?url=' + encodeURIComponent(imageUrl);
     wrapperEl.innerHTML =
       '<img class="ai-concept-image" src="' + imageUrl + '" ' +
-        'alt="' + escBattle(brandName) + ' ' + escBattle(vType.label) + '">' +
+        'alt="' + escBattle(brandName) + ' ' + escBattle(vType.label) + '" ' +
+        'onerror="if(!this.dataset.retried){this.dataset.retried=\'1\';this.src=\'' + proxyUrl + '\'}">' +
       '<div class="ai-concept-badge">AI GENERATED</div>';
-    console.log('[concept ' + index + '] Image loaded successfully');
+    console.log('[concept ' + index + '] Image rendered (' + visual.type + '):', imageUrl.substring(0, 80));
 
   } catch(err) {
     console.error('[concept ' + index + '] Exception:', err.message);
     showFallbackConcept(wrapperEl, visual, vType);
   }
-}
-
-// ═══ BANNER COMPOSITING V2 — Professional marketing layout ═══
-// Composites: AI-generated gradient background + actual product image + actual logo + text
-// This ensures the banner uses the REAL uploaded product (exact color) and REAL logo.
-function compositeBannerV2(bgUrl, logoDataUrl, brandName, headline, subtext) {
-  return new Promise(function(resolve, reject) {
-    var W = 1200, H = 480;
-    var canvas = document.createElement('canvas');
-    canvas.width = W;
-    canvas.height = H;
-    var ctx = canvas.getContext('2d');
-
-    // Collect all assets to load in parallel
-    var assets = {};
-    var toLoad = 1; // background is required
-    var loaded = 0;
-
-    var bgImg = new Image();
-    bgImg.crossOrigin = 'anonymous';
-    assets.bg = bgImg;
-
-    var prodDataUrls = window._productImageDataUrls || [];
-    if (prodDataUrls[0]) {
-      toLoad++;
-      assets.prod = new Image();
-    }
-    if (logoDataUrl) {
-      toLoad++;
-      assets.logo = new Image();
-    }
-
-    function onLoad() {
-      loaded++;
-      if (loaded >= toLoad) compose();
-    }
-
-    function compose() {
-      // ── 1. BACKGROUND: AI-generated gradient/bokeh ──
-      ctx.drawImage(assets.bg, 0, 0, W, H);
-
-      // ── 2. DARK GRADIENT OVERLAY: left side for text readability ──
-      var grad = ctx.createLinearGradient(0, 0, W, 0);
-      grad.addColorStop(0, 'rgba(10,10,10,0.92)');
-      grad.addColorStop(0.4, 'rgba(10,10,10,0.75)');
-      grad.addColorStop(0.6, 'rgba(10,10,10,0.3)');
-      grad.addColorStop(1, 'rgba(10,10,10,0.05)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
-
-      // ── 3. PRODUCT IMAGE: right side, large, with drop shadow ──
-      var prod = assets.prod;
-      if (prod && prod.naturalWidth > 0) {
-        var maxPH = H * 0.75;
-        var maxPW = W * 0.38;
-        var pScale = Math.min(maxPW / prod.naturalWidth, maxPH / prod.naturalHeight);
-        var pw = prod.naturalWidth * pScale;
-        var ph = prod.naturalHeight * pScale;
-        var px = W - pw - 50;
-        var py = (H - ph) / 2;
-
-        // Professional drop shadow
-        ctx.shadowColor = 'rgba(0,0,0,0.5)';
-        ctx.shadowBlur = 40;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 15;
-        ctx.drawImage(prod, px, py, pw, ph);
-
-        // Reset shadow
-        ctx.shadowColor = 'transparent';
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetY = 0;
-      }
-
-      // ── 4. TEXT LAYOUT: left side ──
-      var tx = 56; // left margin
-      var ty = H * 0.25; // start at 25% from top
-
-      // Logo (if available) — top-left, small
-      var logo = assets.logo;
-      if (logo && logo.naturalWidth > 0) {
-        var logoMaxW = 100;
-        var logoMaxH = 36;
-        var lScale = Math.min(logoMaxW / logo.naturalWidth, logoMaxH / logo.naturalHeight);
-        var lw = logo.naturalWidth * lScale;
-        var lh = logo.naturalHeight * lScale;
-        ctx.drawImage(logo, tx, ty - 8, lw, lh);
-        ty += lh + 20; // push text below logo
-      }
-
-      // Brand name — large bold uppercase
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '800 44px Inter, system-ui, sans-serif';
-      ctx.fillText(brandName.toUpperCase(), tx, ty);
-      ty += 14;
-
-      // Campaign headline — medium weight
-      ctx.font = '400 20px Inter, system-ui, sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,0.8)';
-      // Word-wrap headline if too long
-      var words = (headline || '').split(' ');
-      var line = '';
-      var lineH = 28;
-      for (var wi = 0; wi < words.length; wi++) {
-        var test = line + (line ? ' ' : '') + words[wi];
-        if (ctx.measureText(test).width > W * 0.4) {
-          ty += lineH;
-          ctx.fillText(line, tx, ty);
-          line = words[wi];
-        } else {
-          line = test;
-        }
-      }
-      if (line) { ty += lineH; ctx.fillText(line, tx, ty); }
-
-      // Subtext — lighter
-      if (subtext) {
-        ty += 24;
-        ctx.font = '300 14px Inter, system-ui, sans-serif';
-        ctx.fillStyle = 'rgba(255,255,255,0.5)';
-        ctx.fillText(subtext, tx, ty);
-      }
-
-      // Divider line
-      ty += 20;
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(tx, ty);
-      ctx.lineTo(tx + 160, ty);
-      ctx.stroke();
-
-      // CTA
-      ty += 24;
-      ctx.font = '600 12px Inter, system-ui, sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.letterSpacing = '0.08em';
-      ctx.fillText('SHOP NOW  \u2192', tx, ty);
-
-      resolve(canvas.toDataURL('image/jpeg', 0.92));
-    }
-
-    // Start loading assets
-    bgImg.onload = onLoad;
-    bgImg.onerror = function() { reject(new Error('Failed to load banner background')); };
-    bgImg.src = bgUrl;
-
-    if (assets.prod) {
-      assets.prod.onload = onLoad;
-      assets.prod.onerror = onLoad; // proceed without product if it fails
-      assets.prod.src = prodDataUrls[0];
-    }
-    if (assets.logo) {
-      assets.logo.onload = onLoad;
-      assets.logo.onerror = onLoad; // proceed without logo if it fails
-      assets.logo.src = logoDataUrl;
-    }
-  });
-}
-
-// Preload an image and verify it actually renders (not broken/blocked)
-function verifyImageLoads(url) {
-  return new Promise(function(resolve) {
-    var img = new Image();
-    var timeout = setTimeout(function() { resolve(false); }, 15000);
-    img.onload = function() {
-      clearTimeout(timeout);
-      // Check it's a real image (not a 1x1 pixel or empty)
-      resolve(img.naturalWidth > 10 && img.naturalHeight > 10);
-    };
-    img.onerror = function() {
-      clearTimeout(timeout);
-      resolve(false);
-    };
-    img.src = url;
-  });
 }
 
 function showFallbackConcept(wrapperEl, visual, vType) {
@@ -1714,8 +1793,10 @@ function renderStrategyTab(data, brandName, category) {
       sHtml += '<div class="story-card"><div class="story-theme-tag">' + escBattle(story.themeTag) + '</div>' +
         '<div class="story-title">' + escBattle(story.title) + '</div><div class="story-acts">';
       (story.acts || []).forEach(function(a) {
-        sHtml += '<div class="story-act"><div class="act-label">' + escBattle(a.label) + '</div>' +
-          '<div class="act-desc">' + escBattle(a.desc) + '</div></div>';
+        var actLabel = a.label != null ? a.label : ('Act ' + (a.act != null ? a.act : ''));
+        var actDesc = a.desc != null ? a.desc : (a.text || '');
+        sHtml += '<div class="story-act"><div class="act-label">' + escBattle(actLabel) + '</div>' +
+          '<div class="act-desc">' + escBattle(actDesc) + '</div></div>';
       });
       sHtml += '</div></div>';
     });
@@ -1734,7 +1815,7 @@ function renderStrategyTab(data, brandName, category) {
   // CTA buttons
   sHtml += '<div style="margin-top:24px;display:flex;gap:16px;flex-wrap:wrap">' +
     '<button class="btn-primary" onclick="openModal(\'strategistModal\')">Connect with a Creative Strategist \u2192</button>' +
-    '<button class="btn-ghost" onclick="openModal(\'pdfModal\')">Download Full Strategy PDF</button></div>';
+    '<button class="btn-ghost" onclick="downloadPlaybookPdf()">Download Full Strategy PDF</button></div>';
   sHtml += '</div>';
 
   stratContent.innerHTML = sHtml;
@@ -1915,5 +1996,149 @@ async function enrichCompetitorTabFromApify(data, brandName, category) {
     if (typeof showToast === 'function') {
       showToast('warning', 'Live data unavailable', 'Showing AI-estimated competitor data. Instagram scraping failed: ' + err.message, 5000);
     }
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// BATTLE PLAYBOOK PDF — built from battleCardData.strategy (jsPDF)
+// ══════════════════════════════════════════════════════════
+
+function pdfSafeFileName(name) {
+  return String(name || 'Fynd-Brand').replace(/[^a-z0-9\-]+/gi, '-').replace(/^-|-$/g, '') || 'Fynd-Brand';
+}
+
+function pdfWriteLines(doc, text, margin, maxW, startY, lineH, pageH) {
+  var y = startY;
+  var lines = doc.splitTextToSize(String(text || ''), maxW);
+  for (var i = 0; i < lines.length; i++) {
+    if (y + lineH > pageH - 12) {
+      doc.addPage();
+      y = margin;
+    }
+    doc.text(lines[i], margin, y);
+    y += lineH;
+  }
+  return y;
+}
+
+function downloadPlaybookPdf() {
+  if (typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF) {
+    if (typeof showToast === 'function') {
+      showToast('error', 'PDF unavailable', 'Could not load the PDF engine. Please refresh the page.');
+    }
+    return;
+  }
+  if (!battleCardData || !battleCardData.strategy) {
+    if (typeof showToast === 'function') {
+      showToast('info', 'Strategy required', 'Open Battle Cards, go to the Strategy tab, and generate your campaign strategy. Then download again.');
+    }
+    return;
+  }
+
+  var JsPDF = window.jspdf.jsPDF;
+  var s = battleCardData.strategy;
+  var brandName = window._battleBrand || (typeof brandContext !== 'undefined' && brandContext.name) || 'Brand';
+  var category = (typeof brandContext !== 'undefined' && brandContext.category) || 'Category';
+  var catLabel = s.categoryLabel || category;
+
+  var doc = new JsPDF({ unit: 'mm', format: 'a4' });
+  var pageW = doc.internal.pageSize.getWidth();
+  var pageH = doc.internal.pageSize.getHeight();
+  var margin = 14;
+  var maxW = pageW - 2 * margin;
+  var y = margin;
+  var lineH = 5;
+  var smallH = 4.5;
+
+  function newPage() {
+    doc.addPage();
+    y = margin;
+  }
+
+  function heading(text, size) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(size || 14);
+    if (y + 6 > pageH - 15) newPage();
+    y += 4;
+    doc.text(String(text), margin, y);
+    y += size > 12 ? 14 : 10;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+  }
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(18);
+  doc.text('AI Campaign Strategy', margin, y);
+  y += 12;
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(60);
+  y = pdfWriteLines(doc, 'Ogilvy India Formula · ' + brandName + ' · ' + catLabel, margin, maxW, y, smallH, pageH);
+  doc.setTextColor(0);
+  y = pdfWriteLines(doc, 'Generated ' + new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }), margin, maxW, y, smallH, pageH);
+  y += 6;
+
+  heading('The Slogan', 14);
+  doc.setFont('helvetica', 'italic');
+  y = pdfWriteLines(doc, '"' + (s.slogan || '') + '"', margin, maxW, y, lineH, pageH);
+  doc.setFont('helvetica', 'normal');
+  if (s.sloganTranslation) {
+    y = pdfWriteLines(doc, '"' + s.sloganTranslation + '"', margin, maxW, y, lineH, pageH);
+  }
+  y = pdfWriteLines(doc, s.sloganExplain || '', margin, maxW, y, lineH, pageH);
+  y += 4;
+
+  heading('Product truth & human emotion', 12);
+  y = pdfWriteLines(doc, 'Product truth: ' + (s.productTruth || ''), margin, maxW, y, lineH, pageH);
+  y = pdfWriteLines(doc, 'Human emotion: ' + (s.humanEmotion || ''), margin, maxW, y, lineH, pageH);
+  y += 4;
+
+  heading('The three-act formula', 12);
+  y = pdfWriteLines(doc, 'The product is never the hero. The situation is the hero. The product is the punchline.', margin, maxW, y, lineH, pageH);
+  y = pdfWriteLines(doc, 'Act 1 (0–7s): Set up a recognisable social situation. No brand. No product.', margin, maxW, y, lineH, pageH);
+  y = pdfWriteLines(doc, 'Act 2 (8–22s): Escalate tension. The character faces a choice between conformity and self-expression.', margin, maxW, y, lineH, pageH);
+  y = pdfWriteLines(doc, 'Act 3 (23–30s): Character chooses freedom. The ' + brandName + ' product appears naturally — slogan fades in.', margin, maxW, y, lineH, pageH);
+  y += 4;
+
+  if (s.themes && s.themes.length) {
+    heading('Campaign themes', 12);
+    s.themes.forEach(function(t, i) {
+      y = pdfWriteLines(doc, (i + 1) + '. ' + (t.name || '') + ' — ' + (t.sub || ''), margin, maxW, y, lineH, pageH);
+      y = pdfWriteLines(doc, t.desc || '', margin, maxW, y, smallH, pageH);
+      y += 2;
+    });
+    y += 2;
+  }
+
+  if (s.stories && s.stories.length) {
+    heading('Story plots', 12);
+    s.stories.forEach(function(story) {
+      y = pdfWriteLines(doc, (story.themeTag || '') + ': ' + (story.title || ''), margin, maxW, y, lineH, pageH);
+      (story.acts || []).forEach(function(a) {
+        var actLabel = a.label != null ? a.label : ('Act ' + (a.act != null ? a.act : ''));
+        var actDesc = a.desc != null ? a.desc : (a.text || '');
+        y = pdfWriteLines(doc, '  • ' + actLabel + ': ' + actDesc, margin, maxW, y, smallH, pageH);
+      });
+      y += 3;
+    });
+  }
+
+  if (s.pitfalls && s.pitfalls.length) {
+    heading('Common pitfalls to avoid', 12);
+    s.pitfalls.forEach(function(p) {
+      y = pdfWriteLines(doc, '• ' + String(p), margin, maxW, y, lineH, pageH);
+    });
+  }
+
+  // Footer on last page
+  if (y + 12 > pageH - 10) newPage();
+  doc.setFontSize(9);
+  doc.setTextColor(120);
+  doc.text('Fynd Studio — AI-Powered Creative Intelligence', margin, pageH - 10);
+  doc.setTextColor(0);
+
+  doc.save(pdfSafeFileName(brandName) + '-Campaign-Strategy.pdf');
+  if (typeof showToast === 'function') {
+    showToast('success', 'PDF ready', 'Your campaign strategy PDF has been downloaded.');
   }
 }

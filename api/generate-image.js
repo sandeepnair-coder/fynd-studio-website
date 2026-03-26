@@ -164,8 +164,11 @@ async function generateViaFal(apiKey, prompt, imageSize, referenceImageUrl, asse
 
   // Build request body — nano-banana-pro uses aspect_ratio (not image_size)
   // Edit model uses image_urls array (not image_url)
+  // Prepend photorealism instruction to every prompt for natural-looking output
+  const realismPrefix = 'RAW photo, realistic photograph, shot on Canon EOS R5 with 85mm f/1.4 lens, natural lighting, real textures, film grain, genuine materials. ';
   const body = {
-    prompt: prompt,
+    prompt: realismPrefix + prompt,
+    negative_prompt: 'cartoon, illustration, painting, drawing, anime, 3d render, CGI, digital art, fake, plastic, artificial, oversaturated, overprocessed, smooth skin, airbrushed, unrealistic, text, watermark, logo, blurry, low quality',
     num_images: 1,
     aspect_ratio: aspectRatio,
     output_format: 'jpeg',
@@ -175,11 +178,13 @@ async function generateViaFal(apiKey, prompt, imageSize, referenceImageUrl, asse
   if (isI2I) {
     body.image_urls = [referenceImageUrl];
     // Type-specific strength: how much the reference image influences the output
-    // Product: high (0.85) — preserve exact geometry, angle, color
-    // Lifestyle: moderate (0.65) — keep product appearance but allow scene variation
-    // Default: 0.75
-    const strengthMap = { product: 0.85, lifestyle: 0.65, social: 0.65 };
-    body.strength = strengthMap[assetType] || 0.75;
+    // Higher strength = closer to uploaded product (less "fake" looking)
+    // Product: very high (0.88) — preserve exact geometry, angle, color
+    // Lifestyle: high (0.78) — keep product faithful but allow scene context
+    // Social: high (0.78) — product must be recognizable in social setting
+    // Default: 0.80
+    const strengthMap = { product: 0.88, lifestyle: 0.78, social: 0.78 };
+    body.strength = strengthMap[assetType] || 0.80;
     console.log(`[FAL] asset_type: ${assetType || 'default'}, strength: ${body.strength}`);
   }
 

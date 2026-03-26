@@ -5,9 +5,9 @@
 /* ── Tablet (≤991px) ─────────────────────── */
 @media (max-width: 991px) {
   /* Nav: shrink gaps */
-  nav { padding: 14px 32px; }
-  .nav-links { gap: 20px; }
-  .nav-links button { font-size: 13px; }
+  .nav-row--top { padding: 12px 32px; }
+  .nav-row--sub { padding: 10px 32px 12px; }
+  .nav-row--command { padding-left: 32px; padding-right: 32px; }
 
   /* Sections: reduce padding */
   .section-container { padding: 60px 32px; }
@@ -25,6 +25,9 @@
 
   /* Market capture grid: 2 cols */
   .market-capture-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Brand profile (Intel): 2 cols on tablet */
+  .brand-profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   /* Proposal: tablet adjustments */
   .prop-s0-hero { padding: 120px 32px 60px; }
@@ -54,39 +57,91 @@
 /* ── Mobile (≤768px) ─────────────────────── */
 @media (max-width: 768px) {
   /* ── Navigation: hamburger collapse ── */
-  nav {
-    padding: 12px 24px;
+  .site-nav {
     flex-wrap: wrap;
+  }
+  .nav-row--top {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'logo actions'
+      'mode mode';
+    width: 100%;
+    padding: 12px 24px;
     gap: 12px;
   }
-  .nav-hamburger { display: flex; }
-  .nav-links {
+  .nav-mode {
     display: none;
-    order: 3;
     width: 100%;
-    flex-direction: column;
-    gap: 4px;
     padding-top: 12px;
     border-top: 1px solid var(--border);
-    margin-left: 0;
+    margin-top: 4px;
   }
-  .nav-links.nav-open { display: flex; }
-  .nav-links button {
-    font-size: 14px;
+  .site-nav.nav-open .nav-mode {
+    display: flex;
+    justify-content: center;
+  }
+  .nav-hamburger { display: flex; }
+  .nav-row--sub {
+    display: none;
+    order: 10;
     width: 100%;
-    text-align: left;
-    padding: 10px 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 24px 16px;
+    border-top: 1px solid var(--border);
+    gap: 12px;
+  }
+  .site-nav.nav-open .nav-row--sub#navSubPlatform {
+    display: flex;
+  }
+  .nav-sub-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    border-bottom: none;
+  }
+  .nav-sub-link {
+    justify-content: flex-start;
+    width: 100%;
+    padding: 12px 0 12px 12px;
+    margin-bottom: 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border);
+    border-left: 3px solid transparent;
+    font-size: 13px;
+  }
+  .nav-sub-link:hover {
+    border-bottom-color: var(--border);
+    border-left-color: color-mix(in srgb, var(--primary) 40%, transparent);
+  }
+  .nav-sub-link.nav-active {
+    border-bottom-color: var(--border);
+    border-left-color: var(--primary);
     border-bottom: 1px solid var(--border);
   }
-  .nav-links button:last-child { border-bottom: none; }
-  .nav-links .nav-cta {
+  .nav-sub-link:last-of-type {
+    border-bottom: none;
+  }
+  .nav-sub-link.nav-active:last-of-type {
+    border-bottom: none;
+    border-left-color: var(--primary);
+  }
+  .nav-sub-link--locked,
+  .nav-sub-link:disabled {
+    border-left-color: transparent;
+    opacity: 0.5;
+  }
+  .nav-sub-link--locked:hover,
+  .nav-sub-link:disabled:hover {
+    border-left-color: transparent;
+  }
+  .nav-sub-cta {
+    width: 100%;
     text-align: center;
     justify-content: center;
-    margin-top: 8px;
-    border-bottom: none;
-    padding: 10px 16px;
+    padding: 12px 16px;
   }
-  .nav-actions { margin-left: auto; }
+  .nav-actions { margin-left: 0; }
 
   /* ── Hero ── */
   .hero { padding: 120px 24px 60px; }
@@ -168,7 +223,8 @@
   /* ── Grids: collapse to 2 cols ── */
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .scores-grid { grid-template-columns: repeat(2, 1fr); }
-  .dash-scores-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-scores-grid,
+  .brand-profile-grid { grid-template-columns: repeat(2, 1fr); }
   .dash-stat-row { grid-template-columns: 1fr 1fr; }
   .benchmark-grid { grid-template-columns: 1fr 1fr; }
 
@@ -227,7 +283,6 @@
 
   /* ── Misc ── */
   .hcp-score-row { flex-wrap: wrap; }
-  .old-guard-big { font-size: 36px; }
   .d2c-stat-num { font-size: 32px; }
 
   /* ── Footer ── */
@@ -254,9 +309,10 @@
 /* ── Small Mobile (≤480px) ───────────────── */
 @media (max-width: 480px) {
   /* ── Nav: ultra compact ── */
-  nav { padding: 12px 16px; }
-  .nav-links button { font-size: 13px; padding: 8px 0; }
-  .nav-cta { padding: 8px 12px !important; font-size: 13px !important; }
+  .nav-row--top { padding: 10px 16px; }
+  .nav-row--sub { padding-left: 16px; padding-right: 16px; }
+  .nav-sub-link { font-size: 12px; padding: 10px 0 10px 12px; }
+  .nav-cta { padding: 8px 12px; font-size: 13px; }
   .api-toggle-label { font-size: 10px; }
 
   /* ── Hero ── */
@@ -282,7 +338,8 @@
   /* ── Grids: all single column ── */
   .stats-grid { grid-template-columns: 1fr; }
   .scores-grid { grid-template-columns: 1fr; }
-  .dash-scores-grid { grid-template-columns: 1fr; }
+  .dash-scores-grid,
+  .brand-profile-grid { grid-template-columns: 1fr; }
   .d2c-hero-stats { grid-template-columns: 1fr; }
   .tech-grid { grid-template-columns: 1fr; }
   .themes-grid { grid-template-columns: 1fr; }
@@ -321,24 +378,18 @@
   /* ── Cards: tighter padding ── */
   .d2c-stat-card { padding: 20px 16px; }
   .d2c-stat-num { font-size: 28px; }
-  .feature-card { padding: 20px 16px; }
   .tech-card { padding: 20px 16px; }
   .page-card { padding: 24px 20px; }
   .cs-card { padding: 20px 16px; }
   .divide-panel-offline,
   .divide-panel-digital,
   .divide-panel-win,
-  .divide-panel-lose,
-  .divide-panel-old,
-  .divide-panel-new { padding: 20px 16px; }
+  .divide-panel-lose { padding: 20px 16px; }
   .spend-table { padding: 16px; }
   .spend-insight-card { padding: 16px; }
   .hiw-right-panel { padding: 20px 16px; }
   .insight-panel { padding: 20px 16px; }
   .score-card { padding: 20px 16px; }
-
-  /* ── Old guard big text ── */
-  .old-guard-big { font-size: 28px; }
 
   /* ── Pricing table: card layout ── */
   .pricing-table thead { display: none; }
@@ -354,16 +405,26 @@
   .pricing-table td { padding: 8px 0; border: none; text-align: right; }
   .pricing-table td::before { content: attr(data-label); float: left; font-weight: 600; color: var(--foreground); }
 
-  /* ── CTA final section inline overrides ── */
-  .section [style*="padding:72px"] { padding: 40px 20px !important; }
-  .section [style*="font-size:clamp(32px"] { font-size: clamp(24px, 6vw, 40px) !important; }
+  /* ── Final invitation CTA ── */
+  .home-final-cta {
+    padding: 40px 20px;
+  }
+  .home-final-cta-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+  .home-final-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-final-cta-actions .home-final-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
 
   /* ── PC bg number ── */
   .pc-bg-num { font-size: 80px; }
 
-  /* ── Timeline step ── */
-  .timeline-step { grid-template-columns: 32px 1fr; gap: 16px; }
-  .timeline-dot { width: 32px; height: 32px; font-size: 10px; }
+  /* ── How-it-works step ── */
   .hiw-step { grid-template-columns: 32px 1fr; gap: 16px; }
   .hiw-dot { width: 32px; height: 32px; font-size: 10px; }
   .hiw-timeline::before { left: 16px; }

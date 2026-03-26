@@ -111,12 +111,14 @@ var DUMMY_ANALYSIS_DATA = {
 
 // ── MOBILE NAV TOGGLE ──
 function toggleMobileNav() {
-  document.querySelector('.nav-links').classList.toggle('nav-open');
+  var nav = document.querySelector('.site-nav');
+  if (nav) nav.classList.toggle('nav-open');
 }
 // Close mobile nav when a link is clicked
 document.addEventListener('click', function(e) {
-  if (e.target.closest('.nav-links button:not(.nav-cta)') || e.target.closest('.nav-links .nav-cta')) {
-    document.querySelector('.nav-links').classList.remove('nav-open');
+  if (e.target.closest('.nav-sub-link') || e.target.closest('.nav-sub-cta')) {
+    var nav = document.querySelector('.site-nav');
+    if (nav) nav.classList.remove('nav-open');
   }
 });
 
@@ -238,41 +240,25 @@ function showPage(id) {
     launchBattleCardGeneration(bn, brandContext.category, brandContext.segment);
     return;
   }
-  // Intercept campaign proposal navigation — require analysis first, then generate
   if (id === 'proposal') {
-    var pbn = brandContext.name;
-    if (USE_DUMMY_DATA && (!pbn || pbn === 'Your Brand')) {
-      saveBrandContext('Bewakoof', 'Fashion & Apparel', 'Youth Streetwear');
-      pbn = 'Bewakoof';
-    }
-    if (!pbn || pbn === 'Your Brand') {
-      showToast('info', 'Run analysis first', 'Please analyse a brand on the Creative Intel page before generating a Campaign Proposal.', 5000);
-      showPage('intel');
-      return;
-    }
-    if (campaignProposalData && window._proposalBrand === pbn) {
-      _doShowPage('proposal');
-      return;
-    }
-    launchProposalGeneration(pbn, brandContext.category, brandContext.segment);
+    showToast('info', 'Coming soon', 'Campaign Proposal is not available yet.');
     return;
   }
   _doShowPage(id);
 }
 
 function _doShowPage(id) {
+  if (id === 'proposal') {
+    showToast('info', 'Coming soon', 'Campaign Proposal is not available yet.');
+    return;
+  }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   window.scrollTo(0,0);
-  // Nav active state
-  document.querySelectorAll('.nav-links button:not(.nav-cta)').forEach(function(btn) {
-    btn.classList.remove('nav-active');
-    if ((id === 'home' && btn.textContent.trim() === 'Home') ||
-        (id === 'intel' && btn.textContent.trim() === 'Creative Intel') ||
-        (id === 'battle' && btn.textContent.trim() === 'Battle Cards') ||
-        (id === 'proposal' && btn.textContent.trim() === 'Campaign Proposal')) {
-      btn.classList.add('nav-active');
-    }
+  // Nav active state (Platform sub links; skip disabled entries)
+  document.querySelectorAll('.nav-sub-link[data-nav-page]').forEach(function(btn) {
+    var match = btn.getAttribute('data-nav-page') === id;
+    btn.classList.toggle('nav-active', match && !btn.disabled);
   });
   if (id === 'battle') { personalizeBattleCards(); }
   if (id === 'intel' && USE_DUMMY_DATA) {
@@ -340,13 +326,7 @@ function submitDemo() {
   document.getElementById('demoSuccessView').style.display='block';
   showToast('success','Booking confirmed!',`We'll see you soon, ${name}.`);
 }
-function submitPDF() {
-  const email = document.getElementById('pdfEmail').value.trim();
-  if(!email) { showToast('error','Email required','Please enter your work email.'); return; }
-  document.getElementById('pdfFormView').style.display='none';
-  document.getElementById('pdfSuccessView').style.display='block';
-  showToast('success','PDF sent!','Check your inbox in 2 minutes.');
-}
+/* downloadPlaybookPdf — built in battle-cards.js (uses jsPDF + battleCardData.strategy) */
 function submitStrategist() {
   const brand = document.getElementById('stratBrand').value.trim();
   if(!brand) { showToast('error','Brand required','Please enter your brand name.'); return; }
@@ -616,6 +596,15 @@ function animVal(el, target) {
   }, 16);
 }
 
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function renderResults(brandName, category, segment, data) {
   // Store for battle card hero preview
   window.lastAnalysisData = data;
@@ -631,19 +620,28 @@ function renderResults(brandName, category, segment, data) {
   var profileGrid = document.getElementById('brandProfileGrid');
   if (profileGrid && data.brandProfile && Array.isArray(data.brandProfile)) {
     profileGrid.innerHTML = data.brandProfile.map(function(item) {
-      return '<div class="dash-card">' +
-        '<div class="dash-card-header row">' +
-          '<div class="dash-card-header-col">' +
-            '<div class="dash-card-desc">' + (item.icon || '') + ' ' + (item.label || '') + '</div>' +
+      var icon = escapeHtml(item.icon || '');
+      var label = escapeHtml(item.label || '');
+      var value = escapeHtml(item.value || '—');
+      var iconBlock = icon
+        ? '<span class="bp-card-icon" aria-hidden="true">' + icon + '</span>'
+        : '';
+      return (
+        '<div class="brand-profile-card" role="article">' +
+          '<div class="bp-card-header">' +
+            iconBlock +
+            '<div class="bp-card-header-text">' +
+              '<p class="bp-card-label">' + label + '</p>' +
+            '</div>' +
           '</div>' +
-        '</div>' +
-        '<div class="dash-card-content" style="padding:16px 24px 24px">' +
-          '<div style="font-size:15px;line-height:1.6;color:var(--foreground);font-weight:500">' + (item.value || '—') + '</div>' +
-        '</div>' +
-      '</div>';
+          '<div class="bp-card-content">' +
+            '<p class="bp-card-value">' + value + '</p>' +
+          '</div>' +
+        '</div>'
+      );
     }).join('');
   } else if (profileGrid) {
-    profileGrid.innerHTML = '<div class="dash-card" style="grid-column:1/-1;padding:32px;text-align:center;color:var(--muted-foreground)">Brand profile not available for this analysis.</div>';
+    profileGrid.innerHTML = '<div class="brand-profile-card brand-profile-card--empty" role="status">Brand profile not available for this analysis.</div>';
   }
 
   // Transparency bar

@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -90,38 +91,6 @@
   </div>
 </div>
 
-<!-- ── PDF MODAL ── -->
-<div class="modal-backdrop" id="pdfModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('pdfModal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <div id="pdfFormView">
-      <div class="modal-title">Download Full Playbook</div>
-      <div class="modal-sub">Enter your details and we'll send the full Battle Card PDF to your inbox instantly.</div>
-      <div class="modal-field"><label>Work Email</label><input type="email" id="pdfEmail" placeholder="you@brand.com"></div>
-      <div class="modal-field"><label>Your Role</label>
-        <select id="pdfRole">
-          <option value="">Select your role</option>
-          <option>Founder / CEO</option>
-          <option>CMO / Marketing Head</option>
-          <option>Brand Manager</option>
-          <option>Growth / Performance</option>
-          <option>Agency / Consultant</option>
-        </select>
-      </div>
-      <div class="modal-actions">
-        <button class="modal-confirm" onclick="submitPDF()">Send Me the PDF →</button>
-        <button class="modal-cancel" onclick="closeModal('pdfModal')">Cancel</button>
-      </div>
-    </div>
-    <div id="pdfSuccessView" style="display:none" class="modal-success">
-      <div class="tick"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--electric)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3H10l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>
-      <div class="success-title">PDF on its way!</div>
-      <div class="success-sub">Check your inbox in the next 2 minutes. Also check your spam folder if you don't see it.</div>
-      <button class="modal-confirm modal-confirm-full" onclick="closeModal('pdfModal')">Done</button>
-    </div>
-  </div>
-</div>
-
 <!-- ── STRATEGIST MODAL ── -->
 <div class="modal-backdrop" id="strategistModal">
   <div class="modal">
@@ -158,31 +127,60 @@
 <!-- ── TOAST CONTAINER ── -->
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- ── NAV ── -->
-<nav>
-  <button class="nav-logo" onclick="showPage('home')"><img src="/assets/images/fynd-logo-white.png" alt="Fynd" class="nav-logo-img"><img src="/assets/images/fynd-logo-black.png" alt="Fynd" class="nav-logo-img nav-logo-light"></button>
-  <div class="nav-links">
-    <button class="nav-active" onclick="showPage('home')">Home</button>
-    <button onclick="showPage('intel')">Creative Intel</button>
-    <button onclick="showPage('battle')">Battle Cards</button>
-    <button class="nav-locked" disabled title="Locked for now" aria-disabled="true">Campaign Proposal</button>
-    <button class="nav-cta" onclick="openModal('demoModal')">Book a Demo</button>
-  </div>
-  <div class="nav-actions">
-    <div class="api-toggle" title="Toggle between live API and dummy data">
-      <span class="api-toggle-label" id="apiToggleLabel">Demo</span>
-      <label class="toggle-switch">
-        <input type="checkbox" id="apiToggle" onchange="toggleApiMode(this.checked)">
-        <span class="toggle-slider"></span>
-      </label>
+<!-- ── NAV (dual tier: Platform / Command Centre + sub links) ── -->
+<nav class="site-nav" aria-label="Main">
+  <div class="nav-row nav-row--top">
+    <button class="nav-logo" onclick="showPage('home')"><img src="/assets/images/fynd-logo-white.png" alt="Fynd" class="nav-logo-img"><img src="/assets/images/fynd-logo-black.png" alt="Fynd" class="nav-logo-img nav-logo-light"></button>
+    <div class="nav-mode" role="group" aria-label="Product area">
+      <button type="button" class="nav-mode-btn nav-mode-btn--active" id="navModePlatform" aria-pressed="true" aria-controls="navSubPlatform">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>Platform</span>
+      </button>
+      <button type="button" class="nav-mode-btn nav-mode-btn--locked" id="navModeCommand" disabled aria-disabled="true" aria-pressed="false" title="Coming soon" aria-controls="navSubCommand">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Command Centre</span>
+      </button>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle theme">
-      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
+    <div class="nav-actions">
+      <div class="api-toggle" title="Toggle between live API and dummy data">
+        <span class="api-toggle-label" id="apiToggleLabel">Demo</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="apiToggle" onchange="toggleApiMode(this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle theme">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav-row nav-row--sub" id="navSubPlatform">
+    <div class="nav-sub-links">
+      <button type="button" class="nav-sub-link nav-active" data-nav-page="home" onclick="showPage('home')">
+        <svg class="nav-sub-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </button>
+      <button type="button" class="nav-sub-link" data-nav-page="intel" onclick="showPage('intel')">
+        <svg class="nav-sub-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+        <span>Creative Intel</span>
+      </button>
+      <button type="button" class="nav-sub-link" data-nav-page="battle" onclick="showPage('battle')">
+        <svg class="nav-sub-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="m13 19 6-6"/><path d="m16 16 4 4"/><path d="m19 21 2-2"/><path d="m2 12 6 6"/><path d="m3 21 3-3"/></svg>
+        <span>Battle Cards</span>
+      </button>
+      <button type="button" class="nav-sub-link nav-sub-link--locked" data-nav-page="proposal" disabled aria-disabled="true" title="Coming soon">
+        <svg class="nav-sub-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Campaign Proposal</span>
+      </button>
+    </div>
+    <button type="button" class="nav-cta nav-sub-cta" onclick="openModal('demoModal')">Book a Demo</button>
+  </div>
+  <div class="nav-row nav-row--command" id="navSubCommand" hidden aria-hidden="true">
+    <p class="nav-command-placeholder">Command Centre navigation will appear here.</p>
   </div>
 </nav>
 
@@ -203,7 +201,7 @@
       <span class="line2">More Than Just Ads.</span>
       <span class="line3">It Deserves Impact.</span>
     </h1>
-    <p class="hero-sub">India's ₹1.75 Lakh Crore ad market is now 64% digital. If your creative strategy is still built for 2020, you're not just losing relevance — you're losing market share.</p>
+    <p class="hero-sub">India's ₹1.59 Lakh Crore ad market is now 58% digital — and growing at 15% YoY. If your creative strategy is still built for 2020, you're not just losing relevance — you're losing market share.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px;opacity:0.5">
       <span class="source-tag">Source: <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener">GroupM TYNY 2026</a></span>
       <span class="source-tag">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener">Madison PMAR 2026</a></span>
@@ -218,36 +216,36 @@
   ═══════════════════════════════════════ -->
   <div class="stats-bar">
     <div class="stats-track">
-      <div class="stat-item"><span class="num">64%</span><span class="label">India Ad Spend Now Digital</span></div>
+      <div class="stat-item"><span class="num">58%</span><span class="label">India Ad Spend Now Digital</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">3.5×</span><span class="label">Higher ROI with AI Creative</span></div>
+      <div class="stat-item"><span class="num">3.2×</span><span class="label">Higher ROI with AI Creative</span></div>
       <span class="stat-sep">·</span>
       <div class="stat-item"><span class="num">+50%</span><span class="label">Q-Commerce Ad Growth</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">−10%</span><span class="label">TV Ad Volumes Crashed</span></div>
+      <div class="stat-item"><span class="num">−10%</span><span class="label">TV Ad Volumes Declined</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">78%</span><span class="label">Indian SMBs Using AI</span></div>
+      <div class="stat-item"><span class="num">42%</span><span class="label">Indian D2C Brands Using AI</span></div>
       <span class="stat-sep">·</span>
       <div class="stat-item"><span class="num">+33%</span><span class="label">CTV Ad Market Growth</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">156%</span><span class="label">Vernacular Content Growth T2/T3</span></div>
+      <div class="stat-item"><span class="num">+45%</span><span class="label">Vernacular Content Growth T2/T3</span></div>
       <span class="stat-sep">·</span>
       <div class="stat-item"><span class="num">48hrs</span><span class="label">AI Campaign vs 90-Day Agency</span></div>
       <span class="stat-sep">·</span>
       <!-- duplicate for seamless loop -->
-      <div class="stat-item"><span class="num">64%</span><span class="label">India Ad Spend Now Digital</span></div>
+      <div class="stat-item"><span class="num">58%</span><span class="label">India Ad Spend Now Digital</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">3.5×</span><span class="label">Higher ROI with AI Creative</span></div>
+      <div class="stat-item"><span class="num">3.2×</span><span class="label">Higher ROI with AI Creative</span></div>
       <span class="stat-sep">·</span>
       <div class="stat-item"><span class="num">+50%</span><span class="label">Q-Commerce Ad Growth</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">−10%</span><span class="label">TV Ad Volumes Crashed</span></div>
+      <div class="stat-item"><span class="num">−10%</span><span class="label">TV Ad Volumes Declined</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">78%</span><span class="label">Indian SMBs Using AI</span></div>
+      <div class="stat-item"><span class="num">42%</span><span class="label">Indian D2C Brands Using AI</span></div>
       <span class="stat-sep">·</span>
       <div class="stat-item"><span class="num">+33%</span><span class="label">CTV Ad Market Growth</span></div>
       <span class="stat-sep">·</span>
-      <div class="stat-item"><span class="num">156%</span><span class="label">Vernacular Content Growth T2/T3</span></div>
+      <div class="stat-item"><span class="num">+45%</span><span class="label">Vernacular Content Growth T2/T3</span></div>
       <span class="stat-sep">·</span>
       <div class="stat-item"><span class="num">48hrs</span><span class="label">AI Campaign vs 90-Day Agency</span></div>
       <span class="stat-sep">·</span>
@@ -260,14 +258,14 @@
     <h2 class="section-title">The market in 60 seconds.</h2>
     <div class="d2c-hero-stats">
       <div class="d2c-stat-card">
-        <div class="d2c-stat-num" style="color:var(--signal)">64%</div>
-        <div class="d2c-stat-label">India's ad spend is now majority digital, with traditional media growing just 1.1%.</div>
-        <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a></div>
+        <div class="d2c-stat-num" style="color:var(--signal)">58%</div>
+        <div class="d2c-stat-label">India's ad spend is now majority digital, growing at 15% YoY while traditional media grows just 2%.</div>
+        <div class="d2c-stat-source"><a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Madison PMAR 2025</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">GroupM TYNY 2025</a></div>
       </div>
       <div class="d2c-stat-card">
-        <div class="d2c-stat-num" style="color:var(--electric)">3.5×</div>
-        <div class="d2c-stat-label">Higher ROI on AI campaigns vs traditional. Indian businesses report 3.5× returns with AI marketing.</div>
-        <div class="d2c-stat-source"><a href="https://cloud9digital.co.in/" target="_blank" rel="noopener" class="text-source">CLOUD 9 DIGITAL / 500+ BUSINESS SURVEY 2026</a></div>
+        <div class="d2c-stat-num" style="color:var(--electric)">3.2×</div>
+        <div class="d2c-stat-label">Higher ROI on AI-driven campaigns vs traditional production. D2C brands report 3.2× returns with AI creative workflows.</div>
+        <div class="d2c-stat-source"><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/ai-powered-marketing-and-sales-reach-new-heights-with-generative-ai" target="_blank" rel="noopener" class="text-source">McKinsey AI Marketing Report 2024</a></div>
       </div>
       <div class="d2c-stat-card">
         <div class="d2c-stat-num" style="color:var(--signal)">+50%</div>
@@ -285,67 +283,67 @@
   <!-- PLATFORM AD SPEND DISTRIBUTION -->
   <section class="section reveal" style="border-top:1px solid var(--border)">
     <div class="section-label">Platform Ad Spend Distribution</div>
-    <h2 class="section-title">Where India's ₹1.12 lakh crore<br>digital ad budget flows in 2026.</h2>
+    <h2 class="section-title">Where India's ₹92,000 Crore<br>digital ad budget flows in 2025.</h2>
     <p style="font-size:16px;color:var(--muted-foreground);line-height:1.7;max-width:520px;margin-bottom:16px;">Most D2C brands default to Instagram and Google. Here's the full picture —<br>including where the biggest whitespace gaps are hiding.</p>
 
     <div class="spend-section">
       <!-- LEFT: Platform Table -->
       <div class="spend-table">
-        <div class="spend-table-label">Est. Platform Spend · FY2026 · India Digital</div>
+        <div class="spend-table-label">Est. Platform Spend · FY2025 · India Digital</div>
 
         <div class="spend-row">
           <div class="spend-icon">🔍</div>
           <div class="spend-name">Google Search + Display</div>
           <div class="spend-bar-wrap"><div class="spend-bar" style="width:100%;background:var(--primary)"></div></div>
-          <div class="spend-val">₹38,200 Cr</div>
+          <div class="spend-val">₹28,500 Cr</div>
           <div class="spend-yoy">+12% YoY</div>
         </div>
 
         <div class="spend-row">
           <div class="spend-icon">▶</div>
           <div class="spend-name">YouTube (Video + Shorts)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:82%;background:var(--signal)"></div></div>
-          <div class="spend-val">₹31,300 Cr</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:72%"></div></div>
+          <div class="spend-val">₹20,500 Cr</div>
           <div class="spend-yoy">+18% YoY</div>
         </div>
 
         <div class="spend-row">
           <div class="spend-icon">📸</div>
           <div class="spend-name">Meta (Instagram + Facebook)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:71%;background:var(--primary);opacity:0.8"></div></div>
-          <div class="spend-val">₹27,100 Cr</div>
-          <div class="spend-yoy">+22% YoY</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:63%;background:var(--primary);opacity:0.8"></div></div>
+          <div class="spend-val">₹18,000 Cr</div>
+          <div class="spend-yoy">+20% YoY</div>
         </div>
 
         <div class="spend-row">
           <div class="spend-icon">🛒</div>
           <div class="spend-name">Flipkart + Amazon Ads</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:17%;background:var(--primary);opacity:0.6"></div></div>
-          <div class="spend-val">₹6,600 Cr</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:32%;background:var(--primary);opacity:0.6"></div></div>
+          <div class="spend-val">₹9,200 Cr</div>
           <div class="spend-yoy">+28% YoY</div>
         </div>
 
         <div class="spend-row">
           <div class="spend-icon">📺</div>
           <div class="spend-name">JioCinema + Hotstar (CTV)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:21%;background:var(--primary);opacity:0.7"></div></div>
-          <div class="spend-val">₹8,000 Cr</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:25%;background:var(--primary);opacity:0.7"></div></div>
+          <div class="spend-val">₹7,200 Cr</div>
           <div class="spend-yoy">+33% YoY</div>
         </div>
 
         <div class="spend-row">
           <div class="spend-icon">⚡</div>
           <div class="spend-name">Q-Commerce (Blinkit / Zepto)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:10%;background:var(--primary);opacity:0.5"></div></div>
-          <div class="spend-val">₹3,800 Cr</div>
-          <div class="spend-yoy">+202% YoY</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:14%;background:var(--primary);opacity:0.5"></div></div>
+          <div class="spend-val">₹4,100 Cr</div>
+          <div class="spend-yoy">+50% YoY</div>
         </div>
 
         <div class="spend-row">
           <div class="spend-icon">💬</div>
           <div class="spend-name">ShareChat + Moj (Vernacular)</div>
-          <div class="spend-bar-wrap"><div class="spend-bar" style="width:8%;background:var(--primary);opacity:0.4"></div></div>
-          <div class="spend-val">₹3,000 Cr</div>
+          <div class="spend-bar-wrap"><div class="spend-bar" style="width:11%;background:var(--primary);opacity:0.4"></div></div>
+          <div class="spend-val">₹3,200 Cr</div>
           <div class="spend-yoy">+45% YoY</div>
         </div>
 
@@ -356,15 +354,15 @@
       <div class="spend-insights">
         <div class="spend-insight-card">
           <div class="spend-insight-tag"><div class="spend-insight-dot red"></div>Biggest Gap: CTV</div>
-          <div class="spend-insight-text">CTV is growing at <span class="hl-green">+33% YoY</span> — fastest of any major platform — yet the average D2C fashion brand has <span class="hl-red">zero CTV presence</span>. ₹8,000 Cr is spent mostly by legacy FMCG and auto. Fashion D2C has a 12–18 month first-mover window before CPMs triple.</div>
+          <div class="spend-insight-text">CTV is growing at <span class="hl-green">+33% YoY</span> — fastest of any major platform — yet the average D2C brand has <span class="hl-red">zero CTV presence</span>. ₹7,200 Cr is spent mostly by legacy FMCG and auto. D2C brands entering CTV now benefit from CPMs 4-5× lower than linear TV.</div>
         </div>
         <div class="spend-insight-card">
           <div class="spend-insight-tag"><div class="spend-insight-dot green"></div>Fastest Mover: Q-Commerce</div>
-          <div class="spend-insight-text">Q-commerce ad revenue grew <span class="hl-green">+202% in 2025</span>. Blinkit, Zepto, Instamart combined reached ₹3,800 Cr — almost entirely from FMCG. The fashion accessories slot is <strong>almost entirely unoccupied</strong>. CPMs currently 60% below Instagram.</div>
+          <div class="spend-insight-text">Q-commerce ad revenue grew <span class="hl-green">+50% YoY in 2025</span>. Blinkit, Zepto, Instamart combined reached ₹4,100 Cr — almost entirely from FMCG. The fashion accessories slot is <strong>almost entirely unoccupied</strong>. CPMs currently 40-60% below Instagram.</div>
         </div>
         <div class="spend-insight-card">
           <div class="spend-insight-tag"><div class="spend-insight-dot amber"></div>The Underdog: Vernacular</div>
-          <div class="spend-insight-text">ShareChat + Moj reach <strong>350M vernacular users</strong> in Tier 2/3 India with engagement rates <strong>4× higher</strong> than Instagram for regional-language content. CPM: ₹18 vs ₹220 on Instagram. Only 8% of D2C brands are present.</div>
+          <div class="spend-insight-text">ShareChat + Moj reach <strong>325M+ vernacular users</strong> in Tier 2/3 India with engagement rates <strong>3× higher</strong> than Instagram for regional-language content. CPMs are 60-70% lower than Instagram. Only 12% of D2C brands have a vernacular content strategy.</div>
         </div>
       </div>
     </div>
@@ -519,7 +517,7 @@
         <div class="divide-footer-electric">Engaging customers where they shop, watch, and live.</div>
       </div>
     </div>
-    <div class="text-source mt-16">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Pitch Madison PMAR 2026</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">WPP TYNY 2026</a></div>
+    <div class="text-source mt-16">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Madison PMAR 2025</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">GroupM TYNY 2025</a></div>
   </section>
 
   <!-- WHERE INDIA'S TOP BRANDS PROMOTE -->
@@ -529,13 +527,13 @@
     <p class="text-desc-muted" style="margin-bottom:32px">Your competitors are already here. The question is whether you are.</p>
     <div class="data-table-wrap">
       <div class="data-table-head"><span>Channel</span><span>2025 Spend</span><span>Key Insight</span></div>
-      <div class="data-table-row"><span class="text-bold-paper">Digital Video (YouTube, OTT)</span><span class="text-electric-bold">₹14,785 Cr</span><span class="text-half-white">The new prime time. +21% growth.</span></div>
-      <div class="data-table-row"><span class="text-bold-paper">Social Media (Instagram, FB)</span><span class="text-electric-bold">₹12,143 Cr</span><span class="text-half-white">Where culture is created. +16% growth.</span></div>
-      <div class="data-table-row"><span class="text-bold-paper">E-Commerce (Amazon, Flipkart)</span><span class="text-electric-bold">₹10,257 Cr</span><span class="text-half-white">Where decisions are made. +27% growth.</span></div>
-      <div class="data-table-row"><span class="text-bold-paper">Search (Google)</span><span class="text-electric-bold">₹9,132 Cr</span><span class="text-half-white">Where intent is captured. +15% growth.</span></div>
-      <div class="data-table-row-last"><span class="text-bold-paper">Quick Commerce (Blinkit, Zepto)</span><span class="text-signal-bold">₹4,000 Cr</span><span class="text-half-white">The new storefront. +50% explosive growth.</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">Digital Video (YouTube, OTT)</span><span class="text-electric-bold">₹20,500 Cr</span><span class="text-half-white">The new prime time. +18% growth.</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">Social Media (Instagram, FB)</span><span class="text-electric-bold">₹18,000 Cr</span><span class="text-half-white">Where culture is created. +20% growth.</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">E-Commerce (Amazon, Flipkart)</span><span class="text-electric-bold">₹9,200 Cr</span><span class="text-half-white">Where decisions are made. +28% growth.</span></div>
+      <div class="data-table-row"><span class="text-bold-paper">Search (Google)</span><span class="text-electric-bold">₹28,500 Cr</span><span class="text-half-white">Where intent is captured. +12% growth.</span></div>
+      <div class="data-table-row-last"><span class="text-bold-paper">Quick Commerce (Blinkit, Zepto)</span><span class="text-signal-bold">₹4,100 Cr</span><span class="text-half-white">The new storefront. +50% growth.</span></div>
     </div>
-    <div class="text-source mt-16">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a> (Expanded Digital Definition)</div>
+    <div class="text-source mt-16">Source: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Madison PMAR 2025</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">GroupM TYNY 2025</a></div>
   </section>
 
   <!-- THE NEW RULES OF ATTENTION -->
@@ -547,9 +545,9 @@
       <div class="divide-panel-win">
         <div class="divide-heading-sm" style="color:var(--electric)">Rising Trends</div>
         <div class="divide-col-stack-lg">
-          <div><div class="divide-trend-title">Connected TV (CTV)</div><div class="divide-trend-body">+33% growth. ₹8,000 Cr market by 2026. Reaching affluent homes on JioCinema and Hotstar.</div><div class="divide-trend-stat-electric">+33% YoY · First-mover window open</div></div>
-          <div><div class="divide-trend-title">Vernacular AI Content</div><div class="divide-trend-body">156% higher growth in Tier 2/3 cities. Only 8% of D2C brands have a vernacular strategy.</div><div class="divide-trend-stat-electric">156% growth · Massive white space</div></div>
-          <div><div class="divide-trend-title">Influencer-Led Campaigns</div><div class="divide-trend-body">A ₹5,000 Cr+ market growing 25% YoY. 54% of D2C brands spending up to 25% of budget on creators.</div><div class="divide-trend-stat-electric">₹5,000 Cr+ · Creator economy boom</div></div>
+          <div><div class="divide-trend-title">Connected TV (CTV)</div><div class="divide-trend-body">+33% growth. ₹7,200 Cr market in 2025. Reaching affluent homes on JioCinema and Hotstar.</div><div class="divide-trend-stat-electric">+33% YoY · D2C first-mover window open</div></div>
+          <div><div class="divide-trend-title">Vernacular AI Content</div><div class="divide-trend-body">+45% higher growth in Tier 2/3 cities. Only 12% of D2C brands have a vernacular content strategy.</div><div class="divide-trend-stat-electric">+45% growth · Massive white space</div></div>
+          <div><div class="divide-trend-title">Influencer-Led Campaigns</div><div class="divide-trend-body">A ₹3,500 Cr+ market growing 25% YoY. Over half of D2C brands now allocating 15-25% of budget to creators.</div><div class="divide-trend-stat-electric">₹3,500 Cr+ · Creator economy boom</div></div>
         </div>
       </div>
       <!-- LOSING -->
@@ -562,27 +560,75 @@
         </div>
       </div>
     </div>
-    <div class="text-source mt-16">Sources: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">PMAR 2026</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">WPP TYNY 2026</a> · <a href="https://cloud9digital.co.in/" target="_blank" rel="noopener" class="text-source">Cloud 9 Digital AI Marketing Report 2026</a></div>
+    <div class="text-source mt-16">Sources: <a href="https://pitchonnet.com/pmar/" target="_blank" rel="noopener" class="text-source">Madison PMAR 2025</a> · <a href="https://www.groupm.com/this-year-next-year-global-2025-end-of-year-forecast/" target="_blank" rel="noopener" class="text-source">GroupM TYNY 2025</a> · <a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/ai-powered-marketing-and-sales-reach-new-heights-with-generative-ai" target="_blank" rel="noopener" class="text-source">McKinsey AI Marketing Report 2024</a></div>
   </section>
 
   <!-- THE AGENCY LANDSCAPE -->
   <section class="section border-t-subtle-thick">
     <div class="section-label">Old Guard vs. New Guard</div>
     <h2 class="section-title">We are not another agency.<br>We are your AI creative partner.</h2>
-    <div class="grid-2 mt-40">
-      <div class="divide-panel-old">
-        <div class="divide-heading" style="color:var(--mid)">The Old Guard</div>
-        <div class="agency-title-bold" style="color:var(--muted-foreground)">Ogilvy, Lintas, Leo Burnett…</div>
-        <div class="agency-desc">Masters of the 60-second story. Built for a world of TV spots and print ads.</div>
-        <div class="old-guard-big" style="color:var(--muted-foreground)">90 days</div>
-        <div class="old-guard-sub" style="color:var(--mid)">Average campaign turnaround</div>
+    <div class="guard-compare">
+      <!-- OLD GUARD — dark, faded -->
+      <div class="guard-card guard-card--old">
+        <div class="guard-card__badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          The Old Guard
+        </div>
+        <h3 class="guard-card__title guard-card__title--muted">Traditional network<br>agencies &amp; studios</h3>
+        <p class="guard-card__desc">Masters of the 60-second story. Built for a world of TV spots and print ads.</p>
+        <div class="guard-card__metrics">
+          <div class="guard-metric">
+            <span class="guard-metric__value guard-metric__value--muted">90 days</span>
+            <span class="guard-metric__label">Campaign turnaround</span>
+          </div>
+          <div class="guard-metric">
+            <span class="guard-metric__value guard-metric__value--muted">₹15L+</span>
+            <span class="guard-metric__label">Per campaign cost</span>
+          </div>
+          <div class="guard-metric">
+            <span class="guard-metric__value guard-metric__value--muted">8–12</span>
+            <span class="guard-metric__label">Assets per month</span>
+          </div>
+          <div class="guard-metric">
+            <span class="guard-metric__value guard-metric__value--muted">Manual</span>
+            <span class="guard-metric__label">Creative process</span>
+          </div>
+        </div>
+        <div class="guard-card__tagline">Same playbook since 1990.</div>
       </div>
-      <div class="divide-panel-new">
-        <div class="divide-heading-sm" style="color:var(--electric);margin-bottom:24px">The New Guard</div>
-        <div class="agency-title-bold" style="color:var(--electric)">Fynd Studio</div>
-        <div class="agency-desc-bright">Masters of the 6-second impression. Built for a world of algorithms and real-time data.</div>
-        <div class="old-guard-big" style="color:var(--electric)">48 hours</div>
-        <div class="old-guard-sub" style="color:var(--electric)">Average campaign turnaround</div>
+
+      <!-- Divider -->
+      <div class="guard-vs">
+        <span>vs</span>
+      </div>
+
+      <!-- NEW GUARD — bright, confident -->
+      <div class="guard-card guard-card--new">
+        <div class="guard-card__badge guard-card__badge--accent">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          The New Guard
+        </div>
+        <h3 class="guard-card__title">Fynd Studio</h3>
+        <p class="guard-card__desc guard-card__desc--strong">Masters of the 6-second impression. Built for a world of algorithms and real-time data.</p>
+        <div class="guard-card__metrics">
+          <div class="guard-metric">
+            <span class="guard-metric__value">48 hours</span>
+            <span class="guard-metric__label">Campaign turnaround</span>
+          </div>
+          <div class="guard-metric">
+            <span class="guard-metric__value">₹2L</span>
+            <span class="guard-metric__label">Per campaign cost</span>
+          </div>
+          <div class="guard-metric">
+            <span class="guard-metric__value">100+</span>
+            <span class="guard-metric__label">Assets per month</span>
+          </div>
+          <div class="guard-metric">
+            <span class="guard-metric__value">AI-powered</span>
+            <span class="guard-metric__label">Creative process</span>
+          </div>
+        </div>
+        <div class="guard-card__tagline guard-card__tagline--accent">Your unfair advantage starts here.</div>
       </div>
     </div>
   </section>
@@ -700,7 +746,7 @@
       <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4.9 19.1A16 16 0 0 1 12 2"/><path d="M7.8 16.2A10 10 0 0 1 12 6"/><circle cx="12" cy="12" r="2" fill="white"/></svg></div><div class="tech-name">Market Signal AI</div><div class="tech-abbr">REAL-TIME INTELLIGENCE</div><div class="tech-desc">Crawls 1000+ sources to detect market trends, regional signals, and competitor movements in real-time. Feeds directly into your Creative Health Check scores.</div></div>
       <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="tech-name">Creative Velocity Engine</div><div class="tech-abbr">GENERATIVE PRODUCTION</div><div class="tech-desc">Generates production-quality video, images, and copy in 48 hours. Fine-tuned on Indian fashion, skin tones, and cultural contexts — not Western datasets.</div></div>
       <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="tech-name">Predictive ROI Model</div><div class="tech-abbr">FORECAST + OPTIMISE</div><div class="tech-desc">Forecasts the potential ROI of creative decisions before you spend a single rupee. Benchmarks your performance against 15+ direct competitors in real time.</div></div>
-      <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 0 1 5 5c0 1.5-.7 2.8-1.7 3.7L12 14l-3.3-3.3A5 5 0 0 1 12 2z"/><path d="M8 14v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4"/></svg></div><div class="tech-name">Ogilvy Strategy Core</div><div class="tech-abbr">AI-POWERED STRATEGY</div><div class="tech-desc">An AI fine-tuned on the principles of legendary ad campaigns to generate brand strategy, not just ads. Slogans, three-act story plots, campaign themes — in minutes.</div></div>
+      <div class="tech-card"><div class="tech-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 0 1 5 5c0 1.5-.7 2.8-1.7 3.7L12 14l-3.3-3.3A5 5 0 0 1 12 2z"/><path d="M8 14v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4"/></svg></div><div class="tech-name">Agency Strategy Core</div><div class="tech-abbr">AI-POWERED STRATEGY</div><div class="tech-desc">An AI fine-tuned on the principles of legendary ad campaigns to generate brand strategy, not just ads. Slogans, three-act story plots, campaign themes — in minutes.</div></div>
     </div>
   </section>
 
@@ -739,8 +785,8 @@
         <button class="pc-btn">View Battle Cards <span>→</span></button>
         <div class="pc-bg-num">02</div>
       </div>
-      <div class="page-card proposal" onclick="showPage('proposal')">
-        <div class="pc-tag">Tool 03</div>
+      <div class="page-card proposal page-card--locked" role="group" aria-label="Campaign Proposal — coming soon" title="Coming soon">
+        <div class="pc-tag">Coming soon</div>
         <div class="pc-title">Campaign Proposal</div>
         <p class="pc-desc">A premium, single-page campaign proposal crafted by AI. Deep brand understanding, strategic insights, a big creative idea, and tailored AI-powered solutions — ready to pitch.</p>
         <div class="pc-features">
@@ -759,15 +805,17 @@
   <!-- ═══════════════════════════════════════
        SECTION 8: FINAL CTA
   ═══════════════════════════════════════ -->
-  <section class="section" style="border-top:1px solid var(--border);padding-bottom:40px">
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:72px 64px;text-align:center;position:relative;overflow:hidden">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,var(--glow-purple) 0%,transparent 70%);pointer-events:none"></div>
-      <div class="section-label" style="margin-bottom:24px">The Invitation</div>
-      <h2 style="font-family:'Inter',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:24px">Stop Buying Ads.<br><span style="color:var(--signal)">Start Buying Outcomes.</span></h2>
-      <p style="font-size:16px;color:var(--muted-foreground);max-width:480px;margin:0 auto 40px;line-height:1.7">Get your free AI Brand Audit and see the future of your marketing. The first step takes 60 seconds.</p>
-      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-        <button class="btn-primary" style="padding:16px 40px;font-size:15px" onclick="showPage('intel')">Generate My Report →</button>
-        <button class="btn-ghost" style="padding:16px 40px;font-size:15px" onclick="openModal('demoModal')">Schedule a Demo</button>
+  <section class="section home-final-cta-section">
+    <div class="home-final-cta">
+      <div class="home-final-cta-glow" aria-hidden="true"></div>
+      <div class="home-final-cta-inner">
+        <div class="section-label">The Invitation</div>
+        <h2 class="home-final-cta-title">Stop Buying Ads.<br><span class="home-final-cta-accent">Start Buying Outcomes.</span></h2>
+        <p class="home-final-cta-lead">Get your free AI Brand Audit and see the future of your marketing. The first step takes 60 seconds.</p>
+        <div class="home-final-cta-actions">
+          <button type="button" class="btn-primary home-final-cta-btn" onclick="showPage('intel')">Generate My Report →</button>
+          <button type="button" class="btn-ghost home-final-cta-btn" onclick="openModal('demoModal')">Schedule a Demo</button>
+        </div>
       </div>
     </div>
   </section>
@@ -872,7 +920,7 @@
     </div>
 
     <!-- ═══ AI TOP INSIGHT CARD ═══ -->
-    <div class="dash-card" style="margin-bottom:24px">
+    <div class="dash-card dash-card--overflow-visible" style="margin-bottom:24px">
       <div class="dash-card-header row-center" style="gap:24px;padding:24px">
         <div style="display:flex;gap:16px;align-items:center;flex:1">
           <div style="flex-shrink:0;width:40px;height:40px;border-radius:var(--border-radius--8,8px);background:var(--foreground);display:flex;align-items:center;justify-content:center">
@@ -883,9 +931,26 @@
             <div id="topInsight" style="font-size:15px;font-weight:500;color:var(--foreground);line-height:1.65">Run the audit to see your top insight.</div>
           </div>
         </div>
-        <div style="flex-shrink:0;text-align:center;padding:var(--spacing--16,16px) var(--spacing--24,24px);background:var(--muted);border:1px solid var(--border);border-radius:var(--border-radius--8,8px);min-width:80px">
-          <div class="dash-card-desc" style="margin-bottom:8px">Grade</div>
-          <div id="overallGrade" class="dash-grade">—</div>
+        <div class="intel-grade-wrap">
+          <div class="intel-grade-inner">
+            <div class="intel-grade-badge">
+              <div class="dash-card-desc" style="margin-bottom:8px">Grade</div>
+              <div id="overallGrade" class="dash-grade">—</div>
+            </div>
+            <button type="button" class="intel-grade-help" aria-label="How creative health grades work" aria-expanded="false" aria-controls="intelGradeHelpPanel" id="intelGradeHelpBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            </button>
+          </div>
+          <div class="intel-grade-popover" id="intelGradeHelpPanel" role="region" aria-labelledby="intelGradeHelpBtn">
+            <p class="intel-grade-popover-title">Creative health grade</p>
+            <p class="intel-grade-popover-intro">Estimate from your audit: creative velocity, regional fit, platform use, and AI opportunity vs Indian D2C norms. Not a financial or legal rating.</p>
+            <ul class="intel-grade-scale">
+              <li><strong>A+ / A</strong> — Strong execution; low stagnation risk vs peers.</li>
+              <li><strong>B+ / B</strong> — Solid baseline; clear levers to close gap to leaders.</li>
+              <li><strong>C+ / C</strong> — Meaningful gaps in content cadence, channels, or personalisation.</li>
+              <li><strong>D</strong> — Under-indexing on multiple dimensions; prioritise quick wins.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -897,7 +962,7 @@
     </div>
 
     <!-- ═══ BRAND PROFILE — real insights from website scrape ═══ -->
-    <div id="brandProfileGrid" class="dash-scores-grid" style="grid-template-columns: repeat(3, 1fr)">
+    <div id="brandProfileGrid" class="brand-profile-grid">
       <!-- Populated by JS from AI analysis -->
     </div>
 
@@ -1048,7 +1113,7 @@
             <span style="font-size:13px;font-weight:600;color:var(--foreground);font-family:'Inter',sans-serif">Bewakoof</span>
             <span style="font-size:11px;color:var(--muted-foreground);font-family:'Inter',sans-serif">· Fashion &amp; Apparel · March 2026</span>
           </div>
-          <button class="btn-primary" onclick="openModal('pdfModal')">Download PDF</button>
+          <button class="btn-primary" onclick="downloadPlaybookPdf()">Download PDF</button>
         </div>
       </div>
     </div>
@@ -1357,7 +1422,7 @@
 
         <div style="margin-top:24px;display:flex;gap:16px;flex-wrap:wrap">
           <button class="btn-ghost" onclick="openModal('strategistModal')">Connect with a Creative Strategist →</button>
-          <button class="btn-ghost" onclick="openModal('pdfModal')">Download Full Strategy PDF</button>
+          <button class="btn-ghost" onclick="downloadPlaybookPdf()">Download Full Strategy PDF</button>
         </div>
 
       </div>
@@ -1376,7 +1441,7 @@
         </div>
         <div style="display:flex;gap:12px;flex-shrink:0">
           <button class="btn-ghost" onclick="openModal('strategistModal')">Connect with a Creative Strategist →</button>
-          <button class="btn-ghost" onclick="openModal('pdfModal')">Download Full Playbook (PDF)</button>
+          <button class="btn-ghost" onclick="downloadPlaybookPdf()">Download Full Playbook (PDF)</button>
         </div>
       </div>
     </div>

@@ -121,6 +121,12 @@
   --primary-dim: rgba(14, 14, 14, 0.08);
   --primary-ghost: rgba(14, 14, 14, 0.04);
   --glow-purple: rgba(92, 152, 247, 0.12);
+
+  /* Marketing page accents (index.html inline styles — must resolve) */
+  --signal: var(--blue--blue-40, #5c98f7);
+  --electric: var(--blue--blue-50, #2f7af6);
+  --mid: var(--muted-foreground);
+  --paper: var(--foreground);
 }
 
 .dark {
@@ -132,6 +138,11 @@
   --primary-dim: rgba(250, 250, 250, 0.08);
   --primary-ghost: rgba(250, 250, 250, 0.04);
   --glow-purple: rgba(92, 152, 247, 0.08);
+
+  --signal: #5c98f7;
+  --electric: #60a5fa;
+  --mid: var(--muted-foreground);
+  --paper: var(--foreground);
 }
 
 /* ── Layer 3: Component Tokens ─────────────────────────── */
